@@ -1,7 +1,7 @@
 /* --------------------------Usercode Section------------------------ */
-package src.JFlex;
+package JFlex;
 import java_cup.runtime.*;
-import src.JCup.*;
+import JCup.*;
 
 %%
 
