@@ -1,9 +1,9 @@
 /* ----------------------Preliminary Declarations Section--------------------*/
 
 /* Import the class java_cup.runtime.*  */
-package src.JCup;
+package JCup;
 import java_cup.runtime.*;
-import src.JCup.ParserTokens.*;
+import JCup.ParserTokens.*;
 
 /* Parser code to change the way the parser reports errors (include
    line and column INT of the error). */

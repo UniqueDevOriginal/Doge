@@ -23,15 +23,15 @@
    
 import java.io.*;
 
-// import JCup.parser;
+import JCup.parser;
 import JCup.ParserTokens.E;
-// import JFlex.*;
+import JFlex.*;
    
 public class Main {
   static public void main(String argv[]) {    
     /* Start the parser */
     try {
-    	String testFile = "src\\ex2\\test.txt";
+    	String testFile = "src\\program.doge";
       Lexer lexedInput = new Lexer(new FileReader(testFile));
       parser p = new parser(lexedInput);
       E result = (E) p.parse().value;
