@@ -55,98 +55,60 @@ parser code {:
 
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 
-/*-------------Terminais - ('; - SEMI', '( - LEFTPARAN', ') -  RIGHTPARAN', 'void', 'int', 'char', 
-                            'a,b...z', '0,1..9', '{', '}', 'if',
-                            'while', 'print', 'return', '=', '"',
-                            '+', '-', '*', '/', '>', '<', '==', '!=')---------------------- */
 
-terminal      SEMI , LEFTPARAN,  RIGHTPARAN , RETURNTYPE ,  LEFTPARAN , RIGHTPARAN, EQUALS, STAR ;
-terminal    COMMA , LEFTBRACE , RIGHTBRACE , FOR , WHILE , DO , IF , ELSE, SWITCH, BREAK, CASE;
-terminal  LT , GT , EXCL ;
-terminal java.lang.String VARIABLE, COMPARATOR;
+/*Terminais - ('; - SEMI', '( - LEFTPARAN', ') -  RIGHTPARAN', '} - LEFTBRACE', '{ - RIGHTBRACE', '" - QUOTATION'
+               '+ - PLUS', '- - MINUS', '* - TIMES', '/ - DIVIDE', '= - EQUALS', 
+               '< - LESS', '> - GREATER', '== - EQUALSE', '!= - NOTEQUALS',
+               'if - IF','while - WHILE', 'print - PRINT', 'return - RETURN',
+               'int - INT', 'char - CHAR',
+               'a,b...z - AB...Z', '0,1..9 - 12...9',---------------------------------------- */
 
-terminal           PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN, NEWLINE;
-terminal Integer   INT;
-terminal Integer    ID;
+terminal   LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
+// terminal   PLUS, MINUS, TIMES, DIVIDE, EQUALS;
+// terminal   LESS, GREATER, EQUALSE, NOTEQUALS;
+// terminal   IF, WHILE, PRINT, RETURN;
+// terminal   INT, CHAR;
+terminal SEMI, IDENT, INT, CHAR, MAIN;
+/* ------------Não-terminais------------------------ */
 
-non terminal E     E;
-non terminal T     T;
-non terminal F     F;
-non terminal N     N;
+non terminal program, decl, var_decl, var, type_id, id;
+// non terminal program, decl, var_decl, function_decl, var, type_id, arg_list, block, actuals, rel_op, expr, location, literal;
+// non terminal call, id, stmt, int_literal, decimal_literal, char_literal, binop, arith_op, eq_op, digit, AssingOp;
 
 /* ---------------------------------Preedencia dos terminais-------------------------------- */
 
-  precedence left PLUS, MINUS;
-  precedence left TIMES, DIVIDE;
+//   precedence left PLUS, MINUS;
+//   precedence left TIMES, DIVIDE;
+  start with program;
 
 /* ---------------------------------Declaração da gramatica--------------------------------- */
 
-/* EBNF - Gramatica da linguagem.
-Program        ::= Decl *
-Decl           ::= VarDecl 
-                   | FunctionDecl
-VarDecl        ::= Var ’;’
-FunctionDecl   ::= Type Id ’(’ Argument ’)’ Block
-                   | ’void’ Id ’(’ Argument ’)’ Block
-Var            ::= Type Id
-Argument       ::= Var +, 
-                   | ε
-Type           ::= ’int’ 
-                   | ’char’
-Id             ::= Alpha AlphaNum*
-Alpha          ::= ’a’ 
-                   | ’b’ 
-                   | ... 
-                   | ’z’
-AlphaNum       ::= Alpha 
-                  | Digit
-Digit          ::= ’0’ 
-                   | ’1’ 
-                   | ... 
-                   | ’9’
-Call           ::= Id ’(’ Actuals ’)’ ’;’
-Actuals        ::= Expr +, 
-                   | ε
-Block          ::= ’{’ VarDecl * Stmt *’}’
-Stmt           ::= Location AssingOp Exrp ’;’
-                   | Call
-                   | ’if’ ’(’ Exrp ’)’ Block
-                   | ’while’ ’(’ Exrp ’)’ Block
-                   | ’print’ ’(’ Expr +, ’)’ ’;’
-                   | ’return’ < Expr > ’;’
-Expr           ::= Literal 
-                   | Expr BinOp Expr 
-                   | -Expr 
-                   | ’(’ Expr ’)’
-Location       ::= Id
-AssingOp       ::= ’=’
-Literal        ::= IntLiteral 
-                   | CharLiteral
-IntLiteral     ::= DecimalLiteral
-DecimalLiteral ::= Digit Digit*
-CharLiteral    ::= ’"’ Char ’"’
-BinOp          ::= ArithOp 
-                   | RelOp 
-                   | EqOp
-ArithOp        ::= ’+’
-                   |’-’
-                   |’*’
-                   |’/’
-RelOp          ::= ’>’
-                   |’<’
-EqOp           ::= ’==’
-                   |’!=’
-*/
+/* -----------------------------------------Gramatica--------------------------------------- */
 
-  N ::= N:n NEWLINE;
-  E ::= E:l PLUS T:r {: RESULT = new PlusE(l,r); :}  
-        | E:l MINUS T:r  {: RESULT = new MinusE(l,r); :} 
-        | T:t {: RESULT = new TE(t); :} ;
+program 	       ::= MAIN LEFTPAREN RIGHTPAREN LEFTBRACE decl RIGHTBRACE;
+decl            ::= var_decl | ;
+var_decl        ::= var SEMI;
+var             ::= type_id id;
+type_id         ::= INT | CHAR;
+id              ::= IDENT;
 
-  T ::= T:l TIMES F:r {: RESULT = new MultiplyT(l,r); :} 
-        | T:l DIVIDE F:r {: RESULT = new DivideT(l,r); :} 
-        | F:f {: RESULT = new FT(f); :} ;
-
-  F ::= LPAREN E:e RPAREN {: RESULT = new FBRACKET(e); :} 
-        | INT:i {: RESULT = new INT(i); :}  
-        | ID:s {: RESULT = new ID(s); :} ;
+// decl            ::= var_decl | function_decl;
+// var_decl        ::= var SEMI;
+// function_decl   ::= type_id id LEFTPAREN arg_list RIGHTPAREN block;
+// id              ::= var;
+// var             ::= type_id;
+// arg_list        ::= var;
+// type_id         ::= INT | CHAR;
+// call            ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
+// actuals         ::= expr;
+// block           ::= LEFTBRACE var_decl stmt RIGHTBRACE;
+// stmt            ::= location AssingOp expr SEMI | call | IF LEFTPAREN expr RIGHTPAREN block| WHILE LEFTPAREN expr RIGHTPAREN block | PRINT LEFTPAREN expr RIGHTPAREN SEMI | RETURN expr SEMI;
+// expr            ::= literal | expr binop expr | -expr | LEFTPAREN expr RIGHTPAREN;
+// literal         ::= int_literal | char_literal;
+// int_literal     ::= decimal_literal;
+// decimal_literal ::= digit|digit;
+// char_literal    ::= QUOTATION CHAR QUOTATION;
+// binop           ::= arith_op | rel_op | eq_op;
+// arith_op        ::= PLUS | MINUS | TIMES | DIVIDE;
+// rel_op          ::= GREATER | LESS | NOTEQUALS;
+// eq_op           ::= EQUALSE | NOTEQUALS;

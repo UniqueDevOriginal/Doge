@@ -1,2 +1,2 @@
-java -jar java-cup-11a.jar parser.cup
+java -jar java-cup-11b.jar parser.cup
 pause
