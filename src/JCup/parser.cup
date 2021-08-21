@@ -1,61 +1,50 @@
-/* ----------------------Preliminary Declarations Section--------------------*/
+/* ------------------------------Declaração de bibliotecas---------------------------------- */
 
-/* Import the class java_cup.runtime.*  */
 package JCup;
 import java_cup.runtime.*;
 import JCup.ParserTokens.*;
 
-/* Parser code to change the way the parser reports errors (include
-   line and column INT of the error). */
+/* Identificar erro no parser, mostra linha e coluna do erro */
 parser code {:
 
 
-    /* Change the method report_error so it will display the line and
-       column of where the error occurred in the input as well as the
-       reason for the error which is passed into the method in the
-       String 'message'. */
+    /* Sobrescrever o método report_error para que ele exiba a linha e
+        coluna de onde ocorreu o erro na entrada, bem como no
+        razão para o erro que é passado para o método no
+        String 'mensagem'.  */
     public void report_error(String message, Object info) {
 
-        /* Create a StringBuilder called 'm' with the string 'Error' in it. */
+        /* Crie um StringBuilder chamado 'm' com a string 'Erro' nele. */
         StringBuilder m = new StringBuilder("Error");
 
-        /* Check if the information passed to the method is the same
-           type as the type java_cup.runtime.Symbol. */
+        /* Verifique se as informações passadas para o método são 
+        do tipo java_cup.runtime.Symbol. */
         if (info instanceof java_cup.runtime.Symbol) {
-            /* Declare a java_cup.runtime.Symbol object 's' with the
-               information in the object info that is being typecasted
-               as a java_cup.runtime.Symbol object. */
+            /* Declara um objeto java_cup.runtime.Symbol 's' com as
+                informações  que está sendo convertida. */
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
 
-            /* Check if the line INT in the input is greater or
-               equal to zero. */
+            /* Verifica se a linha da entrada >= 0 */
             if (s.left >= 0) {
-                /* Add to the end of the StringBuilder error message
-                   the line INT of the error in the input. */
+                /* Adiciona msg de erro na linha do erro da entrada. */
                 m.append(" in line "+(s.left+1));
-                /* Check if the column INT in the input is greater
-                   or equal to zero. */
+                /*  Verifica se a coluna da entrada >= 0 */
                 if (s.right >= 0)
-                    /* Add to the end of the StringBuilder error message
-                       the column INT of the error in the input. */
+                    /* Adiciona msg de erro na coluna do erro da entrada. */
                     m.append(", column "+(s.right+1));
             }
         }
 
-        /* Add to the end of the StringBuilder error message created in
-           this method the message that was passed into this method. */
+        /* Por fim adiciona a mensagem de erro na tela. */
         m.append(" : "+message);
 
-        /* Print the contents of the StringBuilder 'm', which contains
-           an error message, out on a line. */
+        /* Imprime o conteudo de 'm' que contem a msg de erro, 
+        com as informação de linha e coluna e a msg*/
         System.err.println(m);
     }
 
-    /* Change the method report_fatal_error so when it reports a fatal
-       error it will display the line and column INT of where the
-       fatal error occurred in the input as well as the reason for the
-       fatal error which is passed into the method in the object
-       'message' and then exit.*/
+    /* Sobrescrever report_fatal_error para exibit linha e coluna do erro 
+       alem da mensagem do erro, e termina a execução. */
     public void report_fatal_error(String message, Object info) {
         report_error(message, info);
         System.exit(1);
@@ -64,28 +53,100 @@ parser code {:
 
 
 
-/* ------------Declaration of Terminals and Non Terminals Section----------- */
-terminal           PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN;
+/* --------------------------Declaração de terminais e não-terminais------------------------ */
+
+/*-------------Terminais - ('; - SEMI', '( - LEFTPARAN', ') -  RIGHTPARAN', 'void', 'int', 'char', 
+                            'a,b...z', '0,1..9', '{', '}', 'if',
+                            'while', 'print', 'return', '=', '"',
+                            '+', '-', '*', '/', '>', '<', '==', '!=')---------------------- */
+
+terminal      SEMI , LEFTPARAN,  RIGHTPARAN , RETURNTYPE ,  LEFTPARAN , RIGHTPARAN, EQUALS, STAR ;
+terminal    COMMA , LEFTBRACE , RIGHTBRACE , FOR , WHILE , DO , IF , ELSE, SWITCH, BREAK, CASE;
+terminal  LT , GT , EXCL ;
+terminal java.lang.String VARIABLE, COMPARATOR;
+
+terminal           PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN, NEWLINE;
 terminal Integer   INT;
 terminal Integer    ID;
 
 non terminal E     E;
 non terminal T     T;
 non terminal F     F;
+non terminal N     N;
 
-/* -------------Precedence and Associatively of Terminals Section----------- */
+/* ---------------------------------Preedencia dos terminais-------------------------------- */
 
   precedence left PLUS, MINUS;
   precedence left TIMES, DIVIDE;
 
-/* ----------------------------Grammar Section-------------------- */
+/* ---------------------------------Declaração da gramatica--------------------------------- */
 
-/* The grammar for our parser.
-E ::= E + T | E - T | T
-T ::= T * F | T / F | F
-F ::= (E) | INT | ID
+/* EBNF - Gramatica da linguagem.
+Program        ::= Decl *
+Decl           ::= VarDecl 
+                   | FunctionDecl
+VarDecl        ::= Var ’;’
+FunctionDecl   ::= Type Id ’(’ Argument ’)’ Block
+                   | ’void’ Id ’(’ Argument ’)’ Block
+Var            ::= Type Id
+Argument       ::= Var +, 
+                   | ε
+Type           ::= ’int’ 
+                   | ’char’
+Id             ::= Alpha AlphaNum*
+Alpha          ::= ’a’ 
+                   | ’b’ 
+                   | ... 
+                   | ’z’
+AlphaNum       ::= Alpha 
+                  | Digit
+Digit          ::= ’0’ 
+                   | ’1’ 
+                   | ... 
+                   | ’9’
+Call           ::= Id ’(’ Actuals ’)’ ’;’
+Actuals        ::= Expr +, 
+                   | ε
+Block          ::= ’{’ VarDecl * Stmt *’}’
+Stmt           ::= Location AssingOp Exrp ’;’
+                   | Call
+                   | ’if’ ’(’ Exrp ’)’ Block
+                   | ’while’ ’(’ Exrp ’)’ Block
+                   | ’print’ ’(’ Expr +, ’)’ ’;’
+                   | ’return’ < Expr > ’;’
+Expr           ::= Literal 
+                   | Expr BinOp Expr 
+                   | -Expr 
+                   | ’(’ Expr ’)’
+Location       ::= Id
+AssingOp       ::= ’=’
+Literal        ::= IntLiteral 
+                   | CharLiteral
+IntLiteral     ::= DecimalLiteral
+DecimalLiteral ::= Digit Digit*
+CharLiteral    ::= ’"’ Char ’"’
+BinOp          ::= ArithOp 
+                   | RelOp 
+                   | EqOp
+ArithOp        ::= ’+’
+                   |’-’
+                   |’*’
+                   |’/’
+RelOp          ::= ’>’
+                   |’<’
+EqOp           ::= ’==’
+                   |’!=’
 */
 
-  E ::= E:l PLUS T:r  {: RESULT = new PlusE(l,r); :} | E:l MINUS T:r  {: RESULT = new MinusE(l,r); :} | T:t {: RESULT = new TE(t); :} ;
-  T ::= T:l TIMES F:r {: RESULT = new MultiplyT(l,r); :} | T:l DIVIDE F:r {: RESULT = new DivideT(l,r); :} | F:f {: RESULT = new FT(f); :} ;
-  F ::= LPAREN E:e RPAREN {: RESULT = new FBRACKET(e); :} | INT:i {: RESULT = new INT(i); :}  | ID:s {: RESULT = new ID(s); :} ;
+  N ::= N:n NEWLINE;
+  E ::= E:l PLUS T:r {: RESULT = new PlusE(l,r); :}  
+        | E:l MINUS T:r  {: RESULT = new MinusE(l,r); :} 
+        | T:t {: RESULT = new TE(t); :} ;
+
+  T ::= T:l TIMES F:r {: RESULT = new MultiplyT(l,r); :} 
+        | T:l DIVIDE F:r {: RESULT = new DivideT(l,r); :} 
+        | F:f {: RESULT = new FT(f); :} ;
+
+  F ::= LPAREN E:e RPAREN {: RESULT = new FBRACKET(e); :} 
+        | INT:i {: RESULT = new INT(i); :}  
+        | ID:s {: RESULT = new ID(s); :} ;

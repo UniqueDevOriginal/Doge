@@ -65,13 +65,14 @@ parser code {:
 
 
 /* ------------Declaration of Terminals and Non Terminals Section----------- */
-terminal           PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN;
+terminal           PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN, NEWLINE;
 terminal Integer   INT;
 terminal Integer    ID;
 
 non terminal E     E;
 non terminal T     T;
 non terminal F     F;
+non terminal N     N;
 
 /* -------------Precedence and Associatively of Terminals Section----------- */
 
@@ -86,6 +87,15 @@ T ::= T * F | T / F | F
 F ::= (E) | INT | ID
 */
 
-  E ::= E:l PLUS T:r  {: RESULT = new PlusE(l,r); :} | E:l MINUS T:r  {: RESULT = new MinusE(l,r); :} | T:t {: RESULT = new TE(t); :} ;
-  T ::= T:l TIMES F:r {: RESULT = new MultiplyT(l,r); :} | T:l DIVIDE F:r {: RESULT = new DivideT(l,r); :} | F:f {: RESULT = new FT(f); :} ;
-  F ::= LPAREN E:e RPAREN {: RESULT = new FBRACKET(e); :} | INT:i {: RESULT = new INT(i); :}  | ID:s {: RESULT = new ID(s); :} ;
+  N ::= N:n NEWLINE;
+  E ::= E:l PLUS T:r {: RESULT = new PlusE(l,r); :}  
+        | E:l MINUS T:r  {: RESULT = new MinusE(l,r); :} 
+        | T:t {: RESULT = new TE(t); :} ;
+
+  T ::= T:l TIMES F:r {: RESULT = new MultiplyT(l,r); :} 
+        | T:l DIVIDE F:r {: RESULT = new DivideT(l,r); :} 
+        | F:f {: RESULT = new FT(f); :} ;
+
+  F ::= LPAREN E:e RPAREN {: RESULT = new FBRACKET(e); :} 
+        | INT:i {: RESULT = new INT(i); :}  
+        | ID:s {: RESULT = new ID(s); :} ;

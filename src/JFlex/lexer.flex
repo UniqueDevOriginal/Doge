@@ -97,6 +97,9 @@ dec_int_id = [A-Za-z_][A-Za-z_0-9]*
     "("                { System.out.print(" ( "); return symbol(sym.LPAREN); }
     ")"                { System.out.print(" ) "); return symbol(sym.RPAREN); }
 
+     {LineTerminator}    { System.out.print(yytext());
+                         return symbol(sym.NEWLINE, new Integer(yytext()));}
+
     /* If an integer is found print it out, return the token NUMBER
        that represents an integer and the value of the integer that is
        held in the string yytext which will get turned into an integer
