@@ -9,15 +9,15 @@ public class Main {
     /* Start the parser */
     try {
       // new FileReader(testFile)
-    	String testFile = "src\\program2.txt";
+    	String testFile = "src/program2.txt";
       Lexer lexedInput = new Lexer( new FileReader(testFile));
       parser p = new parser(lexedInput);
-      p.parse();
+      // p.parse();
  
-      // E result = (E) p.parse().value;
-      // System.out.println();
-      // System.out.println();
-      // result.print("",true);
+      E result = (E) p.parse().value;
+      System.out.println();
+      System.out.println();
+      result.print("",true);
       
 @SuppressWarnings("unused")
 int i = 0;   
