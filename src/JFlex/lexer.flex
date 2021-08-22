@@ -71,15 +71,19 @@ Id = {Alpha}{AlphaNum}*
     /* Print the token found that was declared in the class sym and then
        return it. */
    
-    ";"    { print_token("; "); return symbol(sym.SEMI);}
-    "char" { print_token("char "); return symbol(sym.CHAR);}
-    "int"  { print_token("int "); return symbol(sym.INT);}
-    "("    { print_token("( "); return symbol(sym.LEFTPAREN);}
-    ")"    { print_token(") "); return symbol(sym.RIGHTPAREN);}
-    "{"    { print_token("{ "); return symbol(sym.LEFTBRACE);}
-    "}"    { print_token("} "); return symbol(sym.RIGHTBRACE);}
-    ","    { print_token(", "); return symbol(sym.COMMA);}
-    
+    ";"      { print_token("; "); return symbol(sym.SEMI);}
+    "char"   { print_token("char "); return symbol(sym.CHAR);}
+    "int"    { print_token("int "); return symbol(sym.INT);}
+    "("      { print_token("( "); return symbol(sym.LEFTPAREN);}
+    ")"      { print_token(") "); return symbol(sym.RIGHTPAREN);}
+    "{"      { print_token("{ "); return symbol(sym.LEFTBRACE);}
+    "}"      { print_token("} "); return symbol(sym.RIGHTBRACE);}
+    ","      { print_token(", "); return symbol(sym.COMMA);}
+    "if"     { print_token("if "); return symbol(sym.IF);}
+   //  "while"  { print_token("while "); return symbol(sym.WHILE);}
+   //  "print"  { print_token("print "); return symbol(sym.PRINT);}
+   //  "return" { print_token("return "); return symbol(sym.RETURN);}
+     
     {WhiteSpace}     { /* ignore */ }
     {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 
     
@@ -110,3 +114,4 @@ Id = {Alpha}{AlphaNum}*
 /* No token was found for the input so through an error.  Print out an
    Illegal character message with the illegal character that was found. */
 
+   
