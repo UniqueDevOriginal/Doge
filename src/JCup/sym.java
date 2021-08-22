@@ -12,29 +12,29 @@ public class sym {
   public static final int IDENT = 24;
   public static final int PLUS = 9;
   public static final int INT = 3;
-  public static final int EQUAL = 19;
+  public static final int EQUAL = 18;
   public static final int CHARACTER = 25;
+  public static final int SEMI = 23;
   public static final int CHAR = 2;
-  public static final int SEMI = 13;
   public static final int WHILE = 7;
   public static final int SHOW = 5;
   public static final int RETURN = 8;
-  public static final int GREATER = 16;
+  public static final int GREATER = 15;
   public static final int IF = 6;
-  public static final int NOTEQUALS = 18;
-  public static final int EQUALS = 17;
-  public static final int COMMA = 14;
+  public static final int NOTEQUALS = 17;
+  public static final int EQUALS = 16;
+  public static final int COMMA = 13;
   public static final int NUMBER = 26;
   public static final int EOF = 0;
   public static final int DIVIDE = 12;
   public static final int MINUS = 10;
   public static final int error = 1;
-  public static final int RIGHTBRACE = 23;
-  public static final int LEFTBRACE = 22;
-  public static final int RIGHTPAREN = 21;
-  public static final int LEFTPAREN = 20;
+  public static final int RIGHTBRACE = 22;
+  public static final int LEFTBRACE = 21;
+  public static final int RIGHTPAREN = 20;
+  public static final int LEFTPAREN = 19;
   public static final int VOID = 4;
-  public static final int LESS = 15;
+  public static final int LESS = 14;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -49,7 +49,6 @@ public class sym {
   "MINUS",
   "TIMES",
   "DIVIDE",
-  "SEMI",
   "COMMA",
   "LESS",
   "GREATER",
@@ -60,6 +59,7 @@ public class sym {
   "RIGHTPAREN",
   "LEFTBRACE",
   "RIGHTBRACE",
+  "SEMI",
   "IDENT",
   "CHARACTER",
   "NUMBER"

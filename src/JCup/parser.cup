@@ -60,17 +60,15 @@ terminal RETURN;
 
 /* ----------Operadores e pontuação---------*/
 terminal PLUS, MINUS, TIMES, DIVIDE;
-terminal SEMI;
 terminal COMMA;
 terminal LESS, GREATER;
 terminal EQUALS, NOTEQUALS;
 terminal EQUAL;
 
 /* ----------Delimitadores--------*/
-terminal LEFTPAREN;
-terminal RIGHTPAREN;
-terminal LEFTBRACE;
-terminal RIGHTBRACE;
+terminal LEFTPAREN, RIGHTPAREN;
+terminal LEFTBRACE, RIGHTBRACE;
+terminal SEMI;
 
 /* ----------Tokens Com Valor--------*/
 terminal IDENT, CHARACTER, NUMBER;

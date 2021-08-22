@@ -1,4 +1,5 @@
 package JFlex;
+/* ------------------------------Declaração de bibliotecas---------------------------------- */
 import java_cup.runtime.*;
 import JCup.*;
 
@@ -64,22 +65,26 @@ Comentario = "$"[^\n]*
 // String = [\"][^\n\"]+[\"]
 
 
-
-
 %%
 /* ------------------------Regras do scanner---------------------- */
 
-    /* Print the token found that was declared in the class sym and then
-       return it. */
+     /*----------Definição dos Tokens----------*/
+
+    /* Imprime o token encontrado que foi declarado na classe sym e retorna. */
    
-    ";"      { print_token("; "); return symbol(sym.SEMI);}
+   /* ----------Tipos (Também São Palavras Reservadas)---------*/
     "char"   { print_token("char "); return symbol(sym.CHAR);}
     "int"    { print_token("int "); return symbol(sym.INT);}
     "void"   { print_token("void "); return symbol(sym.VOID);}
+
+   /* ----------Delimitadores---------*/
     "("      { print_token("( "); return symbol(sym.LEFTPAREN);}
     ")"      { print_token(") "); return symbol(sym.RIGHTPAREN);}
     "{"      { print_token("{ "); return symbol(sym.LEFTBRACE);}
     "}"      { print_token("} "); return symbol(sym.RIGHTBRACE);}
+    ";"      { print_token("; "); return symbol(sym.SEMI);}
+
+   /* ----------Operadores---------*/
     ","      { print_token(", "); return symbol(sym.COMMA);}
     "<"      { print_token("< "); return symbol(sym.LESS);}
     ">"      { print_token("> "); return symbol(sym.GREATER);}
@@ -90,18 +95,30 @@ Comentario = "$"[^\n]*
     "-"      { print_token("- "); return symbol(sym.MINUS);}
     "*"      { print_token("* "); return symbol(sym.TIMES);}
     "/"      { print_token("/ "); return symbol(sym.DIVIDE);}
+
+   /* ----------Palavras Reservadas---------*/
     "if"     { print_token("if "); return symbol(sym.IF);}
     "while"  { print_token("while "); return symbol(sym.WHILE);}
     "return" { print_token("return "); return symbol(sym.RETURN);}
     "show"  { print_token("show "); return symbol(sym.SHOW);}
      
+     /*----------Comentário e Espaço em Branco----------*/
     {Comentario}     { /* ignore */ }
     {WhiteSpace}     { /* ignore */ }
+
+   /* ----------Char Literal---------- */
     {Character} { print_token(yytext()); return symbol(sym.CHARACTER);}
+
+   /* ----------Int Literal---------- */
     {Number}    { print_token(yytext()); return symbol(sym.NUMBER);}
+
+    /* ----------Identificador---------- */
     {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 
     
+    /*---------Final do Arquivo---------*/
     <<EOF>> { print_token("<<EOF>>"); return symbol(sym.EOF);}   
-    . { throw new Error("Illegal character <"+yytext()+">"); }
+    
+    /*---------Retorna erro léxico---------*/
+    . { throw new Error("\033[0;31m"+"Illegal character <"+yytext()+">"+" in line "+(yyline+1)+", column "+(yycolumn+1)+"\033[0m"); }
 
    

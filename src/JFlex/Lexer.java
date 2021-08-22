@@ -3,6 +3,7 @@
 // source: lexer.flex
 
 package JFlex;
+/* ------------------------------Declaração de bibliotecas---------------------------------- */
 import java_cup.runtime.*;
 import JCup.*;
 
@@ -734,7 +735,7 @@ public class Lexer implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { throw new Error("Illegal character <"+yytext()+">");
+            { throw new Error("\033[0;31m"+"Illegal character <"+yytext()+">"+" in line "+(yyline+1)+", column "+(yycolumn+1)+"\033[0m");
             }
             // fall through
           case 28: break;
