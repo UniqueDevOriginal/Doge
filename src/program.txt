@@ -1,0 +1,7 @@
+int sum (int a, int b){
+    
+}
+
+int main (){
+    sum (4+8, 3*2, 4, 9/2);
+}
