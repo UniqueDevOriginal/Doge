@@ -5,7 +5,10 @@ int sum (int a, int b){
 int main (){
     char test;
     int num1;
-    if(){
+    if(2>2){
+
+    }
+    while(3!=4){
         
     }
 }

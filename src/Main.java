@@ -6,7 +6,6 @@ import JFlex.*;
    
 public class Main {
   static public void main(String argv[]) {    
-   
     /* Start the parser */
     try {
       // new FileReader(testFile)
@@ -14,6 +13,7 @@ public class Main {
       Lexer lexedInput = new Lexer( new FileReader(testFile));
       parser p = new parser(lexedInput);
       p.parse();
+ 
       // E result = (E) p.parse().value;
       // System.out.println();
       // System.out.println();

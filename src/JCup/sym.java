@@ -8,21 +8,26 @@ package JCup;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int WHILE = 12;
-  public static final int INT = 4;
   public static final int IDENT = 3;
-  public static final int SEMI = 2;
-  public static final int EOF = 0;
-  public static final int IF = 11;
-  public static final int error = 1;
-  public static final int COMMA = 6;
-  public static final int PRINT = 13;
-  public static final int RIGHTPAREN = 8;
-  public static final int LEFTPAREN = 7;
-  public static final int RETURN = 14;
-  public static final int RIGHTBRACE = 10;
-  public static final int LEFTBRACE = 9;
+  public static final int INT = 4;
   public static final int CHAR = 5;
+  public static final int SEMI = 2;
+  public static final int WHILE = 13;
+  public static final int RETURN = 15;
+  public static final int GREATER = 17;
+  public static final int IF = 12;
+  public static final int NOTEQUALS = 19;
+  public static final int EQUALS = 18;
+  public static final int COMMA = 6;
+  public static final int EOF = 0;
+  public static final int NUMBER = 7;
+  public static final int PRINT = 14;
+  public static final int error = 1;
+  public static final int LEFTBRACE = 10;
+  public static final int RIGHTBRACE = 11;
+  public static final int LEFTPAREN = 8;
+  public static final int RIGHTPAREN = 9;
+  public static final int LESS = 16;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -31,6 +36,7 @@ public class sym {
   "INT",
   "CHAR",
   "COMMA",
+  "NUMBER",
   "LEFTPAREN",
   "RIGHTPAREN",
   "LEFTBRACE",
@@ -38,7 +44,11 @@ public class sym {
   "IF",
   "WHILE",
   "PRINT",
-  "RETURN"
+  "RETURN",
+  "LESS",
+  "GREATER",
+  "EQUALS",
+  "NOTEQUALS"
   };
 }
 
