@@ -131,7 +131,7 @@ arith_op      ::= PLUS
                     | TIMES 
                     | DIVIDE
                     ;
-assing_o     ::= EQUAL;
+assing_op   ::= EQUAL;
 bin_op        ::= rel_op 
                     | eq_op
                     ;    
