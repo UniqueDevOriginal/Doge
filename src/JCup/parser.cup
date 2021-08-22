@@ -56,7 +56,7 @@ parser code {:
 terminal SEMI, IDENT, INT, CHAR, COMMA, NUMBER, CHARACTER;
 terminal LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
 terminal IF, WHILE, PRINT, RETURN;
-// terminal PLUS, MINUS, TIMES, DIVIDE, EQUAL;
+terminal PLUS, MINUS, TIMES, DIVIDE;
 terminal LESS, GREATER, EQUALS, NOTEQUALS, EQUAL;
 
 /* ---------------------------------Não-terminais------------------------ */
@@ -65,14 +65,14 @@ non terminal program, decl, type_id, id;
 non terminal var_decl, var, var_list;
 non terminal argument, block, function_decl, stmt, expr, block_stmt;
 non terminal bin_op, rel_op, eq_op, assing_op;
-non terminal literal;
+non terminal literal, arith_op, call, actuals;
 // non terminal program, decl, var_decl, function_decl, var, type_id, arg_list, block, actuals, rel_op, expr, location, literal;
 // non terminal call, id, stmt, int_literal, decimal_literal, char_literal, binop, arith_op, eq_op, digit, AssingOp;
 
 /* ---------------------------------Preedencia dos terminais-------------------------------- */
 
-//   precedence left PLUS, MINUS;
-//   precedence left TIMES, DIVIDE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
 //   start with program;
 
 /* ---------------------------------Declaração da gramatica--------------------------------- */
@@ -92,9 +92,14 @@ block           ::= LEFTBRACE block_stmt RIGHTBRACE;
 block_stmt      ::= var_decl block_stmt | stmt block_stmt | /* empty */;
 stmt            ::= IF LEFTPAREN expr RIGHTPAREN block 
                     | WHILE LEFTPAREN expr RIGHTPAREN block 
-                    | id assing_op literal SEMI;
-expr            ::= NUMBER bin_op NUMBER | id bin_op id | NUMBER bin_op id| id bin_op NUMBER;
+                    | id assing_op literal SEMI
+                    | call;
+call            ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
+actuals         ::= literal | literal COMMA actuals | expr COMMA actuals | expr | /* empty */;
+expr            ::= NUMBER bin_op NUMBER | id bin_op id | NUMBER bin_op id | id bin_op NUMBER |
+                    NUMBER arith_op NUMBER;
 literal         ::= NUMBER | CHARACTER;
+arith_op        ::= PLUS | MINUS | TIMES | DIVIDE;
 assing_op       ::= EQUAL;
 bin_op          ::= rel_op | eq_op;    
 rel_op          ::= LESS | GREATER;

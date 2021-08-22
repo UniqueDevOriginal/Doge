@@ -3,12 +3,5 @@ int sum (int a, int b){
 }
 
 int main (){
-    char test;
-    int num1;
-    if(4>a){
-        int b;
-    }
-    while(a!=b){
-        
-    }
+    sum (4+8, 3*2, 4, 9/2);
 }

@@ -84,6 +84,10 @@ Id = {Alpha}{AlphaNum}*
     "="      { print_token("= "); return symbol(sym.EQUAL);}
     "=="     { print_token("== "); return symbol(sym.EQUALS);}
     "!="     { print_token("!= "); return symbol(sym.NOTEQUALS);}
+    "+"      { print_token("+ "); return symbol(sym.PLUS);}
+    "-"      { print_token("- "); return symbol(sym.MINUS);}
+    "*"      { print_token("* "); return symbol(sym.TIMES);}
+    "/"      { print_token("/ "); return symbol(sym.DIVIDE);}
     "if"     { print_token("if "); return symbol(sym.IF);}
     "while"  { print_token("while "); return symbol(sym.WHILE);}
    //  "print"  { print_token("print "); return symbol(sym.PRINT);}

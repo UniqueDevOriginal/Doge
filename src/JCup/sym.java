@@ -8,28 +8,32 @@ package JCup;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
+  public static final int TIMES = 19;
   public static final int IDENT = 3;
+  public static final int PLUS = 17;
   public static final int INT = 4;
-  public static final int EQUAL = 21;
+  public static final int EQUAL = 25;
   public static final int CHAR = 5;
   public static final int SEMI = 2;
   public static final int CHARACTER = 8;
   public static final int WHILE = 14;
   public static final int RETURN = 16;
-  public static final int GREATER = 18;
+  public static final int GREATER = 22;
   public static final int IF = 13;
-  public static final int NOTEQUALS = 20;
-  public static final int EQUALS = 19;
+  public static final int NOTEQUALS = 24;
+  public static final int EQUALS = 23;
   public static final int COMMA = 6;
   public static final int EOF = 0;
   public static final int NUMBER = 7;
+  public static final int DIVIDE = 20;
+  public static final int MINUS = 18;
   public static final int PRINT = 15;
   public static final int error = 1;
   public static final int LEFTBRACE = 11;
   public static final int RIGHTBRACE = 12;
   public static final int LEFTPAREN = 9;
   public static final int RIGHTPAREN = 10;
-  public static final int LESS = 17;
+  public static final int LESS = 21;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -48,6 +52,10 @@ public class sym {
   "WHILE",
   "PRINT",
   "RETURN",
+  "PLUS",
+  "MINUS",
+  "TIMES",
+  "DIVIDE",
   "LESS",
   "GREATER",
   "EQUALS",
