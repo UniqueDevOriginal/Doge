@@ -49,96 +49,132 @@ parser code {:
 :};
 
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
+/* ----------Palavras Reservadas----------*/
+terminal CHAR;
+terminal INT;
+terminal VOID;
+terminal SHOW;
+terminal IF;
+terminal WHILE;
+terminal RETURN;
 
-terminal SEMI, IDENT, INT, CHAR, COMMA, NUMBER, CHARACTER, VOID, SHOW;
-terminal LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
-terminal IF, WHILE, RETURN;
+/* ----------Operadores e pontuação---------*/
 terminal PLUS, MINUS, TIMES, DIVIDE;
-terminal LESS, GREATER, EQUALS, NOTEQUALS, EQUAL;
+terminal SEMI;
+terminal COMMA;
+terminal LESS, GREATER;
+terminal EQUALS, NOTEQUALS;
+terminal EQUAL;
+
+/* ----------Delimitadores--------*/
+terminal LEFTPAREN;
+terminal RIGHTPAREN;
+terminal LEFTBRACE;
+terminal RIGHTBRACE;
+
+/* ----------Tokens Com Valor--------*/
+terminal IDENT, CHARACTER, NUMBER;
 
 /* ---------------------------------Não-terminais------------------------ */
 
-non terminal program, decl, type_id, id;
-non terminal var_decl, var, var_list;
-non terminal argument, block, function_decl, stmt, expr, block_stmt, return_val;
-non terminal bin_op, rel_op, eq_op, assing_op;
-non terminal literal, arith_op, call, actuals;
+non terminal Program ;
+non terminal Decl ;
+non terminal TypeId ; 
+non terminal Id ;
+non terminal VarDecl ;
+non terminal Var ;
+non terminal VarList ;
+non terminal Argument ;
+non terminal Block ; 
+non terminal FunctionDecl ;
+non terminal Stmt ;
+non terminal Expr ;
+non terminal BlockStmt ;
+non terminal ReturnValue ;
+non terminal BinOp ; 
+non terminal RelOp ;
+non terminal EqOp ;
+non terminal AssingOp ;
+non terminal Literal ;  
+non terminal ArithOp ; 
+non terminal Call ;
+non terminal Actuals ;
 
-/* ---------------------------------Preedencia dos terminais-------------------------------- */
+/* ---------------------------------Precedencia dos Terminais-------------------------------- */
 
 precedence left PLUS, MINUS;
 precedence left TIMES, DIVIDE;
 
-/* -----------------------------------------Gramatica--------------------------------------- */
+/* -----------------------------------------Regras de Produção Gramatica Em EBNF--------------------------------------- */
 
-program 	::= decl;
-decl            ::= var_decl decl 
-                    | function_decl decl 
-                    | /* empty */
-                    ;
-var_decl     ::= var SEMI 
-                    | var assing_op literal SEMI
-                    ;
-var              ::= type_id id;
-var_list       ::= var COMMA var_list 
-                    | var
-                    ;
-type_id       ::= INT 
-                    | CHAR
-                    ;
-id                ::= IDENT;
-function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block
-                    | VOID id LEFTPAREN argument RIGHTPAREN block
-                    ;
-argument    ::= var_list 
-                    | /* empty */
-                    ;
-block          ::= LEFTBRACE block_stmt RIGHTBRACE;
-block_stmt ::= var_decl block_stmt 
-                    | stmt block_stmt 
-                    | /* empty */
-                    ;
-stmt            ::= IF LEFTPAREN expr RIGHTPAREN block 
-                    | WHILE LEFTPAREN expr RIGHTPAREN block 
-                    | id assing_op literal SEMI
-                    | SHOW LEFTPAREN id RIGHTPAREN SEMI
-                    | call
-                    | RETURN return_val SEMI
-                    ;
-return_val   ::= expr 
-                    | id 
-                    | literal 
-                    | /* empty */
-                    ;
-call             ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
-actuals        ::= literal 
-                    | literal COMMA actuals 
-                    | expr COMMA actuals 
-                    | expr 
-                    | /* empty */
-                    ;
-expr            ::= NUMBER bin_op NUMBER 
-                    | id bin_op id 
-                    | NUMBER bin_op id 
-                    | id bin_op NUMBER 
-                    | NUMBER arith_op NUMBER
-                    ;
-literal          ::= NUMBER 
-                    | CHARACTER
-                    ;
-arith_op      ::= PLUS 
-                    | MINUS 
-                    | TIMES 
-                    | DIVIDE
-                    ;
-assing_op   ::= EQUAL;
-bin_op        ::= rel_op 
-                    | eq_op
-                    ;    
-rel_op         ::= LESS 
-                    | GREATER
-                    ;
-eq_op         ::= EQUALS 
-                    | NOTEQUALS
-                    ;
+Program     	     ::= Decl;
+Decl                    ::= VarDecl Decl 
+                            | FunctionDecl Decl 
+                            | /* empty */
+                            ;
+VarDecl               ::= Var SEMI 
+                            | Var AssingOp Literal SEMI
+                            ;
+Var                      ::= TypeId Id;
+VarList                ::= Var COMMA VarList 
+                            | Var
+                            ;
+TypeId                ::= INT 
+                            | CHAR
+                            ;
+Id                        ::= IDENT;
+FunctionDecl      ::= TypeId Id LEFTPAREN Argument RIGHTPAREN Block
+                            | VOID Id LEFTPAREN Argument RIGHTPAREN Block
+                            ;
+Argument           ::= VarList 
+                            | /* empty */
+                            ;
+Block                  ::= LEFTBRACE BlockStmt RIGHTBRACE;
+BlockStmt           ::= VarDecl BlockStmt 
+                            | Stmt BlockStmt 
+                            | /* empty */
+                            ;
+Stmt                   ::= IF LEFTPAREN Expr RIGHTPAREN Block 
+                            | WHILE LEFTPAREN Expr RIGHTPAREN Block 
+                            | Id AssingOp Literal SEMI
+                            | SHOW LEFTPAREN Id RIGHTPAREN SEMI
+                            | Call
+                            | RETURN ReturnValue SEMI
+                            ;
+ReturnValue        ::= Expr 
+                            | Id 
+                            | Literal 
+                            | /* empty */
+                            ;
+Call                     ::= Id LEFTPAREN Actuals RIGHTPAREN SEMI;
+Actuals                ::= Literal 
+                            | Literal COMMA Actuals 
+                            | Expr COMMA Actuals 
+                            | Expr 
+                            | /* empty */
+                            ;
+Expr                    ::= NUMBER BinOp NUMBER 
+                            | Id BinOp Id 
+                            | NUMBER BinOp Id 
+                            | Id BinOp NUMBER 
+                            | NUMBER ArithOp NUMBER
+                            ;
+Literal                 ::= NUMBER 
+                            | CHARACTER
+                            ;
+ArithOp              ::= PLUS 
+                            | MINUS 
+                            | TIMES 
+                            | DIVIDE
+                            ;
+AssingOp            ::= EQUAL;
+BinOp                 ::= RelOp 
+                            | EqOp
+                            ;    
+RelOp                 ::= LESS 
+                            | GREATER
+                            ;
+EqOp                  ::= EQUALS 
+                            | NOTEQUALS
+                            ;
 

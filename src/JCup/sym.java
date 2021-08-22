@@ -8,49 +8,40 @@ package JCup;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int TIMES = 20;
-  public static final int IDENT = 3;
-  public static final int PLUS = 18;
-  public static final int INT = 4;
-  public static final int EQUAL = 26;
-  public static final int CHAR = 5;
-  public static final int SEMI = 2;
-  public static final int CHARACTER = 8;
-  public static final int WHILE = 16;
-  public static final int SHOW = 10;
-  public static final int RETURN = 17;
-  public static final int GREATER = 23;
-  public static final int IF = 15;
-  public static final int NOTEQUALS = 25;
-  public static final int EQUALS = 24;
-  public static final int COMMA = 6;
+  public static final int TIMES = 11;
+  public static final int IDENT = 24;
+  public static final int PLUS = 9;
+  public static final int INT = 3;
+  public static final int EQUAL = 19;
+  public static final int CHARACTER = 25;
+  public static final int CHAR = 2;
+  public static final int SEMI = 13;
+  public static final int WHILE = 7;
+  public static final int SHOW = 5;
+  public static final int RETURN = 8;
+  public static final int GREATER = 16;
+  public static final int IF = 6;
+  public static final int NOTEQUALS = 18;
+  public static final int EQUALS = 17;
+  public static final int COMMA = 14;
+  public static final int NUMBER = 26;
   public static final int EOF = 0;
-  public static final int NUMBER = 7;
-  public static final int DIVIDE = 21;
-  public static final int MINUS = 19;
+  public static final int DIVIDE = 12;
+  public static final int MINUS = 10;
   public static final int error = 1;
-  public static final int LEFTBRACE = 13;
-  public static final int RIGHTBRACE = 14;
-  public static final int LEFTPAREN = 11;
-  public static final int RIGHTPAREN = 12;
-  public static final int VOID = 9;
-  public static final int LESS = 22;
+  public static final int RIGHTBRACE = 23;
+  public static final int LEFTBRACE = 22;
+  public static final int RIGHTPAREN = 21;
+  public static final int LEFTPAREN = 20;
+  public static final int VOID = 4;
+  public static final int LESS = 15;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "SEMI",
-  "IDENT",
-  "INT",
   "CHAR",
-  "COMMA",
-  "NUMBER",
-  "CHARACTER",
+  "INT",
   "VOID",
   "SHOW",
-  "LEFTPAREN",
-  "RIGHTPAREN",
-  "LEFTBRACE",
-  "RIGHTBRACE",
   "IF",
   "WHILE",
   "RETURN",
@@ -58,11 +49,20 @@ public class sym {
   "MINUS",
   "TIMES",
   "DIVIDE",
+  "SEMI",
+  "COMMA",
   "LESS",
   "GREATER",
   "EQUALS",
   "NOTEQUALS",
-  "EQUAL"
+  "EQUAL",
+  "LEFTPAREN",
+  "RIGHTPAREN",
+  "LEFTBRACE",
+  "RIGHTBRACE",
+  "IDENT",
+  "CHARACTER",
+  "NUMBER"
   };
 }
 

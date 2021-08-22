@@ -45,6 +45,7 @@ import JCup.*;
     }
 %}
 
+/*Faz com que o JFlex feche o fluxo de entrada no final do arquivo.*/
 %eofclose
 
 /*

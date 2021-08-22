@@ -1,4 +1,0 @@
-void main (){
-    show(b);
-    return 2;
-}
