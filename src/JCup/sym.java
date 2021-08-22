@@ -8,29 +8,55 @@ package JCup;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int INT = 8;
-  public static final int IDENT = 7;
-  public static final int MAIN = 10;
-  public static final int SEMI = 6;
+  public static final int TIMES = 17;
+  public static final int IDENT = 3;
+  public static final int PLUS = 15;
+  public static final int INT = 4;
+  public static final int EQUAL = 19;
+  public static final int NOTEQUAL = 23;
+  public static final int CHAR = 5;
+  public static final int SEMI = 2;
+  public static final int WHILE = 12;
+  public static final int RETURN = 14;
+  public static final int GREATER = 21;
+  public static final int IF = 11;
+  public static final int EQUALS = 22;
   public static final int EOF = 0;
+  public static final int DIVIDE = 18;
+  public static final int MAIN = 6;
+  public static final int MINUS = 16;
+  public static final int PRINT = 13;
   public static final int error = 1;
-  public static final int LEFTPAREN = 2;
-  public static final int RIGHTPAREN = 3;
-  public static final int CHAR = 9;
-  public static final int RIGHTBRACE = 5;
-  public static final int LEFTBRACE = 4;
+  public static final int LEFTBRACE = 9;
+  public static final int RIGHTBRACE = 10;
+  public static final int LEFTPAREN = 7;
+  public static final int RIGHTPAREN = 8;
+  public static final int LESS = 20;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "LEFTPAREN",
-  "RIGHTPAREN",
-  "LEFTBRACE",
-  "RIGHTBRACE",
   "SEMI",
   "IDENT",
   "INT",
   "CHAR",
-  "MAIN"
+  "MAIN",
+  "LEFTPAREN",
+  "RIGHTPAREN",
+  "LEFTBRACE",
+  "RIGHTBRACE",
+  "IF",
+  "WHILE",
+  "PRINT",
+  "RETURN",
+  "PLUS",
+  "MINUS",
+  "TIMES",
+  "DIVIDE",
+  "EQUAL",
+  "LESS",
+  "GREATER",
+  "EQUALS",
+  "NOTEQUAL"
   };
 }
 

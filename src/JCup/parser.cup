@@ -55,23 +55,16 @@ parser code {:
 
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 
-
-/*Terminais - ('; - SEMI', '( - LEFTPARAN', ') -  RIGHTPARAN', '} - LEFTBRACE', '{ - RIGHTBRACE', '" - QUOTATION'
-               '+ - PLUS', '- - MINUS', '* - TIMES', '/ - DIVIDE', '= - EQUALS', 
-               '< - LESS', '> - GREATER', '== - EQUALSE', '!= - NOTEQUALS',
-               'if - IF','while - WHILE', 'print - PRINT', 'return - RETURN',
-               'int - INT', 'char - CHAR',
-               'a,b...z - AB...Z', '0,1..9 - 12...9',---------------------------------------- */
-
-terminal   LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
-// terminal   PLUS, MINUS, TIMES, DIVIDE, EQUALS;
-// terminal   LESS, GREATER, EQUALSE, NOTEQUALS;
-// terminal   IF, WHILE, PRINT, RETURN;
-// terminal   INT, CHAR;
 terminal SEMI, IDENT, INT, CHAR, MAIN;
-/* ------------Não-terminais------------------------ */
+terminal LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
+terminal IF, WHILE, PRINT, RETURN;
+terminal PLUS, MINUS, TIMES, DIVIDE, EQUAL;
+terminal LESS, GREATER, EQUALS, NOTEQUAL;
+
+/* ---------------------------------Não-terminais------------------------ */
 
 non terminal program, decl, var_decl, var, type_id, id;
+non terminal argument, block, stmt, location, assing_op, function_decl;
 // non terminal program, decl, var_decl, function_decl, var, type_id, arg_list, block, actuals, rel_op, expr, location, literal;
 // non terminal call, id, stmt, int_literal, decimal_literal, char_literal, binop, arith_op, eq_op, digit, AssingOp;
 
@@ -85,12 +78,16 @@ non terminal program, decl, var_decl, var, type_id, id;
 
 /* -----------------------------------------Gramatica--------------------------------------- */
 
-program 	       ::= MAIN LEFTPAREN RIGHTPAREN LEFTBRACE decl RIGHTBRACE;
-decl            ::= var_decl | ;
+program 	       ::= decl;
+decl            ::= var_decl | function_decl ;
 var_decl        ::= var SEMI;
+function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block;
 var             ::= type_id id;
 type_id         ::= INT | CHAR;
 id              ::= IDENT;
+argument        ::= var ;
+block           ::= LEFTBRACE var_decl RIGHTBRACE;
+
 
 // decl            ::= var_decl | function_decl;
 // var_decl        ::= var SEMI;

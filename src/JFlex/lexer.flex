@@ -56,6 +56,7 @@ Id = {Alpha}{AlphaNum}*
 // String = [\"][^\n\"]+[\"]
 
 
+
 %%
 /* ------------------------Regras do scanner---------------------- */
 
@@ -73,6 +74,9 @@ Id = {Alpha}{AlphaNum}*
     "{"    { System.out.print(" { "); return symbol(sym.LEFTBRACE);}
     "}"    { System.out.print(" } "); return symbol(sym.RIGHTBRACE);}
     "main" { System.out.print(" main "); return symbol(sym.MAIN);}
+
+    
+    
     
     {WhiteSpace} { }
     {Id} { System.out.println(yytext());

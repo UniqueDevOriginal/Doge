@@ -56,6 +56,7 @@ Id = {Alpha}{AlphaNum}*
 // String = [\"][^\n\"]+[\"]
 
 
+
 %%
 /* ------------------------Regras do scanner---------------------- */
 
@@ -68,10 +69,30 @@ Id = {Alpha}{AlphaNum}*
     ";"    { System.out.print(" ; "); return symbol(sym.SEMI);}
     "char" { System.out.print(" char "); return symbol(sym.CHAR);}
     "int"  { System.out.print(" int "); return symbol(sym.INT);}
+    "("    { System.out.print(" ( "); return symbol(sym.LEFTPAREN);}
+    ")"    { System.out.print(" ) "); return symbol(sym.RIGHTPAREN);}
+    "{"    { System.out.print(" { "); return symbol(sym.LEFTBRACE);}
+    "}"    { System.out.print(" } "); return symbol(sym.RIGHTBRACE);}
+    "main" { System.out.print(" main "); return symbol(sym.MAIN);}
+   //  "="    { System.out.print(" = "); return symbol(sym.EQUAL);}
+   //  "=="   { System.out.print(" == "); return symbol(sym.EQUALS);}
+   //  "!="   { System.out.print(" != "); return symbol(sym.NOTEQUAL);}
+   //  ">"    { System.out.print(" > "); return symbol(sym.GREATER);}
+   //  "<"    { System.out.print(" < "); return symbol(sym.LESS);}
+   //  "+"    { System.out.print(" + "); return symbol(sym.PLUS);}
+   //  "-"    { System.out.print(" - "); return symbol(sym.MINUS);}
+   //  "*"    { System.out.print(" * "); return symbol(sym.TIMES);}
+   //  "/"    { System.out.print(" / "); return symbol(sym.DIVIDE);}
+   //  "if"   { System.out.print(" if "); return symbol(sym.IF);}
+   //  "while"{ System.out.print(" while "); return symbol(sym.WHILE);}
+   //  "return"{ System.out.print(" return "); return symbol(sym.RETURN);}
+   //  "print"{ System.out.print(" print "); return symbol(sym.PRINT);}
+    
+    
     
     {WhiteSpace} { }
     {Id} { System.out.println(yytext());
-           return symbol(sym.ID, new String(yytext));} 
+           return symbol(sym.IDENT, new String(yytext()));} 
 
     <<EOF>> { System.out.println("<<EOF>>");
                return symbol(sym.EOF);}           
