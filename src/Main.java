@@ -8,13 +8,16 @@ public class Main {
   static public void main(String argv[]) {    
     /* Start the parser */
     try {
+      // new FileReader(testFile)
     	String testFile = "src\\program.doge";
-      Lexer lexedInput = new Lexer(new FileReader(testFile));
+      Lexer lexedInput = new Lexer( new FileReader(testFile));
       parser p = new parser(lexedInput);
-      E result = (E) p.parse().value;
-      System.out.println();
-      System.out.println();
-      result.print("",true);
+      p.parse();
+ 
+      // E result = (E) p.parse().value;
+      // System.out.println();
+      // System.out.println();
+      // result.print("",true);
       
 @SuppressWarnings("unused")
 int i = 0;   
