@@ -9,7 +9,7 @@ public class Main {
     /* Start the parser */
     try {
       // new FileReader(testFile)
-    	String testFile = "src\\program.txt";
+    	String testFile = "src\\program2.txt";
       Lexer lexedInput = new Lexer( new FileReader(testFile));
       parser p = new parser(lexedInput);
       p.parse();

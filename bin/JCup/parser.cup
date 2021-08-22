@@ -53,9 +53,9 @@ parser code {:
 
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 
-terminal SEMI, IDENT, INT, CHAR, COMMA, NUMBER, CHARACTER;
+terminal SEMI, IDENT, INT, CHAR, COMMA, NUMBER, CHARACTER, VOID, SHOW;
 terminal LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
-terminal IF, WHILE, PRINT, RETURN;
+terminal IF, WHILE, RETURN;
 terminal PLUS, MINUS, TIMES, DIVIDE;
 terminal LESS, GREATER, EQUALS, NOTEQUALS, EQUAL;
 
@@ -63,7 +63,7 @@ terminal LESS, GREATER, EQUALS, NOTEQUALS, EQUAL;
 
 non terminal program, decl, type_id, id;
 non terminal var_decl, var, var_list;
-non terminal argument, block, function_decl, stmt, expr, block_stmt;
+non terminal argument, block, function_decl, stmt, expr, block_stmt, return_val;
 non terminal bin_op, rel_op, eq_op, assing_op;
 non terminal literal, arith_op, call, actuals;
 // non terminal program, decl, var_decl, function_decl, var, type_id, arg_list, block, actuals, rel_op, expr, location, literal;
@@ -86,14 +86,18 @@ var             ::= type_id id;
 var_list        ::= var COMMA var_list | var;
 type_id         ::= INT | CHAR;
 id              ::= IDENT;
-function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block;
+function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block
+                    | VOID id LEFTPAREN argument RIGHTPAREN block;
 argument        ::= var_list | /* empty */;
 block           ::= LEFTBRACE block_stmt RIGHTBRACE;
 block_stmt      ::= var_decl block_stmt | stmt block_stmt | /* empty */;
 stmt            ::= IF LEFTPAREN expr RIGHTPAREN block 
                     | WHILE LEFTPAREN expr RIGHTPAREN block 
                     | id assing_op literal SEMI
-                    | call;
+                    | SHOW LEFTPAREN id RIGHTPAREN SEMI
+                    | call
+                    | RETURN return_val SEMI;
+return_val      ::= expr | id | literal | /* empty */;
 call            ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
 actuals         ::= literal | literal COMMA actuals | expr COMMA actuals | expr | /* empty */;
 expr            ::= NUMBER bin_op NUMBER | id bin_op id | NUMBER bin_op id | id bin_op NUMBER |

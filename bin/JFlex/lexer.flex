@@ -59,7 +59,7 @@ Digit = [0-9]
 Number = [0-9]|[1-9][0-9]*
 AlphaNum = [{Alpha}|{Digit}]
 Id = {Alpha}{AlphaNum}*
-// Comentario = "$"[^\n]*
+Comentario = "$"[^\n]*
 // String = [\"][^\n\"]+[\"]
 
 
@@ -74,6 +74,7 @@ Id = {Alpha}{AlphaNum}*
     ";"      { print_token("; "); return symbol(sym.SEMI);}
     "char"   { print_token("char "); return symbol(sym.CHAR);}
     "int"    { print_token("int "); return symbol(sym.INT);}
+    "void"   { print_token("void "); return symbol(sym.VOID);}
     "("      { print_token("( "); return symbol(sym.LEFTPAREN);}
     ")"      { print_token(") "); return symbol(sym.RIGHTPAREN);}
     "{"      { print_token("{ "); return symbol(sym.LEFTBRACE);}
@@ -90,9 +91,10 @@ Id = {Alpha}{AlphaNum}*
     "/"      { print_token("/ "); return symbol(sym.DIVIDE);}
     "if"     { print_token("if "); return symbol(sym.IF);}
     "while"  { print_token("while "); return symbol(sym.WHILE);}
-   //  "print"  { print_token("print "); return symbol(sym.PRINT);}
-   //  "return" { print_token("return "); return symbol(sym.RETURN);}
+    "return" { print_token("return "); return symbol(sym.RETURN);}
+    "show"  { print_token("show "); return symbol(sym.SHOW);}
      
+    {Comentario}     { /* ignore */ }
     {WhiteSpace}     { /* ignore */ }
     {Character} { print_token(yytext()); return symbol(sym.CHARACTER);}
     {Number}    { print_token(yytext()); return symbol(sym.NUMBER);}
@@ -100,29 +102,5 @@ Id = {Alpha}{AlphaNum}*
     
     <<EOF>> { print_token("<<EOF>>"); return symbol(sym.EOF);}   
     . { throw new Error("Illegal character <"+yytext()+">"); }
-
-    
-   //   {LineTerminator}    { System.out.print(yytext());
-   //                       return symbol(sym.NEWLINE, new Integer(yytext()));}
-
-   //  /* If an integer is found print it out, return the token NUMBER
-   //     that represents an integer and the value of the integer that is
-   //     held in the string yytext which will get turned into an integer
-   //     before returning */
-   //  {dec_int_lit}      { System.out.print(yytext());
-   //                       return symbol(sym.INT, new Integer(yytext())); }
-
-   //  /* If an identifier is found print it out, return the token ID
-   //     that represents an identifier and the default value one that is
-   //     given to all identifiers. */
-   //  {dec_int_id}       { System.out.print(yytext());
-   //                       return symbol(sym.ID, new Integer(1));}
-
-   //  /* Don't do anything if whitespace is found */
-   //  {WhiteSpace}       { /* just skip what was found, do nothing */ }
-
-
-/* No token was found for the input so through an error.  Print out an
-   Illegal character message with the illegal character that was found. */
 
    
