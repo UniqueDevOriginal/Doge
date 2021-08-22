@@ -1,5 +1,135 @@
-/* ------------------------------Declaração de bibliotecas---------------------------------- */
+// /* ------------------------------Declaração de bibliotecas---------------------------------- */
 
+// package JCup;
+// import java_cup.runtime.*;
+// import JCup.ParserTokens.*;
+
+// /* Identificar erro no parser, mostra linha e coluna do erro */
+// parser code {:
+//     /* Sobrescrever o método report_error para que ele exiba a linha e
+//         coluna de onde ocorreu o erro na entrada, bem como no
+//         razão para o erro que é passado para o método no
+//         String 'mensagem'.  */
+//     public void report_error(String message, Object info) {
+
+//         /* Crie um StringBuilder chamado 'm' com a string 'Erro' nele. */
+//         StringBuilder m = new StringBuilder("Error");
+
+//         /* Verifique se as informações passadas para o método são 
+//         do tipo java_cup.runtime.Symbol. */
+//         if (info instanceof java_cup.runtime.Symbol) {
+//             /* Declara um objeto java_cup.runtime.Symbol 's' com as
+//                 informações  que está sendo convertida. */
+//             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+
+//             /* Verifica se a linha da entrada >= 0 */
+//             if (s.left >= 0) {
+//                 /* Adiciona msg de erro na linha do erro da entrada. */
+//                 m.append(" in line "+(s.left+1));
+//                 /*  Verifica se a coluna da entrada >= 0 */
+//                 if (s.right >= 0)
+//                     /* Adiciona msg de erro na coluna do erro da entrada. */
+//                     m.append(", column "+(s.right+1));
+//             }
+//         }
+
+//         /* Por fim adiciona a mensagem de erro na tela. */
+//         m.append(" : "+message);
+
+//         /* Imprime o conteudo de 'm' que contem a msg de erro, 
+//         com as informação de linha e coluna e a msg*/
+//         System.err.println(m);
+//     }
+
+//     /* Sobrescrever report_fatal_error para exibit linha e coluna do erro 
+//        alem da mensagem do erro, e termina a execução. */
+//     public void report_fatal_error(String message, Object info) {
+//         report_error(message, info);
+//         System.exit(1);
+//     }
+// :};
+
+
+
+// /* --------------------------Declaração de terminais e não-terminais------------------------ */
+
+// terminal SEMI, ID, INT, CHAR, COMMA, NUMBER, CHARACTER, VOID, SHOW;
+// terminal LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
+// terminal IF, WHILE, RETURN;
+// terminal PLUS, MINUS, TIMES, DIVIDE;
+// terminal LESS, GREATER, EQUALS, NOTEQUALS, EQUAL;
+
+// /* ---------------------------------Não-terminais------------------------ */
+
+
+// non terminal E     E;
+// non terminal T     T;
+// non terminal F     F;
+
+
+
+// /* ---------------------------------Preedencia dos terminais-------------------------------- */
+
+// precedence left PLUS, MINUS;
+// precedence left TIMES, DIVIDE;
+// //   start with program;
+
+// /* ---------------------------------Declaração da gramatica--------------------------------- */
+
+// /* -----------------------------------------Gramatica--------------------------------------- */
+
+// E ::= E:l PLUS T:r  {: RESULT = new PlusE(l,r); :} 
+//   | E:l MINUS T:r  {: RESULT = new MinusE(l,r); :} 
+//   | T:t {: RESULT = new TE(t); :} ;
+
+// T ::= T:l TIMES F:r {: RESULT = new MultiplyT(l,r); :} 
+//       | T:l DIVIDE F:r {: RESULT = new DivideT(l,r); :} 
+//       | F:f {: RESULT = new FT(f); :} ;
+
+// F ::= LEFTPAREN E:e RIGHTPAREN {: RESULT = new FBRACKET(e); :} 
+//       | INT:i {: RESULT = new INT(i); :}  
+//       | ID:s {: RESULT = new ID(s); :} ;
+
+
+// // program 	    ::= decl;
+// // decl            ::= var_decl decl | function_decl decl | /* empty */;
+// // var_decl        ::= var SEMI | var assing_op literal SEMI;
+// // var             ::= type_id id;
+// // var_list        ::= var COMMA var_list | var;
+// // type_id         ::= INT | CHAR;
+// // id              ::= IDENT;
+// // function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block
+// //                     | VOID id LEFTPAREN argument RIGHTPAREN block;
+// // argument        ::= var_list | /* empty */;
+// // block           ::= LEFTBRACE block_stmt RIGHTBRACE;
+// // block_stmt      ::= var_decl block_stmt | stmt block_stmt | /* empty */;
+// // stmt            ::= IF LEFTPAREN expr RIGHTPAREN block 
+// //                     | WHILE LEFTPAREN expr RIGHTPAREN block 
+// //                     | id assing_op literal SEMI
+// //                     | SHOW LEFTPAREN id RIGHTPAREN SEMI
+// //                     | call
+// //                     | RETURN return_val SEMI;
+// // return_val      ::= expr | id | literal | /* empty */;
+// // call            ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
+// // actuals         ::= literal | literal COMMA actuals | expr COMMA actuals | expr | /* empty */;
+// // expr            ::= expr:l bin_op NUMBER:r
+// //                     {: RESULT = new PlusE(l,r); :}
+// //                     // | id bin_op id 
+// //                     // | NUMBER bin_op id 
+// //                     // | id bin_op NUMBER 
+// //                     // | NUMBER arith_op NUMBER
+// //                     | NUMBER:n {: RESULT = new TE(n); :}
+// //                     ;
+// // literal         ::= NUMBER | CHARACTER;
+// // // arith_op        ::= PLUS | MINUS | TIMES | DIVIDE;
+// // // assing_op       ::= EQUAL;
+// // bin_op          ::= rel_op | eq_op;    
+// // // rel_op          ::= LESS | GREATER;
+// // // eq_op           ::= EQUALS | NOTEQUALS;
+
+/* ----------------------Preliminary Declarations Section--------------------*/
+
+/* Import the class java_cup.runtime.*  */
 package JCup;
 import java_cup.runtime.*;
 import JCup.ParserTokens.*;
@@ -49,61 +179,92 @@ parser code {:
     }
 :};
 
-
-
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 
-terminal SEMI, IDENT, INT, CHAR, COMMA, NUMBER, CHARACTER, VOID, SHOW;
+terminal SEMI, CHAR, COMMA, NUMBER, CHARACTER, VOID;
 terminal LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
 terminal IF, WHILE, RETURN;
 terminal PLUS, MINUS, TIMES, DIVIDE;
 terminal LESS, GREATER, EQUALS, NOTEQUALS, EQUAL;
 
-/* ---------------------------------Não-terminais------------------------ */
+terminal Integer   INT;
+terminal ID        ID;
 
-non terminal program, decl, type_id, id;
-non terminal var_decl, var, var_list;
-non terminal argument, block, function_decl, stmt, expr, block_stmt, return_val;
-non terminal bin_op, rel_op, eq_op, assing_op;
-non terminal literal, arith_op, call, actuals;
 
-/* ---------------------------------Preedencia dos terminais-------------------------------- */
+// non terminal E     E;
+// non terminal T     T;
+// non terminal F     F;
 
-precedence left PLUS, MINUS;
-precedence left TIMES, DIVIDE;
-//   start with program;
+non terminal Program Program; 
+non terminal Decl    Decl;
+non terminal Var     Var;
+non terminal VarDecl VarDecl;
+non terminal Type    Type; 
+non terminal Id      Id;
 
-/* ---------------------------------Declaração da gramatica--------------------------------- */
+// non terminal var_decl, var, var_list;
+// non terminal argument, block, function_decl, stmt, expr, block_stmt, return_val;
+// non terminal bin_op, rel_op, eq_op, assing_op;
+// non terminal literal, arith_op, call, actuals;
 
-/* -----------------------------------------Gramatica--------------------------------------- */
+/* -------------Precedence and Associatively of Terminals Section----------- */
 
-program 	    ::= decl;
-decl            ::= var_decl decl | function_decl decl | /* empty */;
-var_decl        ::= var SEMI | var assing_op literal SEMI;
-var             ::= type_id id;
-var_list        ::= var COMMA var_list | var;
-type_id         ::= INT | CHAR;
-id              ::= IDENT;
-function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block
-                    | VOID id LEFTPAREN argument RIGHTPAREN block;
-argument        ::= var_list | /* empty */;
-block           ::= LEFTBRACE block_stmt RIGHTBRACE;
-block_stmt      ::= var_decl block_stmt | stmt block_stmt | /* empty */;
-stmt            ::= IF LEFTPAREN expr RIGHTPAREN block 
-                    | WHILE LEFTPAREN expr RIGHTPAREN block 
-                    | id assing_op literal SEMI
-                    | SHOW LEFTPAREN id RIGHTPAREN SEMI
-                    | call
-                    | RETURN return_val SEMI;
-return_val      ::= expr | id | literal | /* empty */;
-call            ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
-actuals         ::= literal | literal COMMA actuals | expr COMMA actuals | expr | /* empty */;
-expr            ::= NUMBER bin_op NUMBER | id bin_op id | NUMBER bin_op id | id bin_op NUMBER |
-                    NUMBER arith_op NUMBER;
-literal         ::= NUMBER | CHARACTER;
-arith_op        ::= PLUS | MINUS | TIMES | DIVIDE;
-assing_op       ::= EQUAL;
-bin_op          ::= rel_op | eq_op;    
-rel_op          ::= LESS | GREATER;
-eq_op           ::= EQUALS | NOTEQUALS;
+  precedence left PLUS, MINUS;
+  precedence left TIMES, DIVIDE;
 
+/* ----------------------------Grammar Section-------------------- */
+
+Program  ::= Decl:decl {: RESULT = new Decl(decl); :};
+Decl     ::= VarDecl Decl;
+VarDecl  ::= Var SEMI;
+Var      ::= Type Id;
+Type     ::= INT 
+           | CHAR;
+Id       ::= ID;
+
+
+// // program 	    ::= decl;
+// // decl            ::= var_decl decl | function_decl decl | /* empty */;
+// // var_decl        ::= var SEMI | var assing_op literal SEMI;
+// // var             ::= type_id id;
+// // var_list        ::= var COMMA var_list | var;
+// // type_id         ::= INT | CHAR;
+// // id              ::= IDENT;
+// // function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block
+// //                     | VOID id LEFTPAREN argument RIGHTPAREN block;
+// // argument        ::= var_list | /* empty */;
+// // block           ::= LEFTBRACE block_stmt RIGHTBRACE;
+// // block_stmt      ::= var_decl block_stmt | stmt block_stmt | /* empty */;
+// // stmt            ::= IF LEFTPAREN expr RIGHTPAREN block 
+// //                     | WHILE LEFTPAREN expr RIGHTPAREN block 
+// //                     | id assing_op literal SEMI
+// //                     | SHOW LEFTPAREN id RIGHTPAREN SEMI
+// //                     | call
+// //                     | RETURN return_val SEMI;
+// // return_val      ::= expr | id | literal | /* empty */;
+// // call            ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
+// // actuals         ::= literal | literal COMMA actuals | expr COMMA actuals | expr | /* empty */;
+// // expr            ::= expr:l bin_op NUMBER:r
+// //                     {: RESULT = new PlusE(l,r); :}
+// //                     // | id bin_op id 
+// //                     // | NUMBER bin_op id 
+// //                     // | id bin_op NUMBER 
+// //                     // | NUMBER arith_op NUMBER
+// //                     | NUMBER:n {: RESULT = new TE(n); :}
+// //                     ;
+// // literal         ::= NUMBER | CHARACTER;
+// // // arith_op        ::= PLUS | MINUS | TIMES | DIVIDE;
+// // // assing_op       ::= EQUAL;
+// // bin_op          ::= rel_op | eq_op;    
+// // // rel_op          ::= LESS | GREATER;
+// // // eq_op           ::= EQUALS | NOTEQUALS; 
+
+//   E ::= E:l PLUS T:r  {: RESULT = new PlusE(l,r); :} 
+//   | E:l MINUS T:r  {: RESULT = new MinusE(l,r); :} 
+//   | T:t {: RESULT = new TE(t); :} ;
+//   T ::= T:l TIMES F:r {: RESULT = new MultiplyT(l,r); :} 
+//   | T:l DIVIDE F:r {: RESULT = new DivideT(l,r); :} 
+//    | F:f {: RESULT = new FT(f); :} ;
+//   F ::= LEFTPAREN E:e RIGHTPAREN {: RESULT = new FBRACKET(e); :} 
+//   | INT:i {: RESULT = new INT(i); :}  
+//   | ID:s {: RESULT = new ID(s); :} ;

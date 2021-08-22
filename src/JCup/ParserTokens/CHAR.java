@@ -1,10 +1,10 @@
 package JCup.ParserTokens;
 
-public class INT extends Type{
-    // Integer number;
+public class CHAR extends Type{
+    // char n;
 
-    // public INT(Integer num) {
-    //    number = num;
+    // public CHAR(char c) {
+    //    n = c;
     // }
 
 	// @Override
@@ -12,7 +12,7 @@ public class INT extends Type{
 		
 	//     String type = "Type";
 	// 	System.out.println(prefix + (isTail ?  "\\-- " : "|-- ") + type);
-	// 	System.out.println(prefix + "    " + (isTail ?  "\\-- " : "|-- ") + "INT");
+	// 	System.out.println(prefix + "    " + (isTail ?  "\\-- " : "|-- ") + "CHAR");
 	    
 	// }
 }
