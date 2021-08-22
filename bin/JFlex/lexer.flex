@@ -29,6 +29,11 @@ import JCup.*;
   Código entre %{ e %}, são usados para incluir código Java dentro da classe do scanner.
 */
 %{
+
+   private void print_token(String token_name) {
+         System.out.println(token_name);         
+   }
+
     /* Criar um novo simbolo com informações sobre token, sem valor */
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
@@ -40,6 +45,7 @@ import JCup.*;
     }
 %}
 
+%eofclose
 
 /*
    Macros que serão usadas no código gerado pelo JFlex.
@@ -62,25 +68,22 @@ Id = {Alpha}{AlphaNum}*
 %%
 /* ------------------------Regras do scanner---------------------- */
 
-
-<YYINITIAL> {
-
     /* Print the token found that was declared in the class sym and then
        return it. */
    
-    ";"    { System.out.print(" ; "); return symbol(sym.SEMI);}
-    "char" { System.out.print(" char "); return symbol(sym.CHAR);}
-    "int"  { System.out.print(" int "); return symbol(sym.INT);}
-    "("    { System.out.print(" ( "); return symbol(sym.LEFTPAREN);}
-    ")"    { System.out.print(" ) "); return symbol(sym.RIGHTPAREN);}
-    "{"    { System.out.print(" { "); return symbol(sym.LEFTBRACE);}
-    "}"    { System.out.print(" } "); return symbol(sym.RIGHTBRACE);}
-    "main" { System.out.print(" main "); return symbol(sym.MAIN);}
+    ";"    { print_token("; "); return symbol(sym.SEMI);}
+    "char" { print_token("char "); return symbol(sym.CHAR);}
+    "int"  { print_token("int "); return symbol(sym.INT);}
+    "("    { print_token("( "); return symbol(sym.LEFTPAREN);}
+    ")"    { print_token(") "); return symbol(sym.RIGHTPAREN);}
+    "{"    { print_token("{ "); return symbol(sym.LEFTBRACE);}
+    "}"    { print_token("} "); return symbol(sym.RIGHTBRACE);}
+    ","    { print_token(", "); return symbol(sym.COMMA);}
     
     {WhiteSpace}     { /* ignore */ }
-    {Id} { System.out.println(yytext());return symbol(sym.IDENT, new String(yytext()));} 
+    {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 
     
-    <<EOF>> { System.out.println("<<EOF>>"); return symbol(sym.EOF);}   
+    <<EOF>> { print_token("<<EOF>>"); return symbol(sym.EOF);}   
     . { throw new Error("Illegal character <"+yytext()+">"); }
 
     
@@ -102,7 +105,6 @@ Id = {Alpha}{AlphaNum}*
 
    //  /* Don't do anything if whitespace is found */
    //  {WhiteSpace}       { /* just skip what was found, do nothing */ }
-}
 
 
 /* No token was found for the input so through an error.  Print out an

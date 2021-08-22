@@ -79,7 +79,6 @@ Id = {Alpha}{AlphaNum}*
     "{"    { print_token("{ "); return symbol(sym.LEFTBRACE);}
     "}"    { print_token("} "); return symbol(sym.RIGHTBRACE);}
     ","    { print_token(", "); return symbol(sym.COMMA);}
-    "main" { print_token("main "); return symbol(sym.MAIN);}
     
     {WhiteSpace}     { /* ignore */ }
     {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 

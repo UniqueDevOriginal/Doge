@@ -78,7 +78,7 @@ non terminal argument, block, function_decl, stmt_list;
 /* -----------------------------------------Gramatica--------------------------------------- */
 
 program 	    ::= decl;
-decl            ::= var_decl | function_decl | decl | /* empty */;
+decl            ::= var_decl decl | function_decl decl | /* empty */;
 var_decl        ::= var SEMI;
 var             ::= type_id id;
 type_id         ::= INT | CHAR;
