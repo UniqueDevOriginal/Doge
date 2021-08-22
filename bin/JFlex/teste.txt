@@ -1,0 +1,1 @@
+SEMI, IDENT, INT, CHAR;

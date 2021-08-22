@@ -46,7 +46,8 @@ import JCup.*;
    expressões regulares que serão usadas posteriormente
 */
 
-WhiteSpace=[\ \n\r\t\f]
+NewLine = \r|\n|\r\n
+WhiteSpace = {NewLine} | [ \t\f]
 Alpha  = [|a-z|]
 Digit = [0-9]
 // Number = [0-9]|[1-9][0-9]*
@@ -54,6 +55,7 @@ AlphaNum = [{Alpha}|{Digit}]
 Id = {Alpha}{AlphaNum}*
 // Comentario = "$"[^\n]*
 // String = [\"][^\n\"]+[\"]
+
 
 
 
@@ -74,29 +76,12 @@ Id = {Alpha}{AlphaNum}*
     "{"    { System.out.print(" { "); return symbol(sym.LEFTBRACE);}
     "}"    { System.out.print(" } "); return symbol(sym.RIGHTBRACE);}
     "main" { System.out.print(" main "); return symbol(sym.MAIN);}
-   //  "="    { System.out.print(" = "); return symbol(sym.EQUAL);}
-   //  "=="   { System.out.print(" == "); return symbol(sym.EQUALS);}
-   //  "!="   { System.out.print(" != "); return symbol(sym.NOTEQUAL);}
-   //  ">"    { System.out.print(" > "); return symbol(sym.GREATER);}
-   //  "<"    { System.out.print(" < "); return symbol(sym.LESS);}
-   //  "+"    { System.out.print(" + "); return symbol(sym.PLUS);}
-   //  "-"    { System.out.print(" - "); return symbol(sym.MINUS);}
-   //  "*"    { System.out.print(" * "); return symbol(sym.TIMES);}
-   //  "/"    { System.out.print(" / "); return symbol(sym.DIVIDE);}
-   //  "if"   { System.out.print(" if "); return symbol(sym.IF);}
-   //  "while"{ System.out.print(" while "); return symbol(sym.WHILE);}
-   //  "return"{ System.out.print(" return "); return symbol(sym.RETURN);}
-   //  "print"{ System.out.print(" print "); return symbol(sym.PRINT);}
     
+    {WhiteSpace}     { /* ignore */ }
+    {Id} { System.out.println(yytext());return symbol(sym.IDENT, new String(yytext()));} 
     
-    
-    {WhiteSpace} { }
-    {Id} { System.out.println(yytext());
-           return symbol(sym.IDENT, new String(yytext()));} 
-
-    <<EOF>> { System.out.println("<<EOF>>");
-               return symbol(sym.EOF);}           
-
+    <<EOF>> { System.out.println("<<EOF>>"); return symbol(sym.EOF);}   
+    . { throw new Error("Illegal character <"+yytext()+">"); }
 
     
    //   {LineTerminator}    { System.out.print(yytext());
@@ -122,4 +107,4 @@ Id = {Alpha}{AlphaNum}*
 
 /* No token was found for the input so through an error.  Print out an
    Illegal character message with the illegal character that was found. */
-[^]                    { throw new Error("Illegal character <"+yytext()+">"); }
+
