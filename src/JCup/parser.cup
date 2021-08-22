@@ -6,8 +6,6 @@ import JCup.ParserTokens.*;
 
 /* Identificar erro no parser, mostra linha e coluna do erro */
 parser code {:
-
-
     /* Sobrescrever o método report_error para que ele exiba a linha e
         coluna de onde ocorreu o erro na entrada, bem como no
         razão para o erro que é passado para o método no
@@ -55,16 +53,17 @@ parser code {:
 
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 
-terminal SEMI, IDENT, INT, CHAR, MAIN;
+terminal SEMI, IDENT, INT, CHAR, COMMA;
 terminal LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
-terminal IF, WHILE, PRINT, RETURN;
-terminal PLUS, MINUS, TIMES, DIVIDE, EQUAL;
-terminal LESS, GREATER, EQUALS, NOTEQUAL;
+// terminal IF, WHILE, PRINT, RETURN;
+// terminal PLUS, MINUS, TIMES, DIVIDE, EQUAL;
+// terminal LESS, GREATER, EQUALS, NOTEQUAL;
 
 /* ---------------------------------Não-terminais------------------------ */
 
-non terminal program, decl, var_decl, var, type_id, id;
-non terminal argument, block, stmt, location, assing_op, function_decl;
+non terminal program, decl, type_id, id;
+non terminal var_decl, var, var_list;
+non terminal argument, block, function_decl, stmt_list;
 // non terminal program, decl, var_decl, function_decl, var, type_id, arg_list, block, actuals, rel_op, expr, location, literal;
 // non terminal call, id, stmt, int_literal, decimal_literal, char_literal, binop, arith_op, eq_op, digit, AssingOp;
 
@@ -79,14 +78,16 @@ non terminal argument, block, stmt, location, assing_op, function_decl;
 /* -----------------------------------------Gramatica--------------------------------------- */
 
 program 	    ::= decl;
-decl            ::= var_decl | function_decl ;
+decl            ::= var_decl | function_decl | decl | /* empty */;
 var_decl        ::= var SEMI;
-function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block;
 var             ::= type_id id;
 type_id         ::= INT | CHAR;
 id              ::= IDENT;
-argument        ::= var ;
-block           ::= LEFTBRACE var_decl RIGHTBRACE;
+function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block;
+argument        ::= var_list | /* empty */;
+var_list        ::= var COMMA var_list | var;
+block           ::= LEFTBRACE stmt_list RIGHTBRACE;
+stmt_list       ::= /* empty */;
 
 
 // decl            ::= var_decl | function_decl;

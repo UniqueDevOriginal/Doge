@@ -8,8 +8,9 @@ public class Main {
   static public void main(String argv[]) {    
     /* Start the parser */
     try {
-    	String testFile = "src\\program.doge";
-      Lexer lexedInput = new Lexer(new FileReader(testFile));
+      // new FileReader(testFile)
+    	String testFile = "src\\program.txt";
+      Lexer lexedInput = new Lexer( new FileReader(testFile));
       parser p = new parser(lexedInput);
       p.parse();
       // E result = (E) p.parse().value;
