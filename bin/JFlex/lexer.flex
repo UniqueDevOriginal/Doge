@@ -31,7 +31,7 @@ import JCup.*;
 %{
 
    private void print_token(String token_name) {
-         System.out.println(token_name);         
+         System.out.print(token_name+"\n");         
    }
 
     /* Criar um novo simbolo com informações sobre token, sem valor */

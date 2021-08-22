@@ -1,6 +1,5 @@
-/* ------------------------------Declaração de bibliotecas---------------------------------- */
-
 package JCup;
+/* ------------------------------Declaração de bibliotecas---------------------------------- */
 import java_cup.runtime.*;
 import JCup.ParserTokens.*;
 
@@ -49,8 +48,6 @@ parser code {:
     }
 :};
 
-
-
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 
 terminal SEMI, IDENT, INT, CHAR, COMMA, NUMBER, CHARACTER, VOID, SHOW;
@@ -71,39 +68,77 @@ non terminal literal, arith_op, call, actuals;
 
 precedence left PLUS, MINUS;
 precedence left TIMES, DIVIDE;
-//   start with program;
-
-/* ---------------------------------Declaração da gramatica--------------------------------- */
 
 /* -----------------------------------------Gramatica--------------------------------------- */
 
-program 	    ::= decl;
-decl            ::= var_decl decl | function_decl decl | /* empty */;
-var_decl        ::= var SEMI | var assing_op literal SEMI;
-var             ::= type_id id;
-var_list        ::= var COMMA var_list | var;
-type_id         ::= INT | CHAR;
-id              ::= IDENT;
+program 	::= decl;
+decl            ::= var_decl decl 
+                    | function_decl decl 
+                    | /* empty */
+                    ;
+var_decl     ::= var SEMI 
+                    | var assing_op literal SEMI
+                    ;
+var              ::= type_id id;
+var_list       ::= var COMMA var_list 
+                    | var
+                    ;
+type_id       ::= INT 
+                    | CHAR
+                    ;
+id                ::= IDENT;
 function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block
-                    | VOID id LEFTPAREN argument RIGHTPAREN block;
-argument        ::= var_list | /* empty */;
-block           ::= LEFTBRACE block_stmt RIGHTBRACE;
-block_stmt      ::= var_decl block_stmt | stmt block_stmt | /* empty */;
+                    | VOID id LEFTPAREN argument RIGHTPAREN block
+                    ;
+argument    ::= var_list 
+                    | /* empty */
+                    ;
+block          ::= LEFTBRACE block_stmt RIGHTBRACE;
+block_stmt ::= var_decl block_stmt 
+                    | stmt block_stmt 
+                    | /* empty */
+                    ;
 stmt            ::= IF LEFTPAREN expr RIGHTPAREN block 
                     | WHILE LEFTPAREN expr RIGHTPAREN block 
                     | id assing_op literal SEMI
                     | SHOW LEFTPAREN id RIGHTPAREN SEMI
                     | call
-                    | RETURN return_val SEMI;
-return_val      ::= expr | id | literal | /* empty */;
-call            ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
-actuals         ::= literal | literal COMMA actuals | expr COMMA actuals | expr | /* empty */;
-expr            ::= NUMBER bin_op NUMBER | id bin_op id | NUMBER bin_op id | id bin_op NUMBER |
-                    NUMBER arith_op NUMBER;
-literal         ::= NUMBER | CHARACTER;
-arith_op        ::= PLUS | MINUS | TIMES | DIVIDE;
-assing_op       ::= EQUAL;
-bin_op          ::= rel_op | eq_op;    
-rel_op          ::= LESS | GREATER;
-eq_op           ::= EQUALS | NOTEQUALS;
+                    | RETURN return_val SEMI
+                    ;
+return_val   ::= expr 
+                    | id 
+                    | literal 
+                    | /* empty */
+                    ;
+call             ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
+actuals        ::= literal 
+                    | literal COMMA actuals 
+                    | expr COMMA actuals 
+                    | expr 
+                    | /* empty */
+                    ;
+expr            ::= NUMBER bin_op NUMBER 
+                    | id bin_op id 
+                    | NUMBER bin_op id 
+                    | id bin_op NUMBER 
+                    | NUMBER arith_op NUMBER
+                    ;
+literal          ::= NUMBER 
+                    | CHARACTER
+                    ;
+arith_op      ::= PLUS 
+                    | MINUS 
+                    | TIMES 
+                    | DIVIDE
+                    ;
+assing_o     ::= EQUAL;
+bin_op        ::= rel_op 
+                    | eq_op
+                    ;    
+rel_op         ::= LESS 
+                    | GREATER
+                    ;
+eq_op         ::= EQUALS 
+                    | NOTEQUALS
+                    ;
 
