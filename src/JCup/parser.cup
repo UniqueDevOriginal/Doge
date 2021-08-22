@@ -66,8 +66,6 @@ non terminal var_decl, var, var_list;
 non terminal argument, block, function_decl, stmt, expr, block_stmt, return_val;
 non terminal bin_op, rel_op, eq_op, assing_op;
 non terminal literal, arith_op, call, actuals;
-// non terminal program, decl, var_decl, function_decl, var, type_id, arg_list, block, actuals, rel_op, expr, location, literal;
-// non terminal call, id, stmt, int_literal, decimal_literal, char_literal, binop, arith_op, eq_op, digit, AssingOp;
 
 /* ---------------------------------Preedencia dos terminais-------------------------------- */
 
@@ -109,24 +107,3 @@ bin_op          ::= rel_op | eq_op;
 rel_op          ::= LESS | GREATER;
 eq_op           ::= EQUALS | NOTEQUALS;
 
-
-// decl            ::= var_decl | function_decl;
-// var_decl        ::= var SEMI;
-// function_decl   ::= type_id id LEFTPAREN arg_list RIGHTPAREN block;
-// id              ::= var;
-// var             ::= type_id;
-// arg_list        ::= var;
-// type_id         ::= INT | CHAR;
-// call            ::= id LEFTPAREN actuals RIGHTPAREN SEMI;
-// actuals         ::= expr;
-// block           ::= LEFTBRACE var_decl stmt RIGHTBRACE;
-// stmt            ::= location AssingOp expr SEMI | call | IF LEFTPAREN expr RIGHTPAREN block| WHILE LEFTPAREN expr RIGHTPAREN block | PRINT LEFTPAREN expr RIGHTPAREN SEMI | RETURN expr SEMI;
-// expr            ::= literal | expr binop expr | -expr | LEFTPAREN expr RIGHTPAREN;
-// literal         ::= int_literal | char_literal;
-// int_literal     ::= decimal_literal;
-// decimal_literal ::= digit|digit;
-// char_literal    ::= QUOTATION CHAR QUOTATION;
-// binop           ::= arith_op | rel_op | eq_op;
-// arith_op        ::= PLUS | MINUS | TIMES | DIVIDE;
-// rel_op          ::= GREATER | LESS | NOTEQUALS;
-// eq_op           ::= EQUALSE | NOTEQUALS;
