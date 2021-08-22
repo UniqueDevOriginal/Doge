@@ -51,10 +51,10 @@ import JCup.*;
    Macros que serão usadas no código gerado pelo JFlex.
    expressões regulares que serão usadas posteriormente
 */
-
 NewLine = \r|\n|\r\n
 WhiteSpace = {NewLine} | [ \t\f]
 Alpha  = [|a-z|]
+Character = [\'][{Alpha}][\']
 Digit = [0-9]
 Number = [0-9]|[1-9][0-9]*
 AlphaNum = [{Alpha}|{Digit}]
@@ -81,6 +81,7 @@ Id = {Alpha}{AlphaNum}*
     ","      { print_token(", "); return symbol(sym.COMMA);}
     "<"      { print_token("< "); return symbol(sym.LESS);}
     ">"      { print_token("> "); return symbol(sym.GREATER);}
+    "="      { print_token("= "); return symbol(sym.EQUAL);}
     "=="     { print_token("== "); return symbol(sym.EQUALS);}
     "!="     { print_token("!= "); return symbol(sym.NOTEQUALS);}
     "if"     { print_token("if "); return symbol(sym.IF);}
@@ -89,7 +90,8 @@ Id = {Alpha}{AlphaNum}*
    //  "return" { print_token("return "); return symbol(sym.RETURN);}
      
     {WhiteSpace}     { /* ignore */ }
-    {Number}         { print_token(yytext()); return symbol(sym.NUMBER);}
+    {Character} { print_token(yytext()); return symbol(sym.CHARACTER);}
+    {Number}    { print_token(yytext()); return symbol(sym.NUMBER);}
     {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 
     
     <<EOF>> { print_token("<<EOF>>"); return symbol(sym.EOF);}   

@@ -53,17 +53,19 @@ parser code {:
 
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 
-terminal SEMI, IDENT, INT, CHAR, COMMA, NUMBER;
+terminal SEMI, IDENT, INT, CHAR, COMMA, NUMBER, CHARACTER;
 terminal LEFTPAREN,  RIGHTPAREN, LEFTBRACE, RIGHTBRACE;
 terminal IF, WHILE, PRINT, RETURN;
 // terminal PLUS, MINUS, TIMES, DIVIDE, EQUAL;
-terminal LESS, GREATER, EQUALS, NOTEQUALS;
+terminal LESS, GREATER, EQUALS, NOTEQUALS, EQUAL;
 
 /* ---------------------------------Não-terminais------------------------ */
 
 non terminal program, decl, type_id, id;
 non terminal var_decl, var, var_list;
-non terminal argument, block, function_decl, stmt, expr, block_stmt, bin_op, rel_op, eq_op;
+non terminal argument, block, function_decl, stmt, expr, block_stmt;
+non terminal bin_op, rel_op, eq_op, assing_op;
+non terminal literal;
 // non terminal program, decl, var_decl, function_decl, var, type_id, arg_list, block, actuals, rel_op, expr, location, literal;
 // non terminal call, id, stmt, int_literal, decimal_literal, char_literal, binop, arith_op, eq_op, digit, AssingOp;
 
@@ -79,18 +81,21 @@ non terminal argument, block, function_decl, stmt, expr, block_stmt, bin_op, rel
 
 program 	    ::= decl;
 decl            ::= var_decl decl | function_decl decl | /* empty */;
-var_decl        ::= var SEMI;
+var_decl        ::= var SEMI | var assing_op literal SEMI;
 var             ::= type_id id;
+var_list        ::= var COMMA var_list | var;
 type_id         ::= INT | CHAR;
 id              ::= IDENT;
 function_decl   ::= type_id id LEFTPAREN argument RIGHTPAREN block;
 argument        ::= var_list | /* empty */;
-var_list        ::= var COMMA var_list | var;
 block           ::= LEFTBRACE block_stmt RIGHTBRACE;
 block_stmt      ::= var_decl block_stmt | stmt block_stmt | /* empty */;
 stmt            ::= IF LEFTPAREN expr RIGHTPAREN block 
-                    | WHILE LEFTPAREN expr RIGHTPAREN block;
-expr            ::= NUMBER bin_op NUMBER;
+                    | WHILE LEFTPAREN expr RIGHTPAREN block 
+                    | id assing_op literal SEMI;
+expr            ::= NUMBER bin_op NUMBER | id bin_op id | NUMBER bin_op id| id bin_op NUMBER;
+literal         ::= NUMBER | CHARACTER;
+assing_op       ::= EQUAL;
 bin_op          ::= rel_op | eq_op;    
 rel_op          ::= LESS | GREATER;
 eq_op           ::= EQUALS | NOTEQUALS;
