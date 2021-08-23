@@ -1,5 +1,5 @@
 package JCup.ParserTokens;
 
-public class VarDecl{
+public class VarDecl {
     
 }

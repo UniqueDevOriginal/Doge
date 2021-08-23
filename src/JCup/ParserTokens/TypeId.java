@@ -1,4 +1,5 @@
 package JCup.ParserTokens;
 
-public  class Type{
+public class TypeId {
+    
 }

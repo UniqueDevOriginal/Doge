@@ -1,7 +1,8 @@
 import java.io.*;
 
 import JCup.parser;
-import JCup.ParserTokens.E;
+import JCup.ParserTokens.Decl;
+import JCup.ParserTokens.Program;
 import JFlex.*;
    
 public class Main {
@@ -14,7 +15,7 @@ public class Main {
       parser p = new parser(lexedInput);
       // p.parse();
  
-      E result = (E) p.parse().value;
+      Program result = (Program) p.parse().value;
       System.out.println();
       System.out.println();
       result.print("",true);
