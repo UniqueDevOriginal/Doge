@@ -1,7 +1,7 @@
 import java.io.*;
 
 import JCup.parser;
-import JCup.ParserTokens.Decl;
+import JCup.sym;
 import JCup.ParserTokens.Program;
 import JFlex.*;
    
@@ -10,6 +10,7 @@ public class Main {
     /* Start the parser */
     try {
       // new FileReader(testFile)
+      sym s = new sym();
     	String testFile = "src/program2.txt";
       Lexer lexedInput = new Lexer( new FileReader(testFile));
       parser p = new parser(lexedInput);

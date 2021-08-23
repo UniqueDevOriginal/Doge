@@ -1,5 +1,7 @@
 package JCup.ParserTokens;
 
-public class TypeId {
-    
+
+public abstract class TypeId {
+
+    abstract void print(String str, boolean b);
 }

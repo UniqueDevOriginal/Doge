@@ -1,5 +1,7 @@
 package JCup.ParserTokens;
 
-public class Var {
+
+public abstract class Var {
     
+	abstract void print(String str, boolean b);
 }
