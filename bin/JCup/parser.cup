@@ -71,7 +71,7 @@ terminal LEFTBRACE, RIGHTBRACE;
 terminal SEMI;
 
 /* ----------Tokens Com Valor--------*/
-terminal Interger IDENT;
+terminal char     IDENT;
 terminal Interger NUMBER;
 terminal Char     CHARACTER;
 
@@ -79,10 +79,10 @@ terminal Char     CHARACTER;
 
 non terminal Program Program;
 non terminal Decl Decl;
-non terminal TypeId ; 
-non terminal Id ;
-non terminal VarDecl ;
-non terminal Var ;
+non terminal TypeId TypeId; 
+non terminal Id Id;
+non terminal VarDecl VarDecl;
+non terminal Var Var;
 non terminal VarList ;
 non terminal Argument ;
 non terminal Block ; 
@@ -112,7 +112,7 @@ Decl                ::= VarDecl Decl
                         | FunctionDecl Decl 
                         | /* empty */
                         ;
-VarDecl             ::= Var SEMI 
+VarDecl             ::= Var:v SEMI {: RESULT = new  :}
                         | Var AssingOp Literal SEMI
                         ;
 Var                 ::= TypeId Id;

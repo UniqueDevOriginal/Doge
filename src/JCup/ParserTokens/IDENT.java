@@ -10,10 +10,10 @@ public class IDENT extends Id {
 	@Override
 	void print(String prefix, boolean isTail) {
 		
-	    String type = "F";
-		System.out.println(prefix + (isTail ?  "\\-- " : "|-- ") + type);
+	    String type = "IDENT";
+		System.out.println(prefix + (isTail ?  "|-- " : "|-- ") + type);
 	    
-		System.out.println(prefix + "    " + (isTail ?  "\\-- " : "|-- ") + "ID");
+		System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + "ID");
 	    
 	}
 }

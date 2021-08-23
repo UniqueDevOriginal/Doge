@@ -1,5 +1,10 @@
 package JCup.ParserTokens;
 
-public class VarDecl {
-    
+
+// function print tree parser
+public class VarDecl extends JCup.ParserTokens.Node
+{
+
+
 }
+
