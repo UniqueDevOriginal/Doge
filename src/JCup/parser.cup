@@ -71,12 +71,14 @@ terminal LEFTBRACE, RIGHTBRACE;
 terminal SEMI;
 
 /* ----------Tokens Com Valor--------*/
-terminal IDENT, CHARACTER, NUMBER;
+terminal Interger IDENT;
+terminal Interger NUMBER;
+terminal Char     CHARACTER;
 
 /* ---------------------------------Não-terminais------------------------ */
 
-non terminal Program ;
-non terminal Decl ;
+non terminal Program Program;
+non terminal Decl Decl;
 non terminal TypeId ; 
 non terminal Id ;
 non terminal VarDecl ;
@@ -105,7 +107,7 @@ precedence left TIMES, DIVIDE;
 
 /* -----------------------------------------Regras de Produção Gramatica Em EBNF--------------------------------------- */
 
-Program     	    ::= Decl;
+Program     	    ::= Decl:d {: RESULT = new Program(d); :};
 Decl                ::= VarDecl Decl 
                         | FunctionDecl Decl 
                         | /* empty */

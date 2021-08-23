@@ -1,4 +1,5 @@
 package JCup.ParserTokens;
 
-public class Var extends Type{    
+public class Var {
+    
 }

@@ -1,5 +1,6 @@
 package JCup.ParserTokens;
 
-public class Decl extends VarDecl{
-    
+public abstract class Decl {
+
+    public abstract void print(String string, boolean b);
 }

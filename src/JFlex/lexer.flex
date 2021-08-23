@@ -64,27 +64,7 @@
 //     /* Print the token found that was declared in the class sym and then
 //        return it. */
    
-//     ";"      { print_token("; "); return symbol(sym.SEMI);}
-//     "char"   { print_token("char "); return symbol(sym.CHAR);}
-//     "int"    { print_token("int "); return symbol(sym.INT);}
-//     "void"   { print_token("void "); return symbol(sym.VOID);}
-//     "("      { print_token("( "); return symbol(sym.LEFTPAREN);}
-//     ")"      { print_token(") "); return symbol(sym.RIGHTPAREN);}
-//     "{"      { print_token("{ "); return symbol(sym.LEFTBRACE);}
-//     "}"      { print_token("} "); return symbol(sym.RIGHTBRACE);}
-//     ","      { print_token(", "); return symbol(sym.COMMA);}
-//     "<"      { print_token("< "); return symbol(sym.LESS);}
-//     ">"      { print_token("> "); return symbol(sym.GREATER);}
-//     "="      { print_token("= "); return symbol(sym.EQUAL);}
-//     "=="     { print_token("== "); return symbol(sym.EQUALS);}
-//     "!="     { print_token("!= "); return symbol(sym.NOTEQUALS);}
-//     "+"      { print_token("+ "); return symbol(sym.PLUS);}
-//     "-"      { print_token("- "); return symbol(sym.MINUS);}
-//     "*"      { print_token("* "); return symbol(sym.TIMES);}
-//     "/"      { print_token("/ "); return symbol(sym.DIVIDE);}
-//     "if"     { print_token("if "); return symbol(sym.IF);}
-//     "while"  { print_token("while "); return symbol(sym.WHILE);}
-//     "return" { print_token("return "); return symbol(sym.RETURN);}
+
 //     "show"  { print_token("show "); return symbol(sym.SHOW);}
      
 //     {Comentario}     { /* ignore */ }
@@ -181,19 +161,34 @@ Comentario = "$"[^\n]*
 /* ------------------------Lexical Rules Section---------------------- */
 
 
-    "+"                { System.out.print(" + "); return symbol(sym.PLUS); }
-    "-"                { System.out.print(" - "); return symbol(sym.MINUS); }
-    "*"                { System.out.print(" * "); return symbol(sym.TIMES); }
-    "/"                { System.out.print(" / "); return symbol(sym.DIVIDE); }
-    "("                { System.out.print(" ( "); return symbol(sym.LEFTPAREN); }
-    ")"                { System.out.print(" ) "); return symbol(sym.RIGHTPAREN); }
+    ";"      { System.out.print(" ; "); return symbol(sym.SEMI);}
+    "char"   { System.out.print("char "); return symbol(sym.CHAR);}
+    "int"    { System.out.print("int "); return symbol(sym.INT);}
+    "void"   { System.out.print("void "); return symbol(sym.VOID);}
+    "("      { System.out.print("( "); return symbol(sym.LEFTPAREN);}
+    ")"      { System.out.print(") "); return symbol(sym.RIGHTPAREN);}
+    "{"      { System.out.print("{ "); return symbol(sym.LEFTBRACE);}
+    "}"      { System.out.print("} "); return symbol(sym.RIGHTBRACE);}
+    ","      { System.out.print(", "); return symbol(sym.COMMA);}
+    "<"      { System.out.print("< "); return symbol(sym.LESS);}
+    ">"      { System.out.print("> "); return symbol(sym.GREATER);}
+    "="      { System.out.print("= "); return symbol(sym.EQUAL);}
+    "=="     { System.out.print("== "); return symbol(sym.EQUALS);}
+    "!="     { System.out.print("!= "); return symbol(sym.NOTEQUALS);}
+    "+"      { System.out.print("+ "); return symbol(sym.PLUS);}
+    "-"      { System.out.print("- "); return symbol(sym.MINUS);}
+    "*"      { System.out.print("* "); return symbol(sym.TIMES);}
+    "/"      { System.out.print("/ "); return symbol(sym.DIVIDE);}
+    "if"     { System.out.print("if "); return symbol(sym.IF);}
+    "while"  { System.out.print("while "); return symbol(sym.WHILE);}
+    "return" { System.out.print("return "); return symbol(sym.RETURN);}
 
     {Comentario}  { /* ignore */ }
     {WhiteSpace}  { /* ignore */ }
     {Number}      { System.out.print(yytext());
                          return symbol(sym.INT, new Integer(yytext())); }
     {Id}          { System.out.print(yytext());
-                         return symbol(sym.ID, new String(yytext()));} 
+                         return symbol(sym.IDENT, new String(yytext()));} 
 
     /* Don't do anything if whitespace is found */
     {WhiteSpace}       { /* just skip what was found, do nothing */ }

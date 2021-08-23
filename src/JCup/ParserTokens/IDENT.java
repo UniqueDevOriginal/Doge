@@ -1,10 +1,9 @@
 package JCup.ParserTokens;
 
+public class IDENT extends Id {
+    String var;
 
-public class ID extends F{
-    Integer var;
-
-    public ID(Integer s) {
+    public IDENT(String s) {
        var = s;
     }
 
@@ -18,3 +17,4 @@ public class ID extends F{
 	    
 	}
 }
+
