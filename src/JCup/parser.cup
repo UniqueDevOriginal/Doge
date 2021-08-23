@@ -72,17 +72,17 @@ terminal SEMI;
 
 /* ----------Tokens Com Valor--------*/
 terminal char     IDENT;
+terminal char     CHARACTER;
 terminal Interger NUMBER;
-terminal Char     CHARACTER;
 
 /* ---------------------------------Não-terminais------------------------ */
 
-non terminal Program Program;
-non terminal Decl Decl;
-non terminal TypeId TypeId; 
-non terminal Id Id;
+non terminal Id      Id;
+non terminal Var     Var;
+non terminal Decl    Decl;
+non terminal TypeId  TypeId; 
 non terminal VarDecl VarDecl;
-non terminal Var Var;
+non terminal Program Program;
 non terminal VarList ;
 non terminal Argument ;
 non terminal Block ; 
@@ -107,22 +107,22 @@ precedence left TIMES, DIVIDE;
 
 /* -----------------------------------------Regras de Produção Gramatica Em EBNF--------------------------------------- */
 
-Program     	    ::= Decl:d {: RESULT = new Program(d); :};
-Decl                ::= VarDecl Decl 
+Program     	    ::= Decl:decl {: RESULT = new ProgramDecl(decl); :};
+Decl                ::= VarDecl:var_decl Decl {: RESULT = new DeclVarDecl(var_decl); :}
                         | FunctionDecl Decl 
                         | /* empty */
                         ;
-VarDecl             ::= Var:v SEMI {: RESULT = new VarDecl(v); :}
+VarDecl             ::= Var:var SEMI {: RESULT = new VarDeclVar(var); :}
                         | Var AssingOp Literal SEMI
                         ;
-Var                 ::= TypeId Id;
+Var                 ::= TypeId:type Id:id {: RESULT = new VarTypeId(type, id); :};
 VarList             ::= Var COMMA VarList 
                         | Var
                         ;
-TypeId              ::= INT 
-                        | CHAR
+TypeId              ::= INT:i {: RESULT = new TypeId(i); :}
+                        | CHAR:c {: RESULT = new TypeId(c); :}
                         ;
-Id                  ::= IDENT;
+Id                  ::= IDENT:ident {: RESULT = new ID(ident); :};
 FunctionDecl        ::= TypeId Id LEFTPAREN Argument RIGHTPAREN Block
                         | VOID Id LEFTPAREN Argument RIGHTPAREN Block
                         ;
