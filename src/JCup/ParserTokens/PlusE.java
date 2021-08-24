@@ -1,13 +1,12 @@
 package JCup.ParserTokens;
 
-
-public class VarTypeId extends TypeId {
+public class PlusE extends Id {
     TypeId child1;
-    Id     child2;
+    Id child2;
 
-  public VarTypeId(TypeId type, Id id) {
-    child1 = type;
-    child2 = id;
+  public PlusE(TypeId left, Id right) {
+    child1 = left;
+    child2 = right;
   }
 
 @Override

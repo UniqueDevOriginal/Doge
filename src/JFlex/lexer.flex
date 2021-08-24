@@ -185,10 +185,12 @@ Comentario = "$"[^\n]*
 
     {Comentario}  { /* ignore */ }
     {WhiteSpace}  { /* ignore */ }
-    {Number}      { System.out.print(yytext());
-                         return symbol(sym.INT, new Integer(yytext())); }
+    {Number}      { int aux = Integer.parseInt(yytext());
+                    System.out.print(yytext());
+                         return symbol(sym.INT, new Integer(aux)); }
     {Id}          { System.out.print(yytext());
                          return symbol(sym.IDENT, new String(yytext()));} 
+  
 
     /* Don't do anything if whitespace is found */
     {WhiteSpace}       { /* just skip what was found, do nothing */ }

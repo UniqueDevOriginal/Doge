@@ -13,7 +13,7 @@ public class sym {
   public static final int PLUS = 9;
   public static final int INT = 3;
   public static final int EQUAL = 18;
-  public static final int CHARACTER = 26;
+  public static final int CHARACTER = 25;
   public static final int SEMI = 23;
   public static final int CHAR = 2;
   public static final int WHILE = 7;
@@ -24,7 +24,7 @@ public class sym {
   public static final int NOTEQUALS = 17;
   public static final int EQUALS = 16;
   public static final int COMMA = 13;
-  public static final int NUMBER = 25;
+  public static final int NUMBER = 26;
   public static final int EOF = 0;
   public static final int DIVIDE = 12;
   public static final int MINUS = 10;
@@ -61,8 +61,8 @@ public class sym {
   "RIGHTBRACE",
   "SEMI",
   "IDENT",
-  "NUMBER",
-  "CHARACTER"
+  "CHARACTER",
+  "NUMBER"
   };
 }
 

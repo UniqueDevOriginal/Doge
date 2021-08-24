@@ -108,19 +108,19 @@ precedence left TIMES, DIVIDE;
 /* -----------------------------------------Regras de Produção Gramatica Em EBNF--------------------------------------- */
 
 Program     	    ::= Decl:decl {: RESULT = new ProgramDecl(decl); :};
-Decl                ::= VarDecl:var_decl Decl {: RESULT = new DeclVarDecl(var_decl); :}
+Decl                ::= VarDecl:vd {: RESULT = new DeclVarDecl(vd); :} Decl 
                         | FunctionDecl Decl 
                         | /* empty */
                         ;
-VarDecl             ::= Var:var SEMI {: RESULT = new VarDeclVar(var); :}
+VarDecl             ::= Var:var {: RESULT = new VarDeclVar(var); :} SEMI 
                         | Var AssingOp Literal SEMI
                         ;
-Var                 ::= TypeId:type Id:id {: RESULT = new VarTypeId(type, id); :};
+Var                 ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
 VarList             ::= Var COMMA VarList 
                         | Var
                         ;
-TypeId              ::= INT:i {: RESULT = new TypeId(i); :}
-                        | CHAR:c {: RESULT = new TypeId(c); :}
+TypeId              ::= NUMBER:in  {: RESULT = new TypeINT(in); :}
+                        | CHARACTER:c  {: RESULT = new TypeCHAR(c); :}
                         ;
 Id                  ::= IDENT:ident {: RESULT = new ID(ident); :};
 FunctionDecl        ::= TypeId Id LEFTPAREN Argument RIGHTPAREN Block

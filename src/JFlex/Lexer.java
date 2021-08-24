@@ -849,8 +849,9 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 34: break;
           case 10:
-            { System.out.print(yytext());
-                         return symbol(sym.INT, new Integer(yytext()));
+            { int aux = Integer.parseInt(yytext());
+                    System.out.print(yytext());
+                         return symbol(sym.INT, new Integer(aux));
             }
             // fall through
           case 35: break;
