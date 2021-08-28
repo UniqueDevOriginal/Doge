@@ -119,7 +119,7 @@ Var                 ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
 VarList             ::= Var COMMA VarList 
                         | Var
                         ;
-TypeId              ::= INT:n {: RESULT = new TypeINT(n); :}
+TypeId              ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR
                         ;
 Id                  ::= IDENT:id {: RESULT = new IDENT(id); :};
