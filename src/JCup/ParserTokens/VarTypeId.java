@@ -1,7 +1,7 @@
 package JCup.ParserTokens;
 
 
-public class VarTypeId extends TypeId {
+public class VarTypeId extends Var {
     TypeId child1;
     Id     child2;
 

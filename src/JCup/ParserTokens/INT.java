@@ -1,7 +1,6 @@
 package JCup.ParserTokens;
 
-
-public class INT extends TypeId{
+public class INT extends F{
     Integer number;
 
     public INT(Integer num) {

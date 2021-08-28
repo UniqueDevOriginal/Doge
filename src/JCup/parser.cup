@@ -51,7 +51,7 @@ parser code {:
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 /* ----------Palavras Reservadas----------*/
 terminal CHAR;
-terminal INT;
+terminal Integer INT;
 terminal VOID;
 terminal SHOW;
 terminal IF;
@@ -71,18 +71,18 @@ terminal LEFTBRACE, RIGHTBRACE;
 terminal SEMI;
 
 /* ----------Tokens Com Valor--------*/
-terminal char     IDENT;
-terminal char     CHARACTER;
+terminal String IDENT;
+terminal String CHARACTER;
 terminal Integer NUMBER;
 
 /* ---------------------------------Não-terminais------------------------ */
 
-non terminal Id      Id;
-non terminal Var     Var;
+non terminal Program Program;
 non terminal Decl    Decl;
 non terminal TypeId  TypeId; 
+non terminal Id      Id;
 non terminal VarDecl VarDecl;
-non terminal Program Program;
+non terminal Var     Var;
 non terminal VarList ;
 non terminal Argument ;
 non terminal Block ; 
@@ -102,27 +102,27 @@ non terminal Actuals ;
 
 /* ---------------------------------Precedencia dos Terminais-------------------------------- */
 
-precedence left PLUS, MINUS;
-precedence left TIMES, DIVIDE;
+// precedence left PLUS, MINUS;
+// precedence left TIMES, DIVIDE;
 
 /* -----------------------------------------Regras de Produção Gramatica Em EBNF--------------------------------------- */
 
-Program     	    ::= Decl:decl {: RESULT = new ProgramDecl(decl); :};
-Decl                ::= VarDecl:vd {: RESULT = new DeclVarDecl(vd); :} Decl 
+Program     	    ::= Decl:d {: RESULT = new ProgramDecl(d); :};
+Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd); :}
                         | FunctionDecl Decl 
                         | /* empty */
                         ;
-VarDecl             ::= Var:var {: RESULT = new VarDeclVar(var); :} SEMI 
+VarDecl             ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
                         | Var AssingOp Literal SEMI
                         ;
 Var                 ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
 VarList             ::= Var COMMA VarList 
                         | Var
                         ;
-TypeId              ::= NUMBER:in  {: RESULT = new TypeINT(in); :}
-                        | CHARACTER:c  {: RESULT = new TypeCHAR(c); :}
+TypeId              ::= INT:n {: RESULT = new TypeINT(n); :}
+                        | CHAR
                         ;
-Id                  ::= IDENT:ident {: RESULT = new ID(ident); :};
+Id                  ::= IDENT:id {: RESULT = new IDENT(id); :};
 FunctionDecl        ::= TypeId Id LEFTPAREN Argument RIGHTPAREN Block
                         | VOID Id LEFTPAREN Argument RIGHTPAREN Block
                         ;
