@@ -10,7 +10,7 @@ public class DeclVarDecl extends Decl {
 @Override
 void print(String prefix, boolean isTail) {
     String type = "Decl";
-	System.out.println(prefix + (isTail ? type + "|-- " : "|-- ") );
+	System.out.println(prefix + (isTail ? "|-- " : "|-- ") +type);
 	//child1.print(prefix + (isTail ? "    " : "|   "), false);
     child1.print(prefix + (isTail ?"    " : "|   "), true);
     

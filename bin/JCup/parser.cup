@@ -48,163 +48,132 @@ parser code {:
     }
 :};
 
-// /* --------------------------Declaração de terminais e não-terminais------------------------ */
-// /* ----------Palavras Reservadas----------*/
-// terminal CHAR;
-// terminal INT;
-// terminal VOID;
-// terminal SHOW;
-// terminal IF;
-// terminal WHILE;
-// terminal RETURN;
+/* --------------------------Declaração de terminais e não-terminais------------------------ */
+/* ----------Palavras Reservadas----------*/
+terminal CHAR;
+terminal Integer INT;
+terminal VOID;
+terminal SHOW;
+terminal IF;
+terminal WHILE;
+terminal RETURN;
 
-// /* ----------Operadores e pontuação---------*/
-// terminal PLUS, MINUS, TIMES, DIVIDE;
-// terminal COMMA;
-// terminal LESS, GREATER;
-// terminal EQUALS, NOTEQUALS;
-// terminal EQUAL;
+/* ----------Operadores e pontuação---------*/
+terminal PLUS, MINUS, TIMES, DIVIDE;
+terminal COMMA;
+terminal LESS, GREATER;
+terminal EQUALS, NOTEQUALS;
+terminal EQUAL;
 
-// /* ----------Delimitadores--------*/
-// terminal LEFTPAREN, RIGHTPAREN;
-// terminal LEFTBRACE, RIGHTBRACE;
-// terminal SEMI;
+/* ----------Delimitadores--------*/
+terminal LEFTPAREN, RIGHTPAREN;
+terminal LEFTBRACE, RIGHTBRACE;
+terminal SEMI;
 
-// /* ----------Tokens Com Valor--------*/
-// terminal String IDENT;
-// terminal String CHARACTER;
-// terminal Integer NUMBER;
+/* ----------Tokens Com Valor--------*/
+terminal String IDENT;
+terminal String CHARACTER;
+terminal Integer NUMBER;
 
-// /* ---------------------------------Não-terminais------------------------ */
+/* ---------------------------------Não-terminais------------------------ */
 
-// non terminal Program Program;
-// non terminal Decl Decl;
-// non terminal TypeId ; 
-// non terminal Id ;
-// non terminal VarDecl ;
-// non terminal Var ;
-// non terminal VarList ;
-// non terminal Argument ;
-// non terminal Block ; 
-// non terminal FunctionDecl ;
-// non terminal Stmt ;
-// non terminal Expr ;
-// non terminal BlockStmt ;
-// non terminal ReturnValue ;
-// non terminal BinOp ; 
-// non terminal RelOp ;
-// non terminal EqOp ;
-// non terminal AssingOp ;
-// non terminal Literal ;  
-// non terminal ArithOp ; 
-// non terminal Call ;
-// non terminal Actuals ;
+non terminal Program Program;
+non terminal Decl    Decl;
+non terminal TypeId  TypeId; 
+non terminal Id      Id;
+non terminal VarDecl VarDecl;
+non terminal Var     Var;
+non terminal VarList ;
+non terminal Argument ;
+non terminal Block ; 
+non terminal FunctionDecl ;
+non terminal Stmt ;
+non terminal Expr ;
+non terminal BlockStmt ;
+non terminal ReturnValue ;
+non terminal BinOp ; 
+non terminal RelOp ;
+non terminal EqOp ;
+non terminal AssingOp ;
+non terminal Literal ;  
+non terminal ArithOp ; 
+non terminal Call ;
+non terminal Actuals ;
 
-// /* ---------------------------------Precedencia dos Terminais-------------------------------- */
+/* ---------------------------------Precedencia dos Terminais-------------------------------- */
 
 // precedence left PLUS, MINUS;
 // precedence left TIMES, DIVIDE;
 
-// /* -----------------------------------------Regras de Produção Gramatica Em EBNF--------------------------------------- */
+/* -----------------------------------------Regras de Produção Gramatica Em EBNF--------------------------------------- */
 
-// Program     	    ::= Decl:d {: RESULT = new ProgramDecl(d); :};
-// Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd); :}
-//                         | FunctionDecl Decl 
-//                         | /* empty */
-//                         ;
-// VarDecl             ::= Var SEMI 
-//                         | Var AssingOp Literal SEMI
-//                         ;
-// Var                 ::= TypeId Id;
-// VarList             ::= Var COMMA VarList 
-//                         | Var
-//                         ;
-// TypeId              ::= INT 
-//                         | CHAR
-//                         ;
-// Id                     ::= IDENT;
-// FunctionDecl   ::= TypeId Id LEFTPAREN Argument RIGHTPAREN Block
-//                         | VOID Id LEFTPAREN Argument RIGHTPAREN Block
-//                         ;
-// Argument            ::= VarList 
-//                         | /* empty */
-//                         ;
-// Block               ::= LEFTBRACE BlockStmt RIGHTBRACE;
-// BlockStmt           ::= VarDecl BlockStmt 
-//                         | Stmt BlockStmt 
-//                         | /* empty */
-//                         ;
-// Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block 
-//                         | WHILE LEFTPAREN Expr RIGHTPAREN Block 
-//                         | Id AssingOp Literal SEMI
-//                         | SHOW LEFTPAREN Id RIGHTPAREN SEMI
-//                         | Call
-//                         | RETURN ReturnValue SEMI
-//                         ;
-// ReturnValue         ::= Expr 
-//                         | Id 
-//                         | Literal 
-//                         | /* empty */
-//                         ;
-// Call                ::= Id LEFTPAREN Actuals RIGHTPAREN SEMI;
-// Actuals             ::= Literal 
-//                         | Literal COMMA Actuals 
-//                         | Expr COMMA Actuals 
-//                         | Expr 
-//                         | /* empty */
-//                         ;
-// Expr                ::= NUMBER BinOp NUMBER 
-//                         | Id BinOp Id 
-//                         | NUMBER BinOp Id 
-//                         | Id BinOp NUMBER 
-//                         | NUMBER ArithOp NUMBER
-//                         ;
-// Literal             ::= NUMBER 
-//                         | CHARACTER
-//                         ;
-// ArithOp             ::= PLUS 
-//                         | MINUS 
-//                         | TIMES 
-//                         | DIVIDE
-//                         ;
-// AssingOp            ::= EQUAL;
-// BinOp               ::= RelOp 
-//                         | EqOp
-//                         ;    
-// RelOp               ::= LESS 
-//                         | GREATER
-//                         ;
-// EqOp                ::= EQUALS 
-//                         | NOTEQUALS
-//                         ;
-/* ------------Declaration of Terminals and Non Terminals Section----------- */
-terminal           PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN;
-terminal Integer   INT;
-terminal Integer    ID;
-
-non terminal E     E;
-non terminal T     T;
-non terminal F     F;
-
-/* -------------Precedence and Associatively of Terminals Section----------- */
-
-  precedence left PLUS, MINUS;
-  precedence left TIMES, DIVIDE;
-
-/* ----------------------------Grammar Section-------------------- */
-
-/* The grammar for our parser.
-E ::= E + T | E - T | T
-T ::= T * F | T / F | F
-F ::= (E) | INT | ID
-*/
-
-  E ::= E:l PLUS T:r  {: RESULT = new PlusE(l,r); :} 
-      | E:l MINUS T:r  {: RESULT = new MinusE(l,r); :} 
-      | T:t {: RESULT = new TE(t); :} ;
-  T ::= T:l TIMES F:r {: RESULT = new MultiplyT(l,r); :} 
-      | T:l DIVIDE F:r {: RESULT = new DivideT(l,r); :} 
-      | F:f {: RESULT = new FT(f); :} ;
-  F ::= LPAREN E:e RPAREN {: RESULT = new FBRACKET(e); :} 
-      | INT:i {: RESULT = new INT(i); :}  
-      | ID:s {: RESULT = new ID(s); :} ;
+Program     	    ::= Decl:d {: RESULT = new ProgramDecl(d); :};
+Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd); :}
+                        | FunctionDecl Decl 
+                        | /* empty */
+                        ;
+VarDecl             ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
+                        | Var AssingOp Literal SEMI
+                        ;
+Var                 ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
+VarList             ::= Var COMMA VarList 
+                        | Var
+                        ;
+TypeId              ::= INT:n {: RESULT = new TypeINT(n); :}
+                        | CHAR
+                        ;
+Id                  ::= IDENT:id {: RESULT = new IDENT(id); :};
+FunctionDecl        ::= TypeId Id LEFTPAREN Argument RIGHTPAREN Block
+                        | VOID Id LEFTPAREN Argument RIGHTPAREN Block
+                        ;
+Argument            ::= VarList 
+                        | /* empty */
+                        ;
+Block               ::= LEFTBRACE BlockStmt RIGHTBRACE;
+BlockStmt           ::= VarDecl BlockStmt 
+                        | Stmt BlockStmt 
+                        | /* empty */
+                        ;
+Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block 
+                        | WHILE LEFTPAREN Expr RIGHTPAREN Block 
+                        | Id AssingOp Literal SEMI
+                        | SHOW LEFTPAREN Id RIGHTPAREN SEMI
+                        | Call
+                        | RETURN ReturnValue SEMI
+                        ;
+ReturnValue         ::= Expr 
+                        | Id 
+                        | Literal 
+                        | /* empty */
+                        ;
+Call                ::= Id LEFTPAREN Actuals RIGHTPAREN SEMI;
+Actuals             ::= Literal 
+                        | Literal COMMA Actuals 
+                        | Expr COMMA Actuals 
+                        | Expr 
+                        | /* empty */
+                        ;
+Expr                ::= NUMBER BinOp NUMBER 
+                        | Id BinOp Id 
+                        | NUMBER BinOp Id 
+                        | Id BinOp NUMBER 
+                        | NUMBER ArithOp NUMBER
+                        ;
+Literal             ::= NUMBER 
+                        | CHARACTER
+                        ;
+ArithOp             ::= PLUS 
+                        | MINUS 
+                        | TIMES 
+                        | DIVIDE
+                        ;
+AssingOp            ::= EQUAL;
+BinOp               ::= RelOp 
+                        | EqOp
+                        ;    
+RelOp               ::= LESS 
+                        | GREATER
+                        ;
+EqOp                ::= EQUALS 
+                        | NOTEQUALS
+                        ;

@@ -14,7 +14,7 @@ public class VarTypeId extends Var {
 public
 void print(String prefix, boolean isTail) {
 	
-    String type = "E";
+    String type = "Var";
 	System.out.println(prefix + (isTail ?  "\\-- " : "|-- ") + type);
     
 	child1.print(prefix + (isTail ? "    " : "|   "), false);
