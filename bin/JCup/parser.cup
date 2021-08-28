@@ -73,7 +73,7 @@ terminal SEMI;
 /* ----------Tokens Com Valor--------*/
 terminal char     IDENT;
 terminal char     CHARACTER;
-terminal Interger NUMBER;
+terminal Integer NUMBER;
 
 /* ---------------------------------Não-terminais------------------------ */
 
