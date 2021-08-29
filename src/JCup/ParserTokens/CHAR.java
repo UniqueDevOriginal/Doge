@@ -1,18 +1,18 @@
 package JCup.ParserTokens;
 
 public class CHAR extends TypeId{
-    char caracter;
+    String caracter;
 
-    public CHAR(char c) {
+    public CHAR(String c) {
        caracter = c;
     }
 
 	@Override
 	void print(String prefix, boolean isTail) {
 		
-	    String type = "F";
-		System.out.println(prefix + (isTail ?  "\\-- " : "|-- ") + type);
-		System.out.println(prefix + "    " + (isTail ?  "\\-- " : "|-- ") + "INT");
+	    String type = "TypeId";
+		System.out.println(prefix + (isTail ?  "|-- " : "|-- ") + type);
+		System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "CHAR");
 	    
 	}
 }

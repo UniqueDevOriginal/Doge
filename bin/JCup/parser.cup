@@ -50,7 +50,7 @@ parser code {:
 
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 /* ----------Palavras Reservadas----------*/
-terminal CHAR;
+terminal String CHAR;
 terminal Integer INT;
 terminal VOID;
 terminal SHOW;
@@ -120,7 +120,7 @@ VarList             ::= Var COMMA VarList
                         | Var
                         ;
 TypeId              ::= INT:n {: RESULT = new INT(n); :}
-                        | CHAR
+                        | CHAR:c {: RESULT = new CHAR(c); :}
                         ;
 Id                  ::= IDENT:id {: RESULT = new IDENT(id); :};
 FunctionDecl        ::= TypeId Id LEFTPAREN Argument RIGHTPAREN Block
