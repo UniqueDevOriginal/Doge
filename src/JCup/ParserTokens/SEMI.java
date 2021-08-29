@@ -1,5 +1,7 @@
 package JCup.ParserTokens;
 
-public class SEMI {
-    
+
+public abstract class SEMI {
+
+    abstract void print(String str, boolean b);
 }

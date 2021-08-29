@@ -10,10 +10,10 @@ public class INT extends TypeId {
 	@Override
 	void print(String prefix, boolean isTail) {
 		
-	    String type = "IDENT";
+	    String type = "TypeId";
 		System.out.println(prefix + (isTail ?  "|-- " : "|-- ") + type);
 	    
-		System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + "ID");
+		System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + "INT");
 	    
 	}
 }

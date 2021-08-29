@@ -11,9 +11,9 @@ public class IDENT extends Id{
 	void print(String prefix, boolean isTail) {
 		
 	    String type = "Id";
-		System.out.println(prefix + (isTail ?  "\\-- " : "|-- ") + type);
+		System.out.println(prefix + (isTail ?  "|-- " : "|-- ") + type);
 	    
-		System.out.println(prefix + "    " + (isTail ?  "\\-- " : "|-- ") + "IDENT");
+		System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + "IDENT");
 	    
 	}
 }
