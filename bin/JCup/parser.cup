@@ -140,7 +140,8 @@ BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDe
                         ;
 Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block 
                         | WHILE LEFTPAREN Expr RIGHTPAREN Block 
-                        | Id EQUAL Literal SEMI
+                        | Id AssingOp Literal SEMI
+                        | Id AssingOp Expr SEMI
                         | SHOW LEFTPAREN Id RIGHTPAREN SEMI
                         | Call
                         | RETURN ReturnValue SEMI
@@ -157,8 +158,9 @@ Actuals             ::= Literal
                         | Expr 
                         | /* empty */
                         ;
-Expr                ::= NUMBER BinOp NUMBER 
-                        | Id BinOp Id 
+Expr                ::= NUMBER BinOp NUMBER
+                        | Id BinOp Id
+                        | Id ArithOp Id 
                         | NUMBER BinOp Id 
                         | Id BinOp NUMBER 
                         | NUMBER ArithOp NUMBER

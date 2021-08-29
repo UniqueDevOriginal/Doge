@@ -10,6 +10,8 @@ public class ProgramDecl extends Program {
     @Override
     public 
     void print (String prefix, boolean isTail) {
+        if (child ==  null)
+            return;
         String type = "Program";
         System.out.println(prefix + (isTail ? "" : "|-- ")+type);
         child.print(prefix + (isTail ?"    " : "|   "), true);
