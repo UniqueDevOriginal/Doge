@@ -94,8 +94,8 @@ non terminal ReturnValue ;
 non terminal BinOp ; 
 non terminal RelOp ;
 non terminal EqOp ;
-non terminal AssingOp ;
-non terminal Literal ;  
+non terminal AssingOp AssingOp;
+non terminal Literal Literal;  
 non terminal ArithOp ; 
 non terminal Call ;
 non terminal Actuals ;
@@ -113,7 +113,7 @@ Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd); :}
                         | /* empty */
                         ;
 VarDecl             ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
-                        | Var AssingOp Literal SEMI
+                        | Var:v AssingOp:ao Literal:lt SEMI {: RESULT = new VarDeclAssingOp(v,ao,lt);:}
                         ;
 Var                 ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
 VarList             ::= Var COMMA VarList 
@@ -136,7 +136,7 @@ BlockStmt           ::= VarDecl BlockStmt
                         ;
 Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block 
                         | WHILE LEFTPAREN Expr RIGHTPAREN Block 
-                        | Id AssingOp Literal SEMI
+                        | Id EQUAL Literal SEMI
                         | SHOW LEFTPAREN Id RIGHTPAREN SEMI
                         | Call
                         | RETURN ReturnValue SEMI
@@ -159,7 +159,7 @@ Expr                ::= NUMBER BinOp NUMBER
                         | Id BinOp NUMBER 
                         | NUMBER ArithOp NUMBER
                         ;
-Literal             ::= NUMBER 
+Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); :}
                         | CHARACTER
                         ;
 ArithOp             ::= PLUS 
@@ -167,7 +167,7 @@ ArithOp             ::= PLUS
                         | TIMES 
                         | DIVIDE
                         ;
-AssingOp            ::= EQUAL;
+AssingOp            ::= EQUAL:eq {: RESULT = new EQUAL(eq); :};
 BinOp               ::= RelOp 
                         | EqOp
                         ;    
