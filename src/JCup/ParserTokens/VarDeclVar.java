@@ -6,6 +6,7 @@ public class VarDeclVar extends VarDecl {
 
     public VarDeclVar(Var ch1) {
       child1 = ch1;
+
     }
   
   @Override

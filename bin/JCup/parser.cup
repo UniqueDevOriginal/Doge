@@ -117,10 +117,11 @@ Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd, d); :}
                         ;
 VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
                         | Var:v AssingOp:ao Literal:lt SEMI {: RESULT = new VarDeclAssingOp(v,ao,lt);:}
+                        | Var:v {: RESULT = new VarDeclArgFunction(v); :}
                         ;
 Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); :};
-VarList            ::= Var COMMA VarList 
-                        | Var:v {: RESULT = new VarListVar(v);:}
+VarList            ::= Var:v COMMA VarList 
+                        | Var:v {: RESULT = new VarListVar(v); :}
                         ;
 TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}

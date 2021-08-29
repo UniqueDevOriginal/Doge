@@ -12,7 +12,6 @@ public class INT extends TypeId {
 		
 	    String type = "TypeId";
 		System.out.println(prefix + (isTail ?  "|-- " : "|-- ") + type);
-	    
 		System.out.println(prefix + "|    " + (isTail ?  "|-- " : "|-- ") + "INT");
 	    
 	}
