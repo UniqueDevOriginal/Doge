@@ -113,7 +113,7 @@ start with Program;
 
 Program     	 ::= Decl:d {: RESULT = new ProgramDecl(d); :};
 Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd, d); :}
-                        | FunctionDecl:fd Decl:d  {: RESULT = new DeclFunctionDecl(fd); :}
+                        | FunctionDecl:fd Decl:d  {: RESULT = new DeclFunctionDecl(fd, d); :}
                         | /* empty */
                         ;
 VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 

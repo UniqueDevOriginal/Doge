@@ -2,9 +2,11 @@ package JCup.ParserTokens;
 
 public class DeclFunctionDecl extends Decl {
    FunctionDecl child1;
+   Decl child2;
 
-  public DeclFunctionDecl(FunctionDecl fd) {
+  public DeclFunctionDecl(FunctionDecl fd, Decl ch2) {
     child1 = fd; 
+    child2 = ch2;
   }
 
   @Override
@@ -13,7 +15,9 @@ public class DeclFunctionDecl extends Decl {
     String type = "Decl";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
     // child1.print(prefix + (isTail ? "    " : "|   "), false);
-    child1.print(prefix + (isTail ?"    " : "|   "), true);
-      
+    child1.print(prefix + (isTail ?"    " : "|   "), false);
+    if (child2 == null)
+    return;
+    child2.print(prefix + (isTail ?"    " : "|   "), true);
   }
 }

@@ -344,7 +344,7 @@ class CUP$parser$actions {
 		int dleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Decl d = (Decl)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new DeclFunctionDecl(fd); 
+		 RESULT = new DeclFunctionDecl(fd, d); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Decl",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

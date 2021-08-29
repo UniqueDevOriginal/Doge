@@ -14,10 +14,10 @@ public class FuncDeclTypeArgBlock extends FunctionDecl {
 
     String type = "FunctionDecl";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
-    System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + "VOID");
+    System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "VOID");
     id.print(prefix + (isTail ?"    " : "|   "), false);
-    System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + "(");
-    System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + ")");
+    System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "(");
+    System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + ")");
     blo.print(prefix + (isTail ?"    " : "|   "), true);
   }
 }    
