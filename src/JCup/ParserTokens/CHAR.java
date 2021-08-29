@@ -1,9 +1,9 @@
 package JCup.ParserTokens;
 
 public class CHAR extends TypeId{
-    String caracter;
+    Object caracter;
 
-    public CHAR(String c) {
+    public CHAR(Object c) {
        caracter = c;
     }
 

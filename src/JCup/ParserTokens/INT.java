@@ -1,9 +1,9 @@
 package JCup.ParserTokens;
 
 public class INT extends TypeId {
-    Integer var;
+    Object var;
 
-    public INT(Integer i) {
+    public INT(Object i) {
        var = i;
     }
 

@@ -57,12 +57,12 @@ NewLine = \r|\n|\r\n
 WhiteSpace = {NewLine} | [ \t\f]
 Alpha  = [|a-z|]
 Character = [\'][{Alpha}][\']
+//String = [\"][^\n\"]+[\"]
 Digit = [0-9]
 Number = [0-9]|[1-9][0-9]*
 AlphaNum = [{Alpha}|{Digit}]
 Id = {Alpha}{AlphaNum}*
 Comentario = "$"[^\n]*
-// String = [\"][^\n\"]+[\"]
 
 
 %%
@@ -107,10 +107,10 @@ Comentario = "$"[^\n]*
     {WhiteSpace}     { /* ignore */ }
 
    /* ----------Char Literal---------- */
-    {Character} { print_token(yytext()); return symbol(sym.CHARACTER);}
+    {Character} { print_token(yytext()); return symbol(sym.CHARACTER, new String(yytext()));}
 
    /* ----------Int Literal---------- */
-    {Number}    { print_token(yytext()); return symbol(sym.NUMBER);}
+    {Number}    { print_token(yytext()); return symbol(sym.NUMBER, new Integer(yytext()));}
 
     /* ----------Identificador---------- */
     {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 

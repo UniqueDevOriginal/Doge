@@ -12,7 +12,7 @@ parser code {:
     public void report_error(String message, Object info) {
 
         /* Crie um StringBuilder chamado 'm' com a string 'Erro' nele. */
-        StringBuilder m = new StringBuilder("Error");
+        StringBuilder m = new StringBuilder("\033[0;31m"+"Error");
 
         /* Verifique se as informações passadas para o método são 
         do tipo java_cup.runtime.Symbol. */
@@ -37,12 +37,13 @@ parser code {:
 
         /* Imprime o conteudo de 'm' que contem a msg de erro, 
         com as informação de linha e coluna e a msg*/
-        System.err.println(m);
+        System.out.println(); 
+        System.err.println(m+"\033[0m");
     }
 
     /* Sobrescrever report_fatal_error para exibit linha e coluna do erro 
        alem da mensagem do erro, e termina a execução. */
-    public void report_fatal_error(String message, Object info) {
+    public void report_fatal_error(String message, Object info) { 
         report_error(message, info);
         System.exit(1);
     }
@@ -50,8 +51,8 @@ parser code {:
 
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
 /* ----------Palavras Reservadas----------*/
-terminal String CHAR;
-terminal Integer INT;
+terminal CHAR;
+terminal INT;
 terminal VOID;
 terminal SHOW;
 terminal IF;
@@ -75,6 +76,7 @@ terminal String IDENT;
 terminal String CHARACTER;
 terminal Integer NUMBER;
 
+
 /* ---------------------------------Não-terminais------------------------ */
 
 non terminal Program Program;
@@ -84,12 +86,12 @@ non terminal Id      Id;
 non terminal VarDecl VarDecl;
 non terminal Var     Var;
 non terminal VarList ;
-non terminal Argument ;
-non terminal Block ; 
-non terminal FunctionDecl ;
+non terminal Argument Argument;
+non terminal Block Block; 
+non terminal FunctionDecl FunctionDecl;
 non terminal Stmt ;
 non terminal Expr ;
-non terminal BlockStmt ;
+non terminal BlockStmt BlockStmt;
 non terminal ReturnValue ;
 non terminal BinOp ; 
 non terminal RelOp ;
@@ -107,32 +109,32 @@ non terminal Actuals ;
 
 /* -----------------------------------------Regras de Produção Gramatica Em EBNF--------------------------------------- */
 
-Program     	    ::= Decl:d {: RESULT = new ProgramDecl(d); :};
+Program     	 ::= Decl:d {: RESULT = new ProgramDecl(d); :};
 Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd); :}
-                        | FunctionDecl Decl 
+                        | FunctionDecl:fd Decl:d  {: RESULT = new DeclFunctionDecl(fd); :}
                         | /* empty */
                         ;
-VarDecl             ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
+VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
                         | Var:v AssingOp:ao Literal:lt SEMI {: RESULT = new VarDeclAssingOp(v,ao,lt);:}
                         ;
-Var                 ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
-VarList             ::= Var COMMA VarList 
+Var                  ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
+VarList            ::= Var COMMA VarList 
                         | Var
                         ;
-TypeId              ::= INT:n {: RESULT = new INT(n); :}
+TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}
                         ;
 Id                  ::= IDENT:id {: RESULT = new IDENT(id); :};
 FunctionDecl        ::= TypeId Id LEFTPAREN Argument RIGHTPAREN Block
-                        | VOID Id LEFTPAREN Argument RIGHTPAREN Block
+                        | VOID Id:i LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(i, bl);:}
                         ;
-Argument            ::= VarList 
-                        | /* empty */
+Argument            ::= VarList
+                        | 
                         ;
-Block               ::= LEFTBRACE BlockStmt RIGHTBRACE;
-BlockStmt           ::= VarDecl BlockStmt 
+Block               ::= LEFTBRACE BlockStmt:blst RIGHTBRACE {: RESULT = new BlockStmtBlock(blst); :};
+BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(vd); :}
                         | Stmt BlockStmt 
-                        | /* empty */
+                        | 
                         ;
 Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block 
                         | WHILE LEFTPAREN Expr RIGHTPAREN Block 
@@ -160,7 +162,7 @@ Expr                ::= NUMBER BinOp NUMBER
                         | NUMBER ArithOp NUMBER
                         ;
 Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); :}
-                        | CHARACTER
+                        |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); :}
                         ;
 ArithOp             ::= PLUS 
                         | MINUS 
