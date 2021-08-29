@@ -20,7 +20,7 @@ public class VarDeclAssingOp extends VarDecl {
         child1.print(prefix + (isTail ? "    " : "|   "), false);
         child2.print(prefix + (isTail ? "    " : "|   "), false);
         child3.print(prefix + (isTail ? "    " : "|   "), true);
-        System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + ";");
+        System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + ";");
     }
 
 }

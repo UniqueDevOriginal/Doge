@@ -75,7 +75,6 @@ Comentario = "$"[^\n]*
    /* ----------Tipos (Também São Palavras Reservadas)---------*/
     "char"   { print_token(" char "); return symbol(sym.CHAR);}
     "int"    { print_token(" int "); return symbol(sym.INT);}
-    "void"   { print_token(" void "); return symbol(sym.VOID);}
  
    /* ----------Delimitadore s---------*/
     "("      { print_token(" ( "); return symbol(sym.LEFTPAREN);}

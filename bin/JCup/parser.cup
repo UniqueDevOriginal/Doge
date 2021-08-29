@@ -53,7 +53,6 @@ parser code {:
 /* ----------Palavras Reservadas----------*/
 terminal CHAR;
 terminal INT;
-terminal VOID;
 terminal SHOW;
 terminal IF;
 terminal WHILE;
@@ -119,41 +118,37 @@ Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd, d); :}
 VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
                         | Var:v AssingOp:ao Literal:lt SEMI {: RESULT = new VarDeclAssingOp(v,ao,lt);:}
                         ;
-Var                  ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
+Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); :};
 VarList            ::= Var COMMA VarList 
                         | Var:v {: RESULT = new VarListVar(v);:}
                         ;
 TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}
                         ;
-Id                  ::= IDENT:id {: RESULT = new IDENT(id); :};
-FunctionDecl        ::= TypeId Id LEFTPAREN Argument RIGHTPAREN Block
-                        | VOID Id:i LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(i,argt, bl);:}
-                        ;
-Argument            ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
-                        | 
+Id                    ::= IDENT:id {: RESULT = new IDENT(id); :};
+FunctionDecl  ::= TypeId:ti Id:id LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti, id,argt, bl);:};
+Argument        ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
+                        | /* empty */
                         ;
 Block               ::= LEFTBRACE BlockStmt:blst RIGHTBRACE {: RESULT = new BlockStmtBlock(blst); :};
 BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(vd); :}
                         | Stmt BlockStmt 
-                        | 
+                        | /* empty */
                         ;
 Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block 
                         | WHILE LEFTPAREN Expr RIGHTPAREN Block 
-                        | Id AssingOp Literal SEMI
-                        | Id AssingOp Expr SEMI
+                        | Id EQUAL Literal SEMI
+                        | Id EQUAL Expr SEMI
                         | SHOW LEFTPAREN Id RIGHTPAREN SEMI
                         | Call
                         | RETURN ReturnValue SEMI
                         ;
 ReturnValue         ::= Expr 
                         | Id 
-                        | Literal 
                         | /* empty */
                         ;
 Call                ::= Id LEFTPAREN Actuals RIGHTPAREN SEMI;
-Actuals             ::= Literal 
-                        | Literal COMMA Actuals 
+Actuals             ::= Literal COMMA Actuals 
                         | Expr COMMA Actuals 
                         | Expr 
                         | /* empty */
