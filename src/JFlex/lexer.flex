@@ -32,7 +32,7 @@ import JCup.*;
 %{
 
    private void print_token(String token_name) {
-         System.out.print(token_name);         
+         System.out.print("teste"+"< "+"token_name+" >");         
    }
 
     /* Criar um novo simbolo com informações sobre token, sem valor */
@@ -47,7 +47,7 @@ import JCup.*;
 %}
 
 /*Faz com que o JFlex feche o fluxo de entrada no final do arquivo.*/
-%eofclose
+// %eofclose
 
 /*
    Macros que serão usadas no código gerado pelo JFlex.
@@ -116,7 +116,7 @@ Comentario = "$"[^\n]*
     {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 
     
     /*---------Final do Arquivo---------*/
-    <<EOF>> { print_token("<<EOF>>"); return symbol(sym.EOF);}   
+    <<EOF>> {return symbol(sym.EOF);}   
     
     /*---------Retorna erro léxico---------*/
     . { throw new Error("\033[0;31m"+"Illegal character <"+yytext()+">"+" in line "+(yyline+1)+", column "+(yycolumn+1)+"\033[0m"); }
