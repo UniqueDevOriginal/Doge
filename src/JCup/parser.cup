@@ -85,7 +85,7 @@ non terminal TypeId  TypeId;
 non terminal Id      Id;
 non terminal VarDecl VarDecl;
 non terminal Var     Var;
-non terminal VarList  VarList;
+non terminal VarList  ;
 non terminal Argument Argument;
 non terminal Block Block; 
 non terminal FunctionDecl FunctionDecl;
@@ -104,13 +104,15 @@ non terminal Actuals ;
 
 /* ---------------------------------Precedencia dos Terminais-------------------------------- */
 
-// precedence left PLUS, MINUS;
-// precedence left TIMES, DIVIDE;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+
+start with Program;
 
 /* -----------------------------------------Regras de Produção Gramatica Em EBNF--------------------------------------- */
 
 Program     	 ::= Decl:d {: RESULT = new ProgramDecl(d); :};
-Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd); :}
+Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd, d); :}
                         | FunctionDecl:fd Decl:d  {: RESULT = new DeclFunctionDecl(fd); :}
                         | /* empty */
                         ;
@@ -119,7 +121,7 @@ VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :}
                         ;
 Var                  ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
 VarList            ::= Var COMMA VarList 
-                        | Var:v {: RESULT =  new VarListVar(v); :}
+                        | Var
                         ;
 TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}

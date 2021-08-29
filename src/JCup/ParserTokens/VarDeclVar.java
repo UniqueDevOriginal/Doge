@@ -4,8 +4,8 @@ public class VarDeclVar extends VarDecl {
 
     Var child1;
 
-    public VarDeclVar(Var child) {
-      child1 = child;
+    public VarDeclVar(Var ch1) {
+      child1 = ch1;
     }
   
   @Override
@@ -14,8 +14,7 @@ public class VarDeclVar extends VarDecl {
     String type = "VarDecl";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
     child1.print(prefix + (isTail ?"    " : "|   "), false);
-    System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + ";");
-      
+    System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + ";");
   }
 }    
 
