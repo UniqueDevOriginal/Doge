@@ -406,7 +406,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 8: // VarList ::= Var COMMA VarList 
             {
-              Object RESULT =null;
+              VarList RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("VarList",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -415,8 +415,11 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 9: // VarList ::= Var 
             {
-              Object RESULT =null;
-
+              VarList RESULT =null;
+		int vleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int vright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Var v = (Var)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT =  new VarListVar(v); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("VarList",6, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

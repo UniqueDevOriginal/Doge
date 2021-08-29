@@ -85,7 +85,7 @@ non terminal TypeId  TypeId;
 non terminal Id      Id;
 non terminal VarDecl VarDecl;
 non terminal Var     Var;
-non terminal VarList ;
+non terminal VarList  VarList;
 non terminal Argument Argument;
 non terminal Block Block; 
 non terminal FunctionDecl FunctionDecl;
@@ -119,7 +119,7 @@ VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :}
                         ;
 Var                  ::= TypeId:t Id:i {: RESULT = new VarTypeId(t,i); :};
 VarList            ::= Var COMMA VarList 
-                        | Var
+                        | Var:v {: RESULT =  new VarListVar(v); :}
                         ;
 TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}
