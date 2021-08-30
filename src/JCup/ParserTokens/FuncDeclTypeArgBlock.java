@@ -19,10 +19,11 @@ public class FuncDeclTypeArgBlock extends FunctionDecl {
     String type = "FunctionDecl";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
     ti.print(prefix + (isTail ?"|   " : "|   "), false);
-    id.print(prefix + (isTail ?"|   " : "|   "), true);
+    id.print(prefix + (isTail ?"|   " : "|   "), false);
     System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "(");
+
     if (arg != null) {
-    arg.print(prefix + (isTail ?"   " : "| "), true);
+    arg.print(prefix + (isTail ?"|   " : "    "), false);
     } else {
       System.out.println(prefix + "|   " + (isTail ?  "| " : "| ") + "  ");
     }
