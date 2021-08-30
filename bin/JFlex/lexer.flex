@@ -73,33 +73,33 @@ Comentario = "$"[^\n]*
     /* Imprime o token encontrado que foi declarado na classe sym e retorna. */
    
    /* ----------Tipos (Também São Palavras Reservadas)---------*/
-    "char"   { print_token(" char "); return symbol(sym.CHAR);}
-    "int"    { print_token(" int "); return symbol(sym.INT);}
+    "char"   { print_token("char"); return symbol(sym.CHAR);}
+    "int"    { print_token("int"); return symbol(sym.INT);}
  
    /* ----------Delimitadore s---------*/
-    "("      { print_token(" ( "); return symbol(sym.LEFTPAREN);}
-    ")"      { print_token(" ) "); return symbol(sym.RIGHTPAREN);}
-    "{"      { print_token(" { "); return symbol(sym.LEFTBRACE);}
-    "}"      { print_token(" } "); return symbol(sym.RIGHTBRACE);}
-    ";"      { print_token(" ; "); return symbol(sym.SEMI);}
+    "("      { print_token("("); return symbol(sym.LEFTPAREN);}
+    ")"      { print_token(")"); return symbol(sym.RIGHTPAREN);}
+    "{"      { print_token("{"); return symbol(sym.LEFTBRACE);}
+    "}"      { print_token("}"); return symbol(sym.RIGHTBRACE);}
+    ";"      { print_token(";"); return symbol(sym.SEMI);}
  
    /* ----------Operadores-- -------*/
-    ","      { print_token(" , "); return symbol(sym.COMMA);}
-    "<"      { print_token(" < "); return symbol(sym.LESS);}
-    ">"      { print_token(" > "); return symbol(sym.GREATER);}
-    "="      { print_token(" = "); return symbol(sym.EQUAL);}
-    "=="     { print_token(" == "); return symbol(sym.EQUALS);}
-    "!="     { print_token(" != "); return symbol(sym.NOTEQUALS);}
-    "+"      { print_token(" + "); return symbol(sym.PLUS);}
-    "-"      { print_token(" - "); return symbol(sym.MINUS);}
-    "*"      { print_token(" * "); return symbol(sym.TIMES);}
-    "/"      { print_token(" / "); return symbol(sym.DIVIDE);}
- 
-   /* ----------Palavras Res ervadas---------*/
-    "if"     { print_token(" if "); return symbol(sym.IF);}
-    "while"  { print_token(" while "); return symbol(sym.WHILE);}
-    "return" { print_token(" return "); return symbol(sym.RETURN);}
-    "show"  { print_token(" show "); return symbol(sym.SHOW);}
+    ","      { print_token(","); return symbol(sym.COMMA);}
+    "<"      { print_token("<"); return symbol(sym.LESS);}
+    ">"      { print_token(">"); return symbol(sym.GREATER);}
+    "="      { print_token("="); return symbol(sym.EQUAL);}
+    "=="     { print_token("=="); return symbol(sym.EQUALS);}
+    "!="     { print_token("!="); return symbol(sym.NOTEQUALS);}
+    "+"      { print_token("+"); return symbol(sym.PLUS);}
+    "-"      { print_token("-"); return symbol(sym.MINUS);}
+    "*"      { print_token("*"); return symbol(sym.TIMES);}
+    "/"      { print_token("/"); return symbol(sym.DIVIDE);}
+
+    /* ----------Palavras Reservadas---------*/
+    "if"     { print_token("if"); return symbol(sym.IF);}
+    "while"  { print_token("while"); return symbol(sym.WHILE);}
+    "return" { print_token("return"); return symbol(sym.RETURN);}
+    "show"  { print_token("show"); return symbol(sym.SHOW);}
      
      /*----------Comentário e Espaço em Branco----------*/
     {Comentario}     { /* ignore */ }

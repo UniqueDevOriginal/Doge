@@ -743,37 +743,37 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 28: break;
           case 3:
-            { print_token(" ( "); return symbol(sym.LEFTPAREN);
+            { print_token("("); return symbol(sym.LEFTPAREN);
             }
             // fall through
           case 29: break;
           case 4:
-            { print_token(" ) "); return symbol(sym.RIGHTPAREN);
+            { print_token(")"); return symbol(sym.RIGHTPAREN);
             }
             // fall through
           case 30: break;
           case 5:
-            { print_token(" * "); return symbol(sym.TIMES);
+            { print_token("*"); return symbol(sym.TIMES);
             }
             // fall through
           case 31: break;
           case 6:
-            { print_token(" + "); return symbol(sym.PLUS);
+            { print_token("+"); return symbol(sym.PLUS);
             }
             // fall through
           case 32: break;
           case 7:
-            { print_token(" , "); return symbol(sym.COMMA);
+            { print_token(","); return symbol(sym.COMMA);
             }
             // fall through
           case 33: break;
           case 8:
-            { print_token(" - "); return symbol(sym.MINUS);
+            { print_token("-"); return symbol(sym.MINUS);
             }
             // fall through
           case 34: break;
           case 9:
-            { print_token(" / "); return symbol(sym.DIVIDE);
+            { print_token("/"); return symbol(sym.DIVIDE);
             }
             // fall through
           case 35: break;
@@ -783,22 +783,22 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 36: break;
           case 11:
-            { print_token(" ; "); return symbol(sym.SEMI);
+            { print_token(";"); return symbol(sym.SEMI);
             }
             // fall through
           case 37: break;
           case 12:
-            { print_token(" < "); return symbol(sym.LESS);
+            { print_token("<"); return symbol(sym.LESS);
             }
             // fall through
           case 38: break;
           case 13:
-            { print_token(" = "); return symbol(sym.EQUAL);
+            { print_token("="); return symbol(sym.EQUAL);
             }
             // fall through
           case 39: break;
           case 14:
-            { print_token(" > "); return symbol(sym.GREATER);
+            { print_token(">"); return symbol(sym.GREATER);
             }
             // fall through
           case 40: break;
@@ -808,27 +808,27 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 41: break;
           case 16:
-            { print_token(" { "); return symbol(sym.LEFTBRACE);
+            { print_token("{"); return symbol(sym.LEFTBRACE);
             }
             // fall through
           case 42: break;
           case 17:
-            { print_token(" } "); return symbol(sym.RIGHTBRACE);
+            { print_token("}"); return symbol(sym.RIGHTBRACE);
             }
             // fall through
           case 43: break;
           case 18:
-            { print_token(" != "); return symbol(sym.NOTEQUALS);
+            { print_token("!="); return symbol(sym.NOTEQUALS);
             }
             // fall through
           case 44: break;
           case 19:
-            { print_token(" == "); return symbol(sym.EQUALS);
+            { print_token("=="); return symbol(sym.EQUALS);
             }
             // fall through
           case 45: break;
           case 20:
-            { print_token(" if "); return symbol(sym.IF);
+            { print_token("if"); return symbol(sym.IF);
             }
             // fall through
           case 46: break;
@@ -838,27 +838,27 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 47: break;
           case 22:
-            { print_token(" int "); return symbol(sym.INT);
+            { print_token("int"); return symbol(sym.INT);
             }
             // fall through
           case 48: break;
           case 23:
-            { print_token(" char "); return symbol(sym.CHAR);
+            { print_token("char"); return symbol(sym.CHAR);
             }
             // fall through
           case 49: break;
           case 24:
-            { print_token(" show "); return symbol(sym.SHOW);
+            { print_token("show"); return symbol(sym.SHOW);
             }
             // fall through
           case 50: break;
           case 25:
-            { print_token(" while "); return symbol(sym.WHILE);
+            { print_token("while"); return symbol(sym.WHILE);
             }
             // fall through
           case 51: break;
           case 26:
-            { print_token(" return "); return symbol(sym.RETURN);
+            { print_token("return"); return symbol(sym.RETURN);
             }
             // fall through
           case 52: break;

@@ -1,8 +1,4 @@
 int alomundo(int e){
     char c;
 }
-int aces;
-
-int b;
-
-int c;
+char teste;
