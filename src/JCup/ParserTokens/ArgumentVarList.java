@@ -9,7 +9,13 @@ public class ArgumentVarList extends Argument {
 
     @Override
     void print (String prefix, boolean isTail) {
-        child.print(prefix + (isTail ?"    " : "|   "), true);
+        String type = "Argument";
+        System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
+        if (child != null) {
+            child.print(prefix + (isTail ?"    " : "|   "), true);
+        } else {
+            System.out.println(prefix + "|   " + (isTail ?  "| " : "| ") + " ");
+        }
     }
     
 }
