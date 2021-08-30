@@ -1,4 +1,3 @@
-int alomundo(int e){
-    char c;
+int f(int a, char g){
+    int c;
 }
-char teste;

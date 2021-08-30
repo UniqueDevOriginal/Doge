@@ -409,7 +409,10 @@ class CUP$parser$actions {
 		int vleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int vright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Var v = (Var)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-
+		int vlleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int vlright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		VarList vl = (VarList)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new VarListVarList(v,vl); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("VarList",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
