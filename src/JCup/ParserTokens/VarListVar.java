@@ -9,7 +9,7 @@ public class VarListVar extends VarList {
   
   @Override
   void print(String prefix, boolean isTail) {
-    child1.print(prefix + (isTail ?"  " : "|   "), true);
+    child1.print(prefix + (isTail ?"" : "|   "), false);
     //System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + ";");
   }
 } 
