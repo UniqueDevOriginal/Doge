@@ -13,7 +13,7 @@ public class VarListVarList extends VarList {
   void print(String prefix, boolean isTail) {
     child1.print(prefix + (isTail ?"|   " : "|   "), false);
     System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + ",");
-    child2.print(prefix +"|   "+ (isTail ?"|   " : "|  "), true);
+    child2.print(prefix + "|   "+ (isTail ?"|   " : "|  "), false);
     
   }
 } 

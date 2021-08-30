@@ -22,7 +22,7 @@ public class FuncDeclTypeArgBlock extends FunctionDecl {
     id.print(prefix + (isTail ?"|   " : "|   "), true);
     System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "(");
     if (arg != null) {
-    arg.print(prefix + (isTail ?"  " : ""), false);
+    arg.print(prefix + (isTail ?"    " : "|   "), false);
     } else {
       System.out.println(prefix + "|   " + (isTail ?  "| " : "| ") + "  ");
     }

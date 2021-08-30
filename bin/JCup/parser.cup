@@ -118,9 +118,7 @@ Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd, d); :}
 VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
                         | Var:v AssingOp:ao Literal:lt SEMI {: RESULT = new VarDeclAssingOp(v,ao,lt);:}
                         ;
-Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); :};
-VarList            ::= Var:v COMMA VarList:vl {: RESULT = new VarListVarList(v,vl); :}
-                        | Var:v {: RESULT = new VarListVar(v); :}
+Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); :}
                         ;
 TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}
@@ -129,6 +127,9 @@ Id                      ::= IDENT:id {: RESULT = new IDENT(id); :};
 FunctionDecl       ::= TypeId:ti Id:id LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti, id,argt, bl);:};
 Argument           ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         | /* empty */
+                        ;
+VarList            ::= Var:v COMMA VarList:vl {: RESULT = new VarListVarList(v,vl); :}
+                        | Var:v {: RESULT = new VarListVar(v); :}
                         ;
 Block               ::= LEFTBRACE BlockStmt:blst RIGHTBRACE {: RESULT = new BlockStmtBlock(blst); :};
 BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(vd, blst); :}
