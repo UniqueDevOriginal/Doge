@@ -144,7 +144,7 @@ Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;
 ReturnValue         ::= Expr 
-                        | Id 
+                        | Id:id {: RESULT = new ReturnValueId(id); :}} 
                         | /* empty */
                         ;
 Call                ::= Id LEFTPAREN Actuals RIGHTPAREN SEMI;

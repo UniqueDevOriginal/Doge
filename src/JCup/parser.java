@@ -637,7 +637,10 @@ class CUP$parser$actions {
           case 28: // ReturnValue ::= Id 
             {
               ReturnValue RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Id id = (Id)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new ReturnValueId(id); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ReturnValue",13, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
