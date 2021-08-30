@@ -59,7 +59,7 @@ terminal WHILE;
 terminal RETURN;
 
 /* ----------Operadores e pontuação---------*/
-terminal Object PLUS, MINUS, TIMES, DIVIDE;
+terminal String PLUS, MINUS, TIMES, DIVIDE;
 terminal COMMA;
 terminal LESS, GREATER;
 terminal EQUALS, NOTEQUALS;
@@ -154,21 +154,20 @@ Actuals             ::= Literal COMMA Actuals
                         | Expr 
                         | /* empty */
                         ;
-Expr                ::= NUMBER
-                        | NUMBER BinOp NUMBER
+Expr                ::= NUMBER BinOp NUMBER
                         | Id BinOp Id
                         | Id ArithOp Id 
                         | NUMBER BinOp Id 
                         | Id BinOp NUMBER 
-                        | NUMBER:nb PLUS:aro Expr /*{: RESULT = new ExprNumberArithOp(n1,aro,n2);:}*/
+                        | NUMBER:n1 ArithOp:aro NUMBER:n2 {: RESULT = new ExprNumberArithOp(n1,aro,n2);:}
                         ;
 Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); :}
                         |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); :}
                         ;
 ArithOp           ::= PLUS:plu {: RESULT = new PLUS(plu);:} 
-                        | MINUS 
-                        | TIMES 
-                        | DIVIDE
+                        | MINUS:min {: RESULT = new MINUS(min);:}
+                        | TIMES:tim {: RESULT = new TIMES(tim);:}
+                        | DIVIDE:div {: RESULT = new DIVIDE(div);:}
                         ;
 AssingOp            ::= EQUAL:eq {: RESULT = new EQUAL(eq); :};
 BinOp               ::= RelOp 

@@ -7,7 +7,7 @@ public class DeclVarDecl extends Decl {
   public DeclVarDecl(VarDecl child, Decl ch2) {
     child1 = child;
     child2 = ch2;
- 
+    System.out.println("VAI DAR MERDA VAI");
   }
 
   @Override

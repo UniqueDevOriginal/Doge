@@ -32,7 +32,7 @@ import JCup.*;
 %{
 
    private void print_token(String token_name) {
-         System.out.print(" <"+token_name+">");         
+         System.out.print(" <"+token_name+">");
    }
 
     /* Criar um novo simbolo com informações sobre token, sem valor */
@@ -90,7 +90,7 @@ Comentario = "$"[^\n]*
     "="      { print_token("="); return symbol(sym.EQUAL);}
     "=="     { print_token("=="); return symbol(sym.EQUALS);}
     "!="     { print_token("!="); return symbol(sym.NOTEQUALS);}
-    "+"      { print_token("+"); return symbol(sym.PLUS);}
+    "+"      { print_token("+"); return symbol(sym.PLUS, new String(yytext()));}
     "-"      { print_token("-"); return symbol(sym.MINUS);}
     "*"      { print_token("*"); return symbol(sym.TIMES);}
     "/"      { print_token("/"); return symbol(sym.DIVIDE);}
@@ -100,8 +100,8 @@ Comentario = "$"[^\n]*
     "while"  { print_token("while"); return symbol(sym.WHILE);}
     "return" { print_token("return"); return symbol(sym.RETURN);}
     "show"  { print_token("show"); return symbol(sym.SHOW);}
-     
-     /*----------Comentário e Espaço em Branco----------*/
+
+          /*----------Comentário e Espaço em Branco----------*/
     {Comentario}     { /* ignore */ }
     {WhiteSpace}     { /* ignore */ }
 
@@ -113,7 +113,7 @@ Comentario = "$"[^\n]*
 
     /* ----------Identificador---------- */
     {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 
-    
+  
     /*---------Final do Arquivo---------*/
     <<EOF>> {return symbol(sym.EOF);}   
     

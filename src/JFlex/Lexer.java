@@ -311,7 +311,7 @@ public class Lexer implements java_cup.runtime.Scanner {
   /* user code: */
 
    private void print_token(String token_name) {
-         System.out.print(" <"+token_name+">");         
+         System.out.print(" <"+token_name+">");
    }
 
     /* Criar um novo simbolo com informações sobre token, sem valor */
@@ -758,7 +758,7 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 31: break;
           case 6:
-            { print_token("+"); return symbol(sym.PLUS);
+            { print_token("+"); return symbol(sym.PLUS, new String(yytext()));
             }
             // fall through
           case 32: break;
