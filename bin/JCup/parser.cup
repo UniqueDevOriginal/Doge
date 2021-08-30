@@ -88,10 +88,10 @@ non terminal VarList  VarList;
 non terminal Argument Argument;
 non terminal Block Block; 
 non terminal FunctionDecl FunctionDecl;
-non terminal Stmt ;
+non terminal Stmt Stmt;
 non terminal Expr ;
 non terminal BlockStmt BlockStmt;
-non terminal ReturnValue ;
+non terminal ReturnValue ReturnValue;
 non terminal BinOp ; 
 non terminal RelOp ;
 non terminal EqOp ;
@@ -132,7 +132,7 @@ Argument           ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         ;
 Block               ::= LEFTBRACE BlockStmt:blst RIGHTBRACE {: RESULT = new BlockStmtBlock(blst); :};
 BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(vd); :}
-                        | Stmt BlockStmt 
+                        | Stmt:st BlockStmt:blst {: RESULT = new BlockStmtStmt(st, blst); :}
                         | /* empty */
                         ;
 Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block 
@@ -141,7 +141,7 @@ Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block
                         | Id EQUAL Expr SEMI
                         | SHOW LEFTPAREN Id RIGHTPAREN SEMI
                         | Call
-                        | RETURN ReturnValue SEMI
+                        | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;
 ReturnValue         ::= Expr 
                         | Id 

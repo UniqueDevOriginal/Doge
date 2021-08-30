@@ -538,7 +538,13 @@ class CUP$parser$actions {
           case 18: // BlockStmt ::= Stmt BlockStmt 
             {
               BlockStmt RESULT =null;
-
+		int stleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int stright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		Stmt st = (Stmt)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int blstleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int blstright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		BlockStmt blst = (BlockStmt)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new BlockStmtStmt(st, blst); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("BlockStmt",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -555,7 +561,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 20: // Stmt ::= IF LEFTPAREN Expr RIGHTPAREN Block 
             {
-              Object RESULT =null;
+              Stmt RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Stmt",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -564,7 +570,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 21: // Stmt ::= WHILE LEFTPAREN Expr RIGHTPAREN Block 
             {
-              Object RESULT =null;
+              Stmt RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Stmt",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -573,7 +579,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 22: // Stmt ::= Id EQUAL Literal SEMI 
             {
-              Object RESULT =null;
+              Stmt RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Stmt",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -582,7 +588,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 23: // Stmt ::= Id EQUAL Expr SEMI 
             {
-              Object RESULT =null;
+              Stmt RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Stmt",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -591,7 +597,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 24: // Stmt ::= SHOW LEFTPAREN Id RIGHTPAREN SEMI 
             {
-              Object RESULT =null;
+              Stmt RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Stmt",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -600,7 +606,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 25: // Stmt ::= Call 
             {
-              Object RESULT =null;
+              Stmt RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Stmt",10, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -609,8 +615,11 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 26: // Stmt ::= RETURN ReturnValue SEMI 
             {
-              Object RESULT =null;
-
+              Stmt RESULT =null;
+		int rvleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int rvright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ReturnValue rv = (ReturnValue)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 RESULT = new StmtReturnValue(rv); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Stmt",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -618,7 +627,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 27: // ReturnValue ::= Expr 
             {
-              Object RESULT =null;
+              ReturnValue RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ReturnValue",13, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -627,7 +636,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 28: // ReturnValue ::= Id 
             {
-              Object RESULT =null;
+              ReturnValue RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ReturnValue",13, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -636,7 +645,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 29: // ReturnValue ::= 
             {
-              Object RESULT =null;
+              ReturnValue RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ReturnValue",13, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
