@@ -2,6 +2,7 @@ package JCup.ParserTokens;
 
 public class BlockStmtBlock extends Block {
     BlockStmt child;
+    
 
     public BlockStmtBlock(BlockStmt d) {
         child = d;

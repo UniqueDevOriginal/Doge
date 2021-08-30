@@ -13,9 +13,9 @@ public class StmtReturnValue extends Stmt {
             return;
         String type = "ReturnValue";
         System.out.println(prefix + (isTail ? "" : "|-- ")+type);
-        System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "RETURN");
+        System.out.println(prefix + "" + (isTail ?  "|-- " : "|-- ") + "RETURN");
          child.print(prefix + (isTail ?"    " : "|   "), true);
-        System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + ";");
+        System.out.println(prefix + "" + (isTail ?  "|-- " : "|-- ") + ";");
         
     }
     

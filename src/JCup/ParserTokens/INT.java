@@ -9,8 +9,7 @@ public class INT extends TypeId {
 
 	@Override
 	void print(String prefix, boolean isTail) {
-		
-	    String type = "TypeId";
+		String type = "TypeId";
 		System.out.println(prefix + (isTail ?  "|-- " : "|-- ") + type);
 		System.out.println(prefix + "|    " + (isTail ?  "|-- " : "|-- ") + "INT");
 	    

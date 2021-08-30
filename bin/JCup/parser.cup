@@ -59,7 +59,7 @@ terminal WHILE;
 terminal RETURN;
 
 /* ----------Operadores e pontuação---------*/
-terminal PLUS, MINUS, TIMES, DIVIDE;
+terminal Object PLUS, MINUS, TIMES, DIVIDE;
 terminal COMMA;
 terminal LESS, GREATER;
 terminal EQUALS, NOTEQUALS;
@@ -89,7 +89,7 @@ non terminal Argument Argument;
 non terminal Block Block; 
 non terminal FunctionDecl FunctionDecl;
 non terminal Stmt Stmt;
-non terminal Expr ;
+non terminal Expr Expr;
 non terminal BlockStmt BlockStmt;
 non terminal ReturnValue ReturnValue;
 non terminal BinOp ; 
@@ -97,7 +97,7 @@ non terminal RelOp ;
 non terminal EqOp ;
 non terminal AssingOp AssingOp;
 non terminal Literal Literal;  
-non terminal ArithOp ; 
+non terminal ArithOp ArithOp; 
 non terminal Call ;
 non terminal Actuals ;
 
@@ -125,17 +125,18 @@ VarList            ::= Var:v COMMA VarList:vl {: RESULT = new VarListVarList(v,v
 TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}
                         ;
-Id                 ::= IDENT:id {: RESULT = new IDENT(id); :};
+Id                      ::= IDENT:id {: RESULT = new IDENT(id); :};
 FunctionDecl       ::= TypeId:ti Id:id LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti, id,argt, bl);:};
 Argument           ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         | /* empty */
                         ;
 Block               ::= LEFTBRACE BlockStmt:blst RIGHTBRACE {: RESULT = new BlockStmtBlock(blst); :};
-BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(vd); :}
+BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(vd, blst); :}
                         | Stmt:st BlockStmt:blst {: RESULT = new BlockStmtStmt(st, blst); :}
                         | /* empty */
                         ;
-Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block 
+Stmt                ::= Expr
+                        | IF LEFTPAREN Expr RIGHTPAREN Block 
                         | WHILE LEFTPAREN Expr RIGHTPAREN Block 
                         | Id EQUAL Literal SEMI
                         | Id EQUAL Expr SEMI
@@ -143,7 +144,7 @@ Stmt                ::= IF LEFTPAREN Expr RIGHTPAREN Block
                         | Call
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;
-ReturnValue         ::= Expr 
+ReturnValue         ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:} 
                         | Id:id {: RESULT = new ReturnValueId(id); :}} 
                         | /* empty */
                         ;
@@ -153,17 +154,18 @@ Actuals             ::= Literal COMMA Actuals
                         | Expr 
                         | /* empty */
                         ;
-Expr                ::= NUMBER BinOp NUMBER
+Expr                ::= NUMBER
+                        | NUMBER BinOp NUMBER
                         | Id BinOp Id
                         | Id ArithOp Id 
                         | NUMBER BinOp Id 
                         | Id BinOp NUMBER 
-                        | NUMBER ArithOp NUMBER
+                        | NUMBER:nb PLUS:aro Expr /*{: RESULT = new ExprNumberArithOp(n1,aro,n2);:}*/
                         ;
 Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); :}
                         |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); :}
                         ;
-ArithOp             ::= PLUS 
+ArithOp           ::= PLUS:plu {: RESULT = new PLUS(plu);:} 
                         | MINUS 
                         | TIMES 
                         | DIVIDE

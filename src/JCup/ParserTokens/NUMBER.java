@@ -5,6 +5,7 @@ public class NUMBER extends Literal {
 
     public NUMBER(Integer i) {
        num = i; 
+       System.out.println(num);
     }
 
     @Override
