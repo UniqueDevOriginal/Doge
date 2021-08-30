@@ -159,7 +159,7 @@ Expr                ::= NUMBER BinOp NUMBER
                         | Id ArithOp Id 
                         | NUMBER BinOp Id 
                         | Id BinOp NUMBER 
-                        | NUMBER:n1 ArithOp:aro NUMBER:n2 {: RESULT = new ExprNumberArithOp(n1,aro,n2);:}
+                        | Literal:lt ArithOp:aro Literal:lt2 {: RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
                         ;
 Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); :}
                         |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); :}

@@ -8,6 +8,6 @@ public class MINUS extends ArithOp {
     }
     @Override
     void print(String prefix, boolean isTail) {
-        System.out.println(prefix + "|    " + (isTail ? "|-- " : "|-- ") + "-");
+        System.out.println(prefix  + (isTail ? "|-- " : "|-- ") + "-");
     }
 }
