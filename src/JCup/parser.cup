@@ -51,8 +51,7 @@ parser code {:
       aux.nodes_function.add(id);
     }
 
-    void id_exist(String id) throws IOException{
-        // System.out.println(id_need_to_exist);
+    void function_id_exist(String id) throws IOException{
         java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
         boolean exist = false;
         for (String newid : aux.nodes_function) {
@@ -61,7 +60,21 @@ parser code {:
             }
         }
         if (!exist){
-            throw new java.io.IOException("\033[0;31m"+"Não existe "+"< "+(id)+" >"+" not found \033[0m");
+            throw new java.io.IOException("\033[0;31m"+ " Function " + "< " + id + " >" + " isn't declared" + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
+        }
+        id_need_to_exist = false;
+    }
+
+    void var_id_exist(String id) throws IOException{
+        java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
+        boolean exist = false;
+        for (String newid : aux.nodes_var) {
+        if(newid.equals(id)){
+           exist = true;
+            }
+        }
+        if (!exist){
+            throw new java.io.IOException("\033[0;31m"+ " Variable " + "< " + id + " >" + " isn't declared" + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
     }
@@ -174,12 +187,12 @@ Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd, d); :}
 VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
                         | Var:v AssingOp:ao Literal:lt SEMI {: RESULT = new VarDeclAssingOp(v,ao,lt);:}
                         ;
-Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); :}
+Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); duplicate_var(temp_id);:}
                         ;
 TypeId             ::= INT:n {: RESULT = new INT(n); type_coming = "INT";:}
                         | CHAR:c {: RESULT = new CHAR(c); type_coming = "CHAR";:}
                         ;
-Id                     ::= IDENT:id {: /*RESULT = new IDENT(id);*/temp_id = id; duplicate_var(id);:};
+Id                     ::= IDENT:id {: /*RESULT = new IDENT(id);*/temp_id = id;:};
 FunctionDecl   ::= TypeId:ti IDENT:id {: duplicate_function(id);:} LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti,argt, bl);:};
 Argument        ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         | /* empty */
@@ -205,7 +218,7 @@ ReturnValue         ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:}
                         | Id:i {: RESULT = new ReturnValueId(i); :} 
                         | /* empty */
                         ;
-Call                ::= Id {:id_exist(temp_id);:}LEFTPAREN Actuals RIGHTPAREN SEMI; 
+Call                ::= Id {: function_id_exist(temp_id); :}LEFTPAREN Actuals RIGHTPAREN SEMI; 
 Actuals             ::= Literal COMMA Actuals 
                         | Expr COMMA Actuals 
                         | Expr 

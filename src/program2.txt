@@ -1,7 +1,10 @@
 int sum;
 
+int sum(){
+}
+
 int main(){
-    sum();    
+    mult();
 }
 
 

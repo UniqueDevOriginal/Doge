@@ -299,8 +299,7 @@ public class parser extends java_cup.runtime.lr_parser {
       aux.nodes_function.add(id);
     }
 
-    void id_exist(String id) throws IOException{
-        // System.out.println(id_need_to_exist);
+    void function_id_exist(String id) throws IOException{
         java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
         boolean exist = false;
         for (String newid : aux.nodes_function) {
@@ -309,7 +308,21 @@ public class parser extends java_cup.runtime.lr_parser {
             }
         }
         if (!exist){
-            throw new java.io.IOException("\033[0;31m"+"Não existe "+"< "+(id)+" >"+" not found \033[0m");
+            throw new java.io.IOException("\033[0;31m"+ " Function " + "< " + id + " >" + " isn't declared" + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
+        }
+        id_need_to_exist = false;
+    }
+
+    void var_id_exist(String id) throws IOException{
+        java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
+        boolean exist = false;
+        for (String newid : aux.nodes_var) {
+        if(newid.equals(id)){
+           exist = true;
+            }
+        }
+        if (!exist){
+            throw new java.io.IOException("\033[0;31m"+ " Variable " + "< " + id + " >" + " isn't declared" + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
     }
@@ -482,7 +495,7 @@ class CUP$parser$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Id i = (Id)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new VarTypeId(ti,i); 
+		 RESULT = new VarTypeId(ti,i); duplicate_var(temp_id);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Var",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -518,7 +531,7 @@ class CUP$parser$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 /*RESULT = new IDENT(id);*/temp_id = id; duplicate_var(id);
+		 /*RESULT = new IDENT(id);*/temp_id = id;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Id",3, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -772,7 +785,7 @@ class CUP$parser$actions {
           case 32: // NT$1 ::= 
             {
               Object RESULT =null;
-id_exist(temp_id);
+ function_id_exist(temp_id); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$1",23, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
