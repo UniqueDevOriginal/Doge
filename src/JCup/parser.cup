@@ -11,16 +11,21 @@ parser code {:
     AuxArray aux =  new AuxArray();
 
     void duplicate_var(String id) throws IOException{
+        java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
         for (String newid : aux.nodes) {
-            if(newid.equals(id)){
-            throw new java.io.IOException("\033[0;31m"+"Duplicate Var"+"\033[0m"); 
-            }
+        if(newid.equals(id)){
+            System.err.println(id);
+            throw new java.io.IOException("\033[0;31m"+"Duplicate Var "+(s.value)+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
         }
+      }
+      aux.nodes.add(id);
     }
     /* Sobrescrever o método report_error para que ele exiba a linha e
         coluna de onde ocorreu o erro na entrada, bem como no
         razão para o erro que é passado para o método no
         String 'mensagem'.  */
+
+    
     public void report_error(String message, Object info) {
 
         /* Crie um StringBuilder chamado 'm' com a string 'Erro' nele. */
@@ -135,9 +140,9 @@ Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); :}
 TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}
                         ;
-Id                      ::= IDENT:id {: RESULT = new IDENT(id); duplicate_var(id);:};
-FunctionDecl       ::= TypeId:ti Id:id LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti, id,argt, bl);:};
-Argument           ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
+Id                     ::= IDENT:id {: /*RESULT = new IDENT(id);*/ duplicate_var(id);:};
+FunctionDecl   ::= TypeId:ti Id:id LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti, id,argt, bl);:};
+Argument        ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         | /* empty */
                         ;
 VarList            ::= Var:v COMMA VarList:vl {: RESULT = new VarListVarList(v,vl); :}

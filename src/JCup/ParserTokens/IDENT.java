@@ -5,8 +5,8 @@ import java.io.IOException;
 public class IDENT extends Id{
     String var;
 
-    public IDENT(String s) {
-       var = s;
+    public IDENT(String id) {
+       var = id;
     }
 
 	@Override

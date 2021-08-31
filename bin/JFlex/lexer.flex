@@ -41,8 +41,8 @@ import JCup.*;
     }
 
     /* Criar um novo simbolo com informações sobre token, com valor */
-    private Symbol symbol(int type, Object value) {
-        return new Symbol(type, yyline, yycolumn, value);
+    private Symbol symbol(int type, Integer line, Integer column, Object value) {
+      return new Symbol(type, yyline, yycolumn, value);
     }
 %}
 
@@ -90,7 +90,7 @@ Comentario = "$"[^\n]*
     "="      { print_token("="); return symbol(sym.EQUAL);}
     "=="     { print_token("=="); return symbol(sym.EQUALS);}
     "!="     { print_token("!="); return symbol(sym.NOTEQUALS);}
-    "+"      { print_token("+"); return symbol(sym.PLUS, new String(yytext()));}
+    "+"      { print_token("+"); return symbol(sym.PLUS, new Integer(yyline), new Integer(yycolumn),new String(yytext()));}
     "-"      { print_token("-"); return symbol(sym.MINUS);}
     "*"      { print_token("*"); return symbol(sym.TIMES);}
     "/"      { print_token("/"); return symbol(sym.DIVIDE);}
@@ -106,13 +106,13 @@ Comentario = "$"[^\n]*
     {WhiteSpace}     { /* ignore */ }
 
    /* ----------Char Literal---------- */
-    {Character} { print_token(yytext()); return symbol(sym.CHARACTER, new String(yytext()));}
+    {Character} { print_token(yytext()); return symbol(sym.CHARACTER, new Integer(yyline), new Integer(yycolumn),new String(yytext()));}
 
    /* ----------Int Literal---------- */
-    {Number}    { print_token(yytext()); return symbol(sym.NUMBER, new Integer(yytext()));}
+    {Number}    { print_token(yytext()); return symbol(sym.NUMBER, new Integer(yyline), new Integer(yycolumn),new String(yytext()));}
 
     /* ----------Identificador---------- */
-    {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 
+    {Id} { print_token(yytext());return symbol(sym.IDENT, new Integer(yyline), new Integer(yycolumn),new String(yytext()));} 
   
     /*---------Final do Arquivo---------*/
     <<EOF>> {return symbol(sym.EOF);}   

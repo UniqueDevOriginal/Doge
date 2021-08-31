@@ -257,9 +257,11 @@ public class parser extends java_cup.runtime.lr_parser {
     AuxArray aux =  new AuxArray();
 
     void duplicate_var(String id) throws IOException{
-      for (String newid : aux.nodes) {
+        java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
+        for (String newid : aux.nodes) {
         if(newid.equals(id)){
-          throw new java.io.IOException("\033[0;31m"+"Duplicate Var"+"\033[0m"); 
+            System.err.println(id);
+            throw new java.io.IOException("\033[0;31m"+"Duplicate Var "+(s.value)+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
         }
       }
       aux.nodes.add(id);
@@ -268,6 +270,8 @@ public class parser extends java_cup.runtime.lr_parser {
         coluna de onde ocorreu o erro na entrada, bem como no
         razão para o erro que é passado para o método no
         String 'mensagem'.  */
+
+    
     public void report_error(String message, Object info) {
 
         /* Crie um StringBuilder chamado 'm' com a string 'Erro' nele. */
@@ -473,7 +477,7 @@ class CUP$parser$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new IDENT(id); duplicate_var(id);
+		 /*RESULT = new IDENT(id);*/ duplicate_var(id);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Id",3, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
