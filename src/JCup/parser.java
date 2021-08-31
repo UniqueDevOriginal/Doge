@@ -7,6 +7,8 @@ package JCup;
 
 import java_cup.runtime.*;
 import JCup.ParserTokens.*;
+import JCup.AuxStruct.AuxArray;
+import java.io.IOException;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -251,6 +253,17 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
 
+
+    AuxArray aux =  new AuxArray();
+
+    void duplicate_var(String id) throws IOException{
+      for (String newid : aux.nodes) {
+        if(newid.equals(id)){
+          throw new java.io.IOException("\033[0;31m"+"Duplicate Var"+"\033[0m"); 
+        }
+      }
+      aux.nodes.add(id);
+    }
     /* Sobrescrever o método report_error para que ele exiba a linha e
         coluna de onde ocorreu o erro na entrada, bem como no
         razão para o erro que é passado para o método no
@@ -460,7 +473,7 @@ class CUP$parser$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new IDENT(id); 
+		 RESULT = new IDENT(id); duplicate_var(id);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Id",3, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

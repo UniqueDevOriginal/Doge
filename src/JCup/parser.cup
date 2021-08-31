@@ -2,9 +2,21 @@ package JCup;
 /* ------------------------------Declaração de bibliotecas---------------------------------- */
 import java_cup.runtime.*;
 import JCup.ParserTokens.*;
+import JCup.AuxStruct.AuxArray; 
+import java.io.IOException; 
 
 /* Identificar erro no parser, mostra linha e coluna do erro */
 parser code {:
+
+    AuxArray aux =  new AuxArray();
+
+    void duplicate_var(String id) throws IOException{
+        for (String newid : aux.nodes) {
+            if(newid.equals(id)){
+            throw new java.io.IOException("\033[0;31m"+"Duplicate Var"+"\033[0m"); 
+            }
+        }
+    }
     /* Sobrescrever o método report_error para que ele exiba a linha e
         coluna de onde ocorreu o erro na entrada, bem como no
         razão para o erro que é passado para o método no
@@ -123,7 +135,7 @@ Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); :}
 TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}
                         ;
-Id                      ::= IDENT:id {: RESULT = new IDENT(id); :};
+Id                      ::= IDENT:id {: RESULT = new IDENT(id); duplicate_var(id);:};
 FunctionDecl       ::= TypeId:ti Id:id LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti, id,argt, bl);:};
 Argument           ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         | /* empty */
