@@ -9,6 +9,22 @@ import java.io.IOException;
 parser code {:
 
     AuxArray aux =  new AuxArray();
+    private String type_coming = "";
+
+    void wrong_type(String type) throws IOException{
+        java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
+        if (type.equals("INT")){
+            if (type_coming != "INT"){
+               throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
+            }   
+        }
+        else if (type.equals("CHAR")){
+            if (type_coming != "CHAR"){
+               throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
+            }   
+        }
+        type_coming = "";
+    }
 
     void duplicate_var(String id) throws IOException{
         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
@@ -33,17 +49,6 @@ parser code {:
       aux.nodes_function.add(id);
     }
 
-    void wrong_type(String type) throws IOException{
-        java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
-        String type_id= s.value.getClass().getSimpleName();
-        System.out.println(type_id);
-        // if (!(type_id.equals("Integer"))){
-        //     System.out.println();
-        //     throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
-        // }
-
-          
-    }
     /* Sobrescrever o método report_error para que ele exiba a linha e
         coluna de onde ocorreu o erro na entrada, bem como no
         razão para o erro que é passado para o método no
@@ -154,8 +159,8 @@ VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :}
                         ;
 Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); :}
                         ;
-TypeId             ::= INT:n {: RESULT = new INT(n); :}
-                        | CHAR:c {: RESULT = new CHAR(c); :}
+TypeId             ::= INT:n {: RESULT = new INT(n); type_coming = "INT";:}
+                        | CHAR:c {: RESULT = new CHAR(c); type_coming = "CHAR";:}
                         ;
 Id                     ::= IDENT:id {: /*RESULT = new IDENT(id);*/ duplicate_var(id);:};
 FunctionDecl   ::= TypeId:ti IDENT:id {: duplicate_function(id);:} LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti,argt, bl);:};
@@ -196,8 +201,8 @@ Expr                ::= NUMBER BinOp NUMBER
                         | Id BinOp NUMBER 
                         | Literal:lt ArithOp:aro Literal:lt2 {: RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
                         ;
-Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb) ; wrong_type("NUMBER");:}
-                        |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); wrong_type("CHARACTER");:}
+Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb);wrong_type("INT");:}
+                        |  CHARACTER:ct  {: RESULT = new CHARACTER(ct);wrong_type("CHAR");:}
                         ;
 ArithOp           ::= PLUS:plu {: RESULT = new PLUS(plu);:} 
                         | MINUS:min {: RESULT = new MINUS(min);:}
