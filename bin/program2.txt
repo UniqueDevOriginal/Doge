@@ -1,3 +1,6 @@
-int main(){
-    int a;
+int chard() {
+    int chard;
+}
+int r() {
+    int chard;
 }

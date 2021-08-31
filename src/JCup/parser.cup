@@ -12,13 +12,25 @@ parser code {:
 
     void duplicate_var(String id) throws IOException{
         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
-        for (String newid : aux.nodes) {
+        for (String newid : aux.nodes_var) {
         if(newid.equals(id)){
-            System.err.println(id);
-            throw new java.io.IOException("\033[0;31m"+"Duplicate Var "+(s.value)+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
+            System.out.println();
+            throw new java.io.IOException("\033[0;31m"+"Duplicate Var "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
         }
       }
-      aux.nodes.add(id);
+      aux.nodes_var.add(id);
+    }
+
+    void duplicate_function(String id) throws IOException{
+        java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
+        System.out.println(s.value);
+        for (String newid : aux.nodes_function) {
+        if(newid.equals(id)){
+            System.out.println();
+            throw new java.io.IOException("\033[0;31m"+"Duplicate Function "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
+        }
+      }
+      aux.nodes_function.add(id);
     }
     /* Sobrescrever o método report_error para que ele exiba a linha e
         coluna de onde ocorreu o erro na entrada, bem como no
@@ -83,7 +95,7 @@ terminal EQUALS, NOTEQUALS;
 terminal EQUAL;
 
 /* ----------Delimitadores--------*/
-terminal LEFTPAREN, RIGHTPAREN;
+terminal String LEFTPAREN, RIGHTPAREN;
 terminal LEFTBRACE, RIGHTBRACE;
 terminal SEMI;
 
@@ -141,7 +153,7 @@ TypeId             ::= INT:n {: RESULT = new INT(n); :}
                         | CHAR:c {: RESULT = new CHAR(c); :}
                         ;
 Id                     ::= IDENT:id {: /*RESULT = new IDENT(id);*/ duplicate_var(id);:};
-FunctionDecl   ::= TypeId:ti Id:id LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti, id,argt, bl);:};
+FunctionDecl   ::= TypeId:ti IDENT:id {: duplicate_function(id);:} LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti,argt, bl);:};
 Argument        ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         | /* empty */
                         ;
@@ -149,7 +161,7 @@ VarList            ::= Var:v COMMA VarList:vl {: RESULT = new VarListVarList(v,v
                         | Var:v {: RESULT = new VarListVar(v); :}
                         ;
 Block               ::= LEFTBRACE BlockStmt:blst RIGHTBRACE {: RESULT = new BlockStmtBlock(blst); :};
-BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(vd, blst); :}
+BlockStmt        ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(vd, blst); :}
                         | Stmt:st BlockStmt:blst {: RESULT = new BlockStmtStmt(st, blst); :}
                         | /* empty */
                         ;
@@ -163,7 +175,7 @@ Stmt                ::= Expr
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;
 ReturnValue         ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:} 
-                        | Id:id {: RESULT = new ReturnValueId(id); :} 
+                        | Id:i {: RESULT = new ReturnValueId(i); :} 
                         | /* empty */
                         ;
 Call                ::= Id LEFTPAREN Actuals RIGHTPAREN SEMI;

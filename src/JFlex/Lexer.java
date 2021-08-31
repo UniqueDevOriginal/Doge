@@ -320,7 +320,7 @@ public class Lexer implements java_cup.runtime.Scanner {
     }
 
     /* Criar um novo simbolo com informações sobre token, com valor */
-    private Symbol symbol(int type, Integer line, Integer column, Object value) {
+    private Symbol symbol(int type, Object value) {
       return new Symbol(type, yyline, yycolumn, value);
     }
 
@@ -743,12 +743,12 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 28: break;
           case 3:
-            { print_token("("); return symbol(sym.LEFTPAREN);
+            { print_token("("); return symbol(sym.LEFTPAREN, new String(yytext()));
             }
             // fall through
           case 29: break;
           case 4:
-            { print_token(")"); return symbol(sym.RIGHTPAREN);
+            { print_token(")"); return symbol(sym.RIGHTPAREN, new String(yytext()));
             }
             // fall through
           case 30: break;
@@ -758,7 +758,7 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 31: break;
           case 6:
-            { print_token("+"); return symbol(sym.PLUS, new Integer(yyline), new Integer(yycolumn),new String(yytext()));
+            { print_token("+"); return symbol(sym.PLUS, new String(yytext()));
             }
             // fall through
           case 32: break;
@@ -778,7 +778,7 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 35: break;
           case 10:
-            { print_token(yytext()); return symbol(sym.NUMBER, new Integer(yyline), new Integer(yycolumn),new String(yytext()));
+            { print_token(yytext()); return symbol(sym.NUMBER, new String(yytext()));
             }
             // fall through
           case 36: break;
@@ -803,7 +803,7 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 40: break;
           case 15:
-            { print_token(yytext());return symbol(sym.IDENT, new Integer(yyline), new Integer(yycolumn),new String(yytext()));
+            { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));
             }
             // fall through
           case 41: break;
@@ -833,7 +833,7 @@ public class Lexer implements java_cup.runtime.Scanner {
             // fall through
           case 46: break;
           case 21:
-            { print_token(yytext()); return symbol(sym.CHARACTER, new Integer(yyline), new Integer(yycolumn),new String(yytext()));
+            { print_token(yytext()); return symbol(sym.CHARACTER, new String(yytext()));
             }
             // fall through
           case 47: break;

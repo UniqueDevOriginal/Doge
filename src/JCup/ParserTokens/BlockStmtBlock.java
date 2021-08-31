@@ -11,7 +11,6 @@ public class BlockStmtBlock extends Block {
     }
 
     @Override
-    public 
     void print (String prefix, boolean isTail) throws IOException {
         String type = "Block";
         System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);

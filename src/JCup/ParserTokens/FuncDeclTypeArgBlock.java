@@ -3,13 +3,11 @@ import java.io.IOException;
 
 public class FuncDeclTypeArgBlock extends FunctionDecl {
     TypeId ti;
-    Id id;
     Argument arg;
     Block blo;
 
-    public FuncDeclTypeArgBlock(TypeId ch4, Id child1,Argument child2,Block child3) {
+    public FuncDeclTypeArgBlock(TypeId ch4,Argument child2,Block child3) {
       ti   =ch4;
-      id = child1;
       arg = child2;
       blo = child3;
     }
@@ -20,7 +18,7 @@ public class FuncDeclTypeArgBlock extends FunctionDecl {
     String type = "FunctionDecl";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
     ti.print(prefix + (isTail ?"|   " : "|   "), false);
-    id.print(prefix + (isTail ?"|   " : "|   "), true);
+    System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "IDENT");
     System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "(");
     arg.print(prefix + (isTail ?"    " : "|   "), false);
     System.out.println(prefix + "|   " + (isTail ?  "| " : "| ") + "  ");
