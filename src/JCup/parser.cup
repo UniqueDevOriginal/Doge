@@ -5,6 +5,25 @@ import JCup.ParserTokens.*;
 
 /* Identificar erro no parser, mostra linha e coluna do erro */
 parser code {:
+
+    public void semantic_error(String message, Object info) {
+        StringBuilder sb = new StringBuilder("Error");
+
+        if (info != null) { 
+
+        System.out.println("Erro semantico na linha " + yyline + " coluna " + yycolumn + ": " + message);
+        System.exit(0);
+
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol sym = (java_cup.runtime.Symbol) info;
+            sb.append(" " + sym.left+1 + "." + sym.right+1 + "." + sym.value);
+        }
+        sb.append(" " + message);
+        System.out.println(); 
+        System.err.println(m+"\033[0m");
+
+    }
+
     /* Sobrescrever o método report_error para que ele exiba a linha e
         coluna de onde ocorreu o erro na entrada, bem como no
         razão para o erro que é passado para o método no
@@ -47,6 +66,10 @@ parser code {:
         report_error(message, info);
         System.exit(1);
     }
+
+    public void semantic_error(String message, Object info) {
+        semantic_error(mensagem)
+
 :};
 
 /* --------------------------Declaração de terminais e não-terminais------------------------ */
@@ -137,11 +160,11 @@ BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDe
                         | /* empty */
                         ;
 Stmt                ::= Expr
-                        | IF:f LEFTPAREN Expr:ex RIGHTPAREN Block:bl {: RESULT = new StmtIfExprBlock(f, ex, bl); :}
-                        | WHILE:w LEFTPAREN Expr:ex RIGHTPAREN Block:bl {: RESULT = new StmtWhileExprBlock(w, ex, bl); :} 
-                        | Id:i EQUAL Literal:lt SEMI {: RESULT = new StmtIdEqualLiteralSemi(i, lt); :}
-                        | Id:i EQUAL Expr:lt SEMI {: RESULT = new StmtIdEqualExprSemi(i, lt); :}
-                        | SHOW:sh LEFTPAREN Id:i RIGHTPAREN SEMI {: RESULT = new StmtShowIdRightParSemi(sh, i); :}
+                        | IF:f LEFTPAREN Expr:ex RIGHTPAREN Block:bl 
+                        | WHILE:w LEFTPAREN Expr:ex RIGHTPAREN Block:bl 
+                        | Id:i EQUAL Literal:lt SEMI 
+                        | Id:i EQUAL Expr:lt SEMI
+                        | SHOW:sh LEFTPAREN Id:i RIGHTPAREN SEMI 
                         | Call
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;

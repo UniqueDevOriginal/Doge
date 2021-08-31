@@ -5,8 +5,10 @@ import JCup.ParserTokens.Program;
 import JFlex.*;
    
 
+
 public class Main {
-  static public void main(String argv[]) {    
+  static public void main(String argv[]) {   
+
     /* Start the parser */
     try {
       // new FileReader(testFile)
@@ -15,7 +17,7 @@ public class Main {
       parser p = new parser(lexedInput);
       // p.parse();
       Program result = (Program) p.parse().value;
-      System.out.println();
+      System.out.println(); 
       System.out.println();
       
       result.print("",true);
