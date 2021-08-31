@@ -1,6 +1,1 @@
-int chard() {
-    int chard;
-}
-int r() {
-    int chard;
-}
+int b = 10;

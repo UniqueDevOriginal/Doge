@@ -283,20 +283,19 @@ public class parser extends java_cup.runtime.lr_parser {
         coluna de onde ocorreu o erro na entrada, bem como no
         razão para o erro que é passado para o método no
         String 'mensagem'.  */
-
-    
     public void report_error(String message, Object info) {
 
         /* Crie um StringBuilder chamado 'm' com a string 'Erro' nele. */
-        StringBuilder m = new StringBuilder("\033[0;31m"+"Error");
+        System.out.println();
+        StringBuilder m = new StringBuilder("\033[0;31m");
 
+        m.append(message);
         /* Verifique se as informações passadas para o método são 
         do tipo java_cup.runtime.Symbol. */
         if (info instanceof java_cup.runtime.Symbol) {
             /* Declara um objeto java_cup.runtime.Symbol 's' com as
                 informações  que está sendo convertida. */
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
-
             /* Verifica se a linha da entrada >= 0 */
             if (s.left >= 0) {
                 /* Adiciona msg de erro na linha do erro da entrada. */
@@ -307,16 +306,10 @@ public class parser extends java_cup.runtime.lr_parser {
                     m.append(", column "+(s.right+1));
             }
         }
-
-        /* Por fim adiciona a mensagem de erro na tela. */
-        m.append(" : "+message);
-
         /* Imprime o conteudo de 'm' que contem a msg de erro, 
         com as informação de linha e coluna e a msg*/
-        System.out.println(); 
         System.err.println(m+"\033[0m");
     }
-
     /* Sobrescrever report_fatal_error para exibit linha e coluna do erro 
        alem da mensagem do erro, e termina a execução. */
     public void report_fatal_error(String message, Object info) { 

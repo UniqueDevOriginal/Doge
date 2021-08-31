@@ -17,7 +17,6 @@ public class Main {
       //Program result = (Program) p.parse().value;
       System.out.println();
       System.out.println();
-    // java_cup.runtime. s = ((java_cup.runtime.Symbol) var);
       //result.print("",true);
 
 @SuppressWarnings("unused")
