@@ -109,7 +109,7 @@ Comentario = "$"[^\n]*
     {Character} { print_token(yytext()); return symbol(sym.CHARACTER, new String(yytext()));}
 
    /* ----------Int Literal---------- */
-    {Number}    { print_token(yytext()); return symbol(sym.NUMBER, new String(yytext()));}
+    {Number}    { print_token(yytext()); return symbol(sym.NUMBER, new Integer(yytext()));}
 
     /* ----------Identificador---------- */
     {Id} { print_token(yytext());return symbol(sym.IDENT, new String(yytext()));} 

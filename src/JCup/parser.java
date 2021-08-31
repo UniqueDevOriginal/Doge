@@ -279,6 +279,29 @@ public class parser extends java_cup.runtime.lr_parser {
       }
       aux.nodes_function.add(id);
     }
+
+    void wrong_type(String type) throws IOException{
+      java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
+      String type_id= s.value.getClass().getSimpleName();
+      System.out.println(type_id);
+      switch (type) {
+        case "NUMBER":
+        if (!(type_id.equals("Integer"))){
+            System.out.println();
+            throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
+        }
+        break;
+      
+        case "CHARACTER":
+        break;
+      }
+      // if (!(type_id.equals("Integer"))){
+      //     System.out.println();
+      //     throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
+      // }
+
+        
+  }
     /* Sobrescrever o método report_error para que ele exiba a linha e
         coluna de onde ocorreu o erro na entrada, bem como no
         razão para o erro que é passado para o método no
@@ -848,7 +871,7 @@ class CUP$parser$actions {
 		int nbleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int nbright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Integer nb = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new NUMBER(nb); 
+		 RESULT = new NUMBER(nb) ; wrong_type("NUMBER");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Literal",18, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -860,7 +883,7 @@ class CUP$parser$actions {
 		int ctleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int ctright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String ct = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new CHARACTER(ct); 
+		 RESULT = new CHARACTER(ct); wrong_type("CHARACTER");
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Literal",18, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
