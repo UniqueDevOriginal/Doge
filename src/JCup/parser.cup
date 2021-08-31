@@ -60,7 +60,7 @@ parser code {:
             }
         }
         if (!exist){
-            throw new java.io.IOException("\033[0;31m"+ " Function " + "< " + id + " >" + " isn't declared" + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
+            throw new java.io.IOException("\033[0;31m"+ " Function " + "< " + id + " >" + " isn't declared " + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
     }
@@ -74,7 +74,7 @@ parser code {:
             }
         }
         if (!exist){
-            throw new java.io.IOException("\033[0;31m"+ " Variable " + "< " + id + " >" + " isn't declared" + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
+            throw new java.io.IOException("\033[0;31m"+ " Variable " + "< " + id + " >" + " isn't declared " + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
     }
@@ -208,8 +208,7 @@ BlockStmt        ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(
 Stmt                ::= Expr
                         | IF LEFTPAREN Expr RIGHTPAREN Block 
                         | WHILE LEFTPAREN Expr RIGHTPAREN Block 
-                        | Id EQUAL Literal SEMI
-                        | Id EQUAL Expr SEMI
+                        | Id {:var_id_exist(temp_id);:} EQUAL Literal SEMI
                         | SHOW LEFTPAREN Id RIGHTPAREN SEMI
                         | Call
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
