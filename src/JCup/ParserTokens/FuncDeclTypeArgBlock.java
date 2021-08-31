@@ -1,4 +1,5 @@
 package JCup.ParserTokens;
+import java.io.IOException;
 
 public class FuncDeclTypeArgBlock extends FunctionDecl {
     TypeId ti;
@@ -14,7 +15,7 @@ public class FuncDeclTypeArgBlock extends FunctionDecl {
     }
   
   @Override
-  void print(String prefix, boolean isTail) {
+  void print(String prefix, boolean isTail) throws IOException{
 
     String type = "FunctionDecl";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);

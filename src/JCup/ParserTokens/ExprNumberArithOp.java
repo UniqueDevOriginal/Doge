@@ -16,7 +16,6 @@ public class ExprNumberArithOp extends Expr{
         lt1.print(prefix + (isTail ?"" : ""), false);
         //System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + lt1.getClass().getSimpleName());
         op.print(prefix + (isTail ?"" : ""), false);
-        lt2.print(prefix + (isTail ?"" : ""), true);
-        //System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + lt2.getClass().getSimpleName());
+        lt2.print(prefix + (isTail ?"" : ""), true);        //System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + lt2.getClass().getSimpleName());
     }
 }

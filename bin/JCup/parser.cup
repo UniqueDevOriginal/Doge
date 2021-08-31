@@ -146,7 +146,7 @@ Stmt                ::= Expr
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;
 ReturnValue         ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:} 
-                        | Id:id {: RESULT = new ReturnValueId(id); :}} 
+                        | Id:id {: RESULT = new ReturnValueId(id); :} 
                         | /* empty */
                         ;
 Call                ::= Id LEFTPAREN Actuals RIGHTPAREN SEMI;

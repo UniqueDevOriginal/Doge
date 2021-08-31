@@ -1,5 +1,7 @@
 package JCup.ParserTokens;
 
+import java.io.IOException;
+
 public class DeclFunctionDecl extends Decl {
    FunctionDecl child1;
    Decl child2;
@@ -10,7 +12,7 @@ public class DeclFunctionDecl extends Decl {
   }
 
   @Override
-  void print(String prefix, boolean isTail) {
+  void print(String prefix, boolean isTail) throws IOException {
 
     String type = "Decl";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
