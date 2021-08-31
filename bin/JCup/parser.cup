@@ -137,11 +137,11 @@ BlockStmt           ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDe
                         | /* empty */
                         ;
 Stmt                ::= Expr
-                        | IF LEFTPAREN Expr RIGHTPAREN Block 
-                        | WHILE LEFTPAREN Expr RIGHTPAREN Block 
-                        | Id EQUAL Literal SEMI
-                        | Id EQUAL Expr SEMI
-                        | SHOW LEFTPAREN Id RIGHTPAREN SEMI
+                        | IF:f LEFTPAREN Expr:ex RIGHTPAREN Block:bl {: RESULT = new StmtIfExprBlock(f, ex, bl); :}
+                        | WHILE:w LEFTPAREN Expr:ex RIGHTPAREN Block:bl {: RESULT = new StmtWhileExprBlock(w, ex, bl); :} 
+                        | Id:i EQUAL Literal:lt SEMI {: RESULT = new StmtIdEqualLiteralSemi(i, lt); :}
+                        | Id:i EQUAL Expr:lt SEMI {: RESULT = new StmtIdEqualExprSemi(i, lt); :}
+                        | SHOW:sh LEFTPAREN Id:i RIGHTPAREN SEMI {: RESULT = new StmtShowIdRightParSemi(sh, i); :}
                         | Call
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;
