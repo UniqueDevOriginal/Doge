@@ -1,6 +1,7 @@
 int a;
 int main(){
-    while (5 < 3) {
-        return 0+6;
-    }
+    tothemoon(a);
+    tothemoon(a);
+    tothemoon(a);
+
 }

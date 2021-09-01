@@ -1,10 +1,12 @@
 package JCup.ParserTokens;
 
 public class StmtReturnValue extends Stmt {
-    ReturnValue child;
+    ReturnValue child1;
+    Object child2;
 
-    public StmtReturnValue(ReturnValue d) {
-        child = d;
+    public StmtReturnValue(Object d1, ReturnValue d) {
+        child1 = d;
+        child2 = d1;
     }
 
     @Override
@@ -12,7 +14,7 @@ public class StmtReturnValue extends Stmt {
         String type = "Stmt";
         System.out.println(prefix + (isTail ? "|-- " : "|-- ") + type);
         System.out.println(prefix + "    " + (isTail ? "|-- " : "|-- ") + "RETURN");
-        child.print(prefix + (isTail ? "    " : "    "), false);
+        child1.print(prefix + (isTail ? "    " : "    "), false);
         System.out.println(prefix + "    " + (isTail ? "|-- " : "|-- ") + ";");
 
     }

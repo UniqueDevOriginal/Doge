@@ -1,7 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
-
 public class VarListVarList extends VarList {
     Var child1;
     VarList child2;

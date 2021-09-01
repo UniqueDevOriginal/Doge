@@ -3,10 +3,12 @@ package JCup.ParserTokens;
 public class StmtIf extends Stmt {
     ExprComp child1;
     Block child2;
+    Object child3;
 
-    public StmtIf(ExprComp ch1, Block ch2) {
+    public StmtIf(Object ch3, ExprComp ch1, Block ch2) {
         child1 = ch1;
         child2 = ch2;
+        child3 = ch3;
     }
 
     @Override

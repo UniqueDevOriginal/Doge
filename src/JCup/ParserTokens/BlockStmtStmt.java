@@ -21,6 +21,5 @@ public class BlockStmtStmt extends BlockStmt {
       return;
     }
     child2.print(prefix + (isTail ?"    " : "|   "), true);
-
   }
 }

@@ -229,12 +229,12 @@ BlockStmt        ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(
                         | Stmt:st BlockStmt:blst {: RESULT = new BlockStmtStmt(st, blst); :}
                         | /* empty */
                         ;
-Stmt                ::=  IF LEFTPAREN ExprComp:ec RIGHTPAREN Block:bl {: RESULT = new StmtIf(ec, bl); :}
-                        | WHILE LEFTPAREN ExprComp:ec RIGHTPAREN Block:bl {: RESULT = new StmtWhile(ec, bl); :} 
+Stmt                ::=  IF:sif LEFTPAREN ExprComp:ec RIGHTPAREN Block:bl {: RESULT = new StmtIf(sif, ec, bl); :}
+                        | WHILE:swh LEFTPAREN ExprComp:ec RIGHTPAREN Block:bl {: RESULT = new StmtWhile(swh, ec, bl); :} 
                         | Id:i {: var_id_exist(id_info.get(id_info.size()-1)[0]); :} EQUAL Literal:lt SEMI {: verify_assing(id_info.get(id_info.size()-1)[0]); RESULT = new StmtIdEqualLiteralSemi(i, lt);:}
-                        | TOTHEMOON LEFTPAREN Id {: /*function_id_exist(temp_id); */:} RIGHTPAREN SEMI
+                        | TOTHEMOON:ttm LEFTPAREN Id:i {:  var_id_exist(id_info.get(id_info.size()-1)[0]); :} RIGHTPAREN SEMI {: RESULT = new StmtTothemoon(ttm, i);:}
                         | Call
-                        | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
+                        | RETURN:rtn ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rtn,rv); :}
                         ;
 ReturnValue     ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:} 
                         | Id:i  {: var_id_exist(id_info.get(id_info.size()-1)[0]); RESULT = new ReturnValueId(i); :} 
