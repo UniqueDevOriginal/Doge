@@ -5,7 +5,6 @@ public class CHARACTER extends Literal {
 
     public CHARACTER(String ct) {
         charc = ct; 
-        System.out.println(charc); 
     }
 
     @Override

@@ -4,6 +4,7 @@ import java_cup.runtime.*;
 import JCup.ParserTokens.*;
 import JCup.AuxStruct.AuxArray; 
 import java.io.IOException; 
+import java.util.ArrayList;
 
 /* Identificar erro no parser, mostra linha e coluna do erro */
 parser code {:
@@ -11,7 +12,30 @@ parser code {:
     AuxArray aux =  new AuxArray();
     private String type_coming = "";
     private boolean id_need_to_exist = false;
-    private String temp_id = "";
+    private String Literal_type = "";
+    private ArrayList<String[]> id_info = new ArrayList<>();
+    private String[] var_to_assing;
+
+     void create_id_info(String id, String type){
+        String[] info = new String[2];
+        info[0] = id;
+        info[1] = type;
+        id_info.add(info);
+    }
+
+    void verify_assing(String id) throws IOException{
+        int pos = 0;  
+        for(int i = 0; i < id_info.size(); i++){
+            if (id_info.get(i)[0] == id){
+              pos = i;
+              break;
+            }
+        }
+        var_to_assing = id_info.get(pos);
+        if (!(var_to_assing[1].equals(Literal_type))){
+               throw new java.io.IOException("\033[0;31m"+"Trying to assing "+ Literal_type +" to "+ var_to_assing[1]+ "\033[0m"); 
+        }
+    }
 
     void wrong_type(String type) throws IOException{
         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
@@ -41,7 +65,6 @@ parser code {:
 
     void duplicate_function(String id) throws IOException{
         java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
-        System.out.println(s.value);
         for (String newid : aux.nodes_function) {
         if(newid.equals(id)){
             System.out.println();
@@ -188,12 +211,12 @@ Decl                ::= VarDecl:vd Decl:d {: RESULT = new DeclVarDecl(vd, d); :}
 VarDecl           ::= Var:v SEMI {: RESULT = new VarDeclVar(v); :} 
                         | Var:v AssingOp:ao Literal:lt SEMI {: RESULT = new VarDeclAssingOp(v,ao,lt);:}
                         ;
-Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); duplicate_var(temp_id);:}
+Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); duplicate_var(id_info.get(id_info.size()-1)[0]);:}
                         ;
 TypeId             ::= INT:n {: RESULT = new INT(n); type_coming = "INT";:}
                         | CHAR:c {: RESULT = new CHAR(c); type_coming = "CHAR";:}
                         ;
-Id                     ::= IDENT:id {: /*RESULT = new IDENT(id);*/temp_id = id;:};
+Id                     ::= IDENT:id {:create_id_info(id, type_coming);:};
 FunctionDecl   ::= TypeId:ti IDENT:id {: duplicate_function(id);:} LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti,argt, bl);:};
 Argument        ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         | /* empty */
@@ -208,8 +231,8 @@ BlockStmt        ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(
                         ;
 Stmt                ::=  IF LEFTPAREN ExprComp RIGHTPAREN Block 
                         | WHILE LEFTPAREN ExprComp RIGHTPAREN Block 
-                        | Id {:var_id_exist(temp_id);:} EQUAL Literal SEMI
-                        | TOTHEMOON LEFTPAREN Id {: function_id_exist(temp_id); :} RIGHTPAREN SEMI
+                        | Id {:var_id_exist(id_info.get(id_info.size()-1)[0]);:} EQUAL Literal {:verify_assing(id_info.get(id_info.size()-1)[0]);:} SEMI 
+                        | TOTHEMOON LEFTPAREN Id {: /*function_id_exist(temp_id); */:} RIGHTPAREN SEMI
                         | Call
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;
@@ -217,7 +240,7 @@ ReturnValue     ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:}
                         | Id:i {: RESULT = new ReturnValueId(i); :} 
                         | /* empty */
                         ;
-Call                 ::= Id {: function_id_exist(temp_id); :}LEFTPAREN Actuals RIGHTPAREN SEMI; 
+Call                 ::= Id {: function_id_exist(id_info.get(id_info.size()-1)[0]); :}LEFTPAREN Actuals RIGHTPAREN SEMI; 
 Actuals            ::= Literal COMMA Actuals 
                         | Literal
                         | /* empty */
@@ -225,8 +248,8 @@ Actuals            ::= Literal COMMA Actuals
 Expr                ::= NUMBER:lt ArithOp:aro NUMBER:lt2 {: RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
                         ;
 ExprComp      ::= NUMBER BinOp NUMBER;
-Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb);wrong_type("INT");:}
-                        |  CHARACTER:ct  {: RESULT = new CHARACTER(ct);wrong_type("CHAR");:}
+Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); Literal_type = "INT"; /*wrong_type("INT");*/:}
+                        |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); Literal_type = "CHAR"; /*wrong_type("CHAR");*/:}
                         ;
 ArithOp           ::= PLUS:plu {: RESULT = new PLUS(plu);:} 
                         | MINUS:min {: RESULT = new MINUS(min);:}

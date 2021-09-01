@@ -14,7 +14,7 @@ public class Main {
       Lexer lexedInput = new Lexer( new FileReader(testFile));
       parser p = new parser(lexedInput);
       p.parse();
-      //Program result = (Program) p.parse().value;
+      // Program result = (Program) p.parse().value;
       System.out.println();
       System.out.println();
       //result.print("",true);

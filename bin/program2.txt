@@ -1,12 +1,7 @@
-int f;
-int main(int a)
-{
-    f =1;
-    a = 2;
-    while(2<1){
-        $tothemoon(a) ;
-    }
-return;
-return a;
-return 2+2;
+
+int main(){
+    char f = 'b';
+    f = 'c';
+    int l = 10;
+    l = 'f';
 }
