@@ -1,7 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
-
 public class ArgumentVarList extends Argument {
     VarList child;
 
@@ -10,14 +8,10 @@ public class ArgumentVarList extends Argument {
     }
 
     @Override
-    void print (String prefix, boolean isTail) throws IOException {
+    void print (String prefix, boolean isTail) {
         String type = "Argument";
         System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
-        if (child != null) {
-            child.print(prefix + (isTail ?"    " : "|   "), true);
-        } else {
-            System.out.println(prefix + "|   " + (isTail ?  "| " : "| ") + " ");
-        }
+        child.print(prefix + (isTail ?"    " : "|   "), true);
     }
     
 }

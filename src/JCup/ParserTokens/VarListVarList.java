@@ -12,7 +12,7 @@ public class VarListVarList extends VarList {
     }
   
   @Override
-  void print(String prefix, boolean isTail) throws IOException {
+  void print(String prefix, boolean isTail)   {
     String type = "VarList";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
     child1.print(prefix + (isTail ?"    " : "|   "), false);

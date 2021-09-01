@@ -13,11 +13,11 @@ public class Main {
     	String testFile = "src/program2.txt";
       Lexer lexedInput = new Lexer( new FileReader(testFile));
       parser p = new parser(lexedInput);
-      p.parse();
-      //Program result = (Program) p.parse().value;
+      //p.parse();
+      Program result = (Program) p.parse().value;
       System.out.println();
       System.out.println();
-      //result.print("",true);
+      result.print("",true);
 
 
 @SuppressWarnings("unused")

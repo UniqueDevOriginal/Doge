@@ -1,6 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
 
 public class DeclVarDecl extends Decl {
     VarDecl child1;
@@ -12,7 +11,7 @@ public class DeclVarDecl extends Decl {
   }
 
   @Override
-  void print(String prefix, boolean isTail) throws IOException {
+  void print(String prefix, boolean isTail)   {
 
     String type = "Decl";
 

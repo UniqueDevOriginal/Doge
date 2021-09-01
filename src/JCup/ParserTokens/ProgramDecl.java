@@ -1,6 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
 
 public class ProgramDecl extends Program {
     Decl child;
@@ -11,7 +10,7 @@ public class ProgramDecl extends Program {
 
     @Override
     public 
-    void print (String prefix, boolean isTail) throws IOException {
+    void print (String prefix, boolean isTail)   {
         if (child ==  null)
             return;
         String type = "Program";

@@ -1,6 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
 
 public class VarTypeId extends Var {
   TypeId child1;
@@ -12,7 +11,7 @@ public class VarTypeId extends Var {
   }
 
   @Override
-  public void print(String prefix, boolean isTail) throws IOException {
+  public void print(String prefix, boolean isTail)   {
 
     String type = "Var";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ") + type);

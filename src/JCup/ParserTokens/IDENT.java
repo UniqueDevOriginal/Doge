@@ -1,6 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
 
 public class IDENT extends Id{
     String var;
@@ -10,7 +9,7 @@ public class IDENT extends Id{
     }
 
 	@Override
-	void print(String prefix, boolean isTail) throws IOException {
+	void print(String prefix, boolean isTail)   {
 		String type = "Id";
 		System.out.println(prefix + (isTail ?  "|-- " : "|-- ") + type);
 	    

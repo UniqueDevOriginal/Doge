@@ -161,9 +161,9 @@ non terminal Stmt Stmt;
 non terminal Expr Expr;
 non terminal BlockStmt BlockStmt;
 non terminal ReturnValue ReturnValue;
-non terminal BinOp ; 
-non terminal RelOp ;
-non terminal EqOp ;
+non terminal BinOp BinOp; 
+non terminal RelOp RelOp;
+non terminal EqOp EqOp;
 non terminal AssingOp AssingOp;
 non terminal Literal Literal;  
 non terminal ArithOp ArithOp; 
@@ -193,7 +193,7 @@ Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); duplica
 TypeId             ::= INT:n {: RESULT = new INT(n); type_coming = "INT";:}
                         | CHAR:c {: RESULT = new CHAR(c); type_coming = "CHAR";:}
                         ;
-Id                     ::= IDENT:id {: /*RESULT = new IDENT(id);*/temp_id = id;:};
+Id                     ::= IDENT:id {: RESULT = new IDENT(id); temp_id = id;:};
 FunctionDecl   ::= TypeId:ti IDENT:id {: duplicate_function(id);:} LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti,argt, bl);:};
 Argument        ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         | /* empty */
@@ -206,9 +206,9 @@ BlockStmt        ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(
                         | Stmt:st BlockStmt:blst {: RESULT = new BlockStmtStmt(st, blst); :}
                         | /* empty */
                         ;
-Stmt                ::=  IF LEFTPAREN ExprComp RIGHTPAREN Block 
+Stmt                ::=  IF LEFTPAREN ExprComp:ec RIGHTPAREN Block:bl {: RESULT = new StmtIf(ec, bl); :}
                         | WHILE LEFTPAREN ExprComp RIGHTPAREN Block 
-                        | Id {:var_id_exist(temp_id);:} EQUAL Literal SEMI
+                        | Id:i {:var_id_exist(temp_id);:} EQUAL Literal:lt SEMI {: RESULT = new StmtIdEqualLiteralSemi(i, lt);:}
                         | TOTHEMOON LEFTPAREN Id {: function_id_exist(temp_id); :} RIGHTPAREN SEMI
                         | Call
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
@@ -224,7 +224,7 @@ Actuals            ::= Literal COMMA Actuals
                         ;
 Expr                ::= NUMBER:lt ArithOp:aro NUMBER:lt2 {: RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
                         ;
-ExprComp      ::= NUMBER BinOp NUMBER;
+ExprComp      ::= NUMBER: BinOp NUMBER {: RESULT = new ExprCompNumBinOpNum(lt, aro, lt2);:}};
 Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb);wrong_type("INT");:}
                         |  CHARACTER:ct  {: RESULT = new CHARACTER(ct);wrong_type("CHAR");:}
                         ;

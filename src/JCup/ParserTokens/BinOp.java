@@ -1,7 +1,6 @@
 package JCup.ParserTokens;
 
-public abstract class Block {
+public abstract class BinOp {
 
     abstract void print(String string, boolean b);
 }
-

@@ -1,6 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
 
 public class BlockStmtStmt extends BlockStmt {
     Stmt child1;
@@ -13,7 +12,7 @@ public class BlockStmtStmt extends BlockStmt {
   }
 
   @Override
-  void print(String prefix, boolean isTail) throws IOException {
+  void print(String prefix, boolean isTail){
 
     String type = "Stmt";
 

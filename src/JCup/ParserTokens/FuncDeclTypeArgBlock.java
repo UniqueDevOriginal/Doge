@@ -1,5 +1,4 @@
 package JCup.ParserTokens;
-import java.io.IOException;
 
 public class FuncDeclTypeArgBlock extends FunctionDecl {
     TypeId ti;
@@ -13,15 +12,18 @@ public class FuncDeclTypeArgBlock extends FunctionDecl {
     }
   
   @Override
-  void print(String prefix, boolean isTail) throws IOException{
+  void print(String prefix, boolean isTail)  {
 
     String type = "FunctionDecl";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
     ti.print(prefix + (isTail ?"|   " : "|   "), false);
     System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "IDENT");
     System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + "(");
+    if (arg != null) {
     arg.print(prefix + (isTail ?"    " : "|   "), false);
-    System.out.println(prefix + "|   " + (isTail ?  "| " : "| ") + "  ");
+   } else{
+     System.out.println(prefix + "|   " + (isTail ?  "| " : "| ") + "  ");
+   }
     System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + ")");
     blo.print(prefix + (isTail ?"|   " : "|   "), true);
   }

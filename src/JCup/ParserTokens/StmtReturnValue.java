@@ -1,6 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
 
 public class StmtReturnValue extends Stmt {
     ReturnValue child;
@@ -10,7 +9,7 @@ public class StmtReturnValue extends Stmt {
     }
 
     @Override
-    void print (String prefix, boolean isTail) throws IOException {
+    void print (String prefix, boolean isTail)   {
         if (child ==  null)
             return;
         String type = "ReturnValue";

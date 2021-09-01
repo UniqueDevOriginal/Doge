@@ -1,6 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
 
 public class BlockStmtVarDecl extends BlockStmt {
 
@@ -13,7 +12,7 @@ public class BlockStmtVarDecl extends BlockStmt {
     }
   
   @Override
-  void print(String prefix, boolean isTail) throws IOException {
+  void print(String prefix, boolean isTail) {
 
     String type = "BlockStmt";
     System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);

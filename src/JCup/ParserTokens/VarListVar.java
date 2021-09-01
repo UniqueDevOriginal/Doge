@@ -1,6 +1,5 @@
 package JCup.ParserTokens;
 
-import java.io.IOException;
 
 public class VarListVar extends VarList {
     Var child1;
@@ -10,7 +9,7 @@ public class VarListVar extends VarList {
     }
   
   @Override
-  void print(String prefix, boolean isTail) throws IOException {
+  void print(String prefix, boolean isTail)   {
     child1.print(prefix + (isTail ?"" : "|   "), true);
     //System.out.println(prefix + "|   " + (isTail ?  "|-- " : "|-- ") + ";");
   }

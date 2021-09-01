@@ -1,5 +1,5 @@
 package JCup.ParserTokens;
-import java.io.IOException;
+
 
 public class ReturnValueId extends ReturnValue {
     Id child;
@@ -9,7 +9,7 @@ public class ReturnValueId extends ReturnValue {
     }
 
     @Override
-    void print (String prefix, boolean isTail) throws IOException{
+    void print (String prefix, boolean isTail)  {
         child.print(prefix + (isTail ?"    " : "|   "), true);
     }
 }
