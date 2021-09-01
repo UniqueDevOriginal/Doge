@@ -23,7 +23,22 @@ parser code {:
         id_info.add(info);
     }
 
+//     void verify_keyword(String id) throws Exception{
+//         System.out.println(); 
+//         System.out.println("ewfwef");
+//         System.out.println("wdwd");  
+//         String str[] = {"int", "char",  "if", "while", "tothemoon", "return"};
+//         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
+//         for (String newid : str) {
+//         if(newid.equals(s.value)){
+//             System.out.println();
+//             throw new java.io.IOException("\033[0;31m"+"Syntax error "+"< "+(id)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
+//         }
+//     }
+// }
+
     void verify_assing(String id) throws IOException{
+        java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
         int pos = 0;  
         for(int i = 0; i < id_info.size(); i++){
             if (id_info.get(i)[0] == id){
@@ -33,7 +48,8 @@ parser code {:
         }
         var_to_assing = id_info.get(pos);
         if (!(var_to_assing[1].equals(Literal_type))){
-               throw new java.io.IOException("\033[0;31m"+"Trying to assing "+ Literal_type +" to "+ var_to_assing[1]+ "\033[0m"); 
+            System.out.println(); 
+            throw new java.io.IOException("\033[0;31m"+"Trying to assing "+"< "+(id)+" > "+ Literal_type +" to "+ var_to_assing[1]+" in line "+(s.left+1)+" on column "+(s.right+1)+"\033[0m"); 
         }
     }
 
@@ -41,11 +57,13 @@ parser code {:
         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
         if (type.equals("INT")){
             if (type_coming != "INT"){
+                System.out.println(); 
                throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
             }   
         }
         else if (type.equals("CHAR")){
             if (type_coming != "CHAR"){
+                System.out.println(); 
                throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
             }   
         }
@@ -83,6 +101,7 @@ parser code {:
             }
         }
         if (!exist){
+            System.out.println(); 
             throw new java.io.IOException("\033[0;31m"+ " Function " + "< " + id + " >" + " isn't declared " + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
@@ -97,6 +116,7 @@ parser code {:
             }
         }
         if (!exist){
+            System.out.println(); 
             throw new java.io.IOException("\033[0;31m"+ " Variable " + "< " + id + " >" + " isn't declared " + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
@@ -119,6 +139,8 @@ parser code {:
             /* Declara um objeto java_cup.runtime.Symbol 's' com as
                 informações  que está sendo convertida. */
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+
+                       /* Crie um StringBuilder chamado 'm' com a string 'Erro' nele. */
             /* Verifica se a linha da entrada >= 0 */
             if (s.left >= 0) {
                 /* Adiciona msg de erro na linha do erro da entrada. */
@@ -126,7 +148,7 @@ parser code {:
                 /*  Verifica se a coluna da entrada >= 0 */
                 if (s.right >= 0)
                     /* Adiciona msg de erro na coluna do erro da entrada. */
-                    m.append(", column "+(s.right+1));
+                    m.append(", on column "+(s.right+1));
             }
         }
         /* Imprime o conteudo de 'm' que contem a msg de erro, 
@@ -135,7 +157,7 @@ parser code {:
     }
     /* Sobrescrever report_fatal_error para exibit linha e coluna do erro 
        alem da mensagem do erro, e termina a execução. */
-    public void report_fatal_error(String message, Object info) { 
+    public void report_fatal_error(String message, Object info) {
         report_error(message, info);
         System.exit(1);
     }
@@ -190,8 +212,8 @@ non terminal EqOp EqOp;
 non terminal AssingOp AssingOp;
 non terminal Literal Literal;  
 non terminal ArithOp ArithOp; 
-non terminal Call ;
-non terminal Actuals ;
+non terminal Call Call;
+non terminal Actuals Actuals;
 non terminal ExprComp ExprComp;
 
 /* ---------------------------------Precedencia dos Terminais-------------------------------- */
@@ -216,7 +238,7 @@ Var                  ::= TypeId:ti Id:i {: RESULT = new VarTypeId(ti,i); duplica
 TypeId             ::= INT:n {: RESULT = new INT(n); type_coming = "INT";:}
                         | CHAR:c {: RESULT = new CHAR(c); type_coming = "CHAR";:}
                         ;
-Id                     ::= IDENT:id {:create_id_info(id, type_coming); RESULT = new IDENT(id);:};
+Id                     ::= IDENT:id {:create_id_info(id, type_coming); RESULT = new IDENT(id); /*verify_keyword(id);*/:};
 FunctionDecl   ::= TypeId:ti IDENT:id {: duplicate_function(id);:} LEFTPAREN Argument:argt RIGHTPAREN Block:bl {: RESULT = new FuncDeclTypeArgBlock(ti,argt, bl);:};
 Argument        ::= VarList:vl {: RESULT = new ArgumentVarList(vl);:}
                         | /* empty */
@@ -233,16 +255,16 @@ Stmt                ::=  IF:sif LEFTPAREN ExprComp:ec RIGHTPAREN Block:bl {: RES
                         | WHILE:swh LEFTPAREN ExprComp:ec RIGHTPAREN Block:bl {: RESULT = new StmtWhile(swh, ec, bl); :} 
                         | Id:i {: var_id_exist(id_info.get(id_info.size()-1)[0]); :} EQUAL Literal:lt SEMI {: verify_assing(id_info.get(id_info.size()-1)[0]); RESULT = new StmtIdEqualLiteralSemi(i, lt);:}
                         | TOTHEMOON:ttm LEFTPAREN Id:i {:  var_id_exist(id_info.get(id_info.size()-1)[0]); :} RIGHTPAREN SEMI {: RESULT = new StmtTothemoon(ttm, i);:}
-                        | Call
+                        | Call:cll {: RESULT = new StmtCall(cll);:}
                         | RETURN:rtn ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rtn,rv); :}
                         ;
 ReturnValue     ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:} 
                         | Id:i  {: var_id_exist(id_info.get(id_info.size()-1)[0]); RESULT = new ReturnValueId(i); :} 
                         | /* empty */
                         ;
-Call                 ::= Id {: function_id_exist(id_info.get(id_info.size()-1)[0]); :}LEFTPAREN Actuals RIGHTPAREN SEMI; 
+Call                 ::= Id:id {: function_id_exist(id_info.get(id_info.size()-1)[0]); :}LEFTPAREN Actuals:act RIGHTPAREN SEMI {: RESULT = new CallIdActuals(id,act);:}; 
 Actuals            ::= Literal COMMA Actuals 
-                        | Literal
+                        | Literal:lt {: RESULT = new ActualsLiteral(lt);:}
                         | /* empty */
                         ;
 Expr                ::= NUMBER:lt ArithOp:aro NUMBER:lt2 {: RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
@@ -263,6 +285,6 @@ BinOp             ::= RelOp:reop {: RESULT = new BinOpRelOp(reop);:}
 RelOp               ::= LESS:les {: RESULT = new LESS(les);:}
                         | GREATER:gre {: RESULT = new GREATER(gre);:}
                         ;
-EqOp                ::= EQUALS
+EqOp               ::= EQUALS
                         | NOTEQUALS
                         ;

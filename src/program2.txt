@@ -1,7 +1,5 @@
-int a;
-int main(){
-    tothemoon(a);
-    tothemoon(a);
-    tothemoon(a);
-
+int k(int d, int am, int w, int f){
+    char m;
+    char tg;
 }
+char jhk;

@@ -118,4 +118,5 @@ Comentario = "$"[^\n]*
     <<EOF>> {return symbol(sym.EOF);}   
     
     /*---------Retorna erro léxico---------*/
-    . { throw new Error("\033[0;31m"+"Illegal character <"+yytext()+">"+" in line "+(yyline+1)+", column "+(yycolumn+1)+"\033[0m"); }
+       
+    . {System.out.println(); throw new Error("\033[0;31m"+"Illegal character <"+yytext()+">"+" in line "+(yyline+1)+", on column "+(yycolumn+1)+"\033[0m"); }

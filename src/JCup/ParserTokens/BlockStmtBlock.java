@@ -15,7 +15,7 @@ public class BlockStmtBlock extends Block {
         System.out.println(prefix + (isTail ? "|-- " : "|-- ")+type);
         if (child != null) {
             System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + "{");
-            child.print(prefix + (isTail ?"    " : "|   "), false);
+            child.print(prefix + (isTail ?"    " : "    "), false);
             System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + "}");
         }	else {
             System.out.println(prefix + "    " + (isTail ?  "|-- " : "|-- ") + "{");

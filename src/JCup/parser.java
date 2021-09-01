@@ -221,7 +221,22 @@ public class parser extends java_cup.runtime.lr_parser {
         id_info.add(info);
     }
 
+//     void verify_keyword(String id) throws Exception{
+//         System.out.println(); 
+//         System.out.println("ewfwef");
+//         System.out.println("wdwd");  
+//         String str[] = {"int", "char",  "if", "while", "tothemoon", "return"};
+//         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
+//         for (String newid : str) {
+//         if(newid.equals(s.value)){
+//             System.out.println();
+//             throw new java.io.IOException("\033[0;31m"+"Syntax error "+"< "+(id)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
+//         }
+//     }
+// }
+
     void verify_assing(String id) throws IOException{
+        java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
         int pos = 0;  
         for(int i = 0; i < id_info.size(); i++){
             if (id_info.get(i)[0] == id){
@@ -231,7 +246,8 @@ public class parser extends java_cup.runtime.lr_parser {
         }
         var_to_assing = id_info.get(pos);
         if (!(var_to_assing[1].equals(Literal_type))){
-               throw new java.io.IOException("\033[0;31m"+"Trying to assing "+ Literal_type +" to "+ var_to_assing[1]+ "\033[0m"); 
+            System.out.println(); 
+            throw new java.io.IOException("\033[0;31m"+"Trying to assing "+"< "+(id)+" > "+ Literal_type +" to "+ var_to_assing[1]+" in line "+(s.left+1)+" on column "+(s.right+1)+"\033[0m"); 
         }
     }
 
@@ -239,11 +255,13 @@ public class parser extends java_cup.runtime.lr_parser {
         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
         if (type.equals("INT")){
             if (type_coming != "INT"){
+                System.out.println(); 
                throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
             }   
         }
         else if (type.equals("CHAR")){
             if (type_coming != "CHAR"){
+                System.out.println(); 
                throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
             }   
         }
@@ -281,6 +299,7 @@ public class parser extends java_cup.runtime.lr_parser {
             }
         }
         if (!exist){
+            System.out.println(); 
             throw new java.io.IOException("\033[0;31m"+ " Function " + "< " + id + " >" + " isn't declared " + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
@@ -295,6 +314,7 @@ public class parser extends java_cup.runtime.lr_parser {
             }
         }
         if (!exist){
+            System.out.println(); 
             throw new java.io.IOException("\033[0;31m"+ " Variable " + "< " + id + " >" + " isn't declared " + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
@@ -317,6 +337,8 @@ public class parser extends java_cup.runtime.lr_parser {
             /* Declara um objeto java_cup.runtime.Symbol 's' com as
                 informações  que está sendo convertida. */
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+
+                       /* Crie um StringBuilder chamado 'm' com a string 'Erro' nele. */
             /* Verifica se a linha da entrada >= 0 */
             if (s.left >= 0) {
                 /* Adiciona msg de erro na linha do erro da entrada. */
@@ -324,7 +346,7 @@ public class parser extends java_cup.runtime.lr_parser {
                 /*  Verifica se a coluna da entrada >= 0 */
                 if (s.right >= 0)
                     /* Adiciona msg de erro na coluna do erro da entrada. */
-                    m.append(", column "+(s.right+1));
+                    m.append(", on column "+(s.right+1));
             }
         }
         /* Imprime o conteudo de 'm' que contem a msg de erro, 
@@ -333,7 +355,7 @@ public class parser extends java_cup.runtime.lr_parser {
     }
     /* Sobrescrever report_fatal_error para exibit linha e coluna do erro 
        alem da mensagem do erro, e termina a execução. */
-    public void report_fatal_error(String message, Object info) { 
+    public void report_fatal_error(String message, Object info) {
         report_error(message, info);
         System.exit(1);
     }
@@ -504,7 +526,7 @@ class CUP$parser$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		create_id_info(id, type_coming); RESULT = new IDENT(id);
+		create_id_info(id, type_coming); RESULT = new IDENT(id); /*verify_keyword(id);*/
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Id",3, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -747,7 +769,10 @@ class CUP$parser$actions {
           case 27: // Stmt ::= Call 
             {
               Stmt RESULT =null;
-
+		int cllleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int cllright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Call cll = (Call)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new StmtCall(cll);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Stmt",10, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -803,7 +828,10 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 32: // NT$3 ::= 
             {
-              Object RESULT =null;
+              Call RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Id id = (Id)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
  function_id_exist(id_info.get(id_info.size()-1)[0]); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$3",26, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -812,10 +840,16 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 33: // Call ::= Id NT$3 LEFTPAREN Actuals RIGHTPAREN SEMI 
             {
-              Object RESULT =null;
+              Call RESULT =null;
               // propagate RESULT from NT$3
-                RESULT = (Object) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
-
+                RESULT = (Call) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		Id id = (Id)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		int actleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int actright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Actuals act = (Actuals)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		 RESULT = new CallIdActuals(id,act);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Call",20, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -823,7 +857,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 34: // Actuals ::= Literal COMMA Actuals 
             {
-              Object RESULT =null;
+              Actuals RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Actuals",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -832,8 +866,11 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 35: // Actuals ::= Literal 
             {
-              Object RESULT =null;
-
+              Actuals RESULT =null;
+		int ltleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int ltright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Literal lt = (Literal)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new ActualsLiteral(lt);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Actuals",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -841,7 +878,7 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 36: // Actuals ::= 
             {
-              Object RESULT =null;
+              Actuals RESULT =null;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Actuals",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
