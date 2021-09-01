@@ -11,6 +11,6 @@ public class ActualsLiteral extends Actuals {
     void print(String prefix, boolean isTail) {
         String type = "Actuals";
         System.out.println(prefix + (isTail ? "|-- " : "|-- ") + type);
-        child1.print(prefix + (isTail ?"|   " : "|   "), false);
+        child1.print(prefix + (isTail ?"|   " : "|   "), true);
     }
 }

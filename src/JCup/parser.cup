@@ -263,7 +263,7 @@ ReturnValue     ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:}
                         | /* empty */
                         ;
 Call                 ::= Id:id {: function_id_exist(id_info.get(id_info.size()-1)[0]); :}LEFTPAREN Actuals:act RIGHTPAREN SEMI {: RESULT = new CallIdActuals(id,act);:}; 
-Actuals            ::= Literal COMMA Actuals 
+Actuals            ::= Literal:lt COMMA Actuals:act {: RESULT = new ActualsLiteralActuals(lt,act);:} 
                         | Literal:lt {: RESULT = new ActualsLiteral(lt);:}
                         | /* empty */
                         ;
@@ -280,11 +280,11 @@ ArithOp           ::= PLUS:plu {: RESULT = new PLUS(plu);:}
                         ;
 AssingOp        ::= EQUAL:eq {: RESULT = new EQUAL(eq); :};
 BinOp             ::= RelOp:reop {: RESULT = new BinOpRelOp(reop);:}
-                        | EqOp
+                        | EqOp:eqop {: RESULT = new BinOpEqOp(eqop);:}
                         ;    
 RelOp               ::= LESS:les {: RESULT = new LESS(les);:}
                         | GREATER:gre {: RESULT = new GREATER(gre);:}
                         ;
-EqOp               ::= EQUALS
-                        | NOTEQUALS
+EqOp               ::= EQUALS:eqs {: RESULT = new EQUALS(eqs);:}
+                        | NOTEQUALS:nqs {: RESULT = new NOTEQUALS(nqs);:}
                         ;

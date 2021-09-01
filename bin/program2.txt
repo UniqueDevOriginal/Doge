@@ -1,5 +1,6 @@
-int k(int d, int am, int w, int f){
-    char m;
-    char tg;
+int main(){
+    if(3!=2){
+        main(1,2,3, 'd',2);
+        main(1,2,3, 'd',2);
+    }
 }
-char jhk;

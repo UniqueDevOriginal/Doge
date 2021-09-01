@@ -858,7 +858,13 @@ class CUP$parser$actions {
           case 34: // Actuals ::= Literal COMMA Actuals 
             {
               Actuals RESULT =null;
-
+		int ltleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int ltright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Literal lt = (Literal)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int actleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int actright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Actuals act = (Actuals)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new ActualsLiteralActuals(lt,act);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Actuals",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1020,7 +1026,10 @@ class CUP$parser$actions {
           case 47: // BinOp ::= EqOp 
             {
               BinOp RESULT =null;
-
+		int eqopleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eqopright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		EqOp eqop = (EqOp)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new BinOpEqOp(eqop);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("BinOp",14, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1053,7 +1062,10 @@ class CUP$parser$actions {
           case 50: // EqOp ::= EQUALS 
             {
               EqOp RESULT =null;
-
+		int eqsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eqsright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object eqs = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new EQUALS(eqs);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EqOp",16, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1062,7 +1074,10 @@ class CUP$parser$actions {
           case 51: // EqOp ::= NOTEQUALS 
             {
               EqOp RESULT =null;
-
+		int nqsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int nqsright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object nqs = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new NOTEQUALS(nqs);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("EqOp",16, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
