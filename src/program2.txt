@@ -1,7 +1,7 @@
-
 int main(){
     char f = 'b';
     f = 'c';
     int l = 10;
-    l = 'f';
+    int c = 10;
+    l = 1;
 }

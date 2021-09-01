@@ -32,7 +32,7 @@ import JCup.*;
 %{
 
    private void print_token(String token_name) {
-         System.out.println(" <"+token_name+">");
+         System.out.print(" <"+token_name+">");
    }
 
     /* Criar um novo simbolo com informações sobre token, sem valor */
@@ -54,7 +54,7 @@ import JCup.*;
    expressões regulares que serão usadas posteriormente
 */
 NewLine = \r|\n|\r\n
-WhiteSpace = {NewLine} | [ \t\f]
+WhiteSpace = [ \t\f]
 Alpha  = [|a-z|]
 Character = [\'][{Alpha}][\']
 //String = [\"][^\n\"]+[\"]
@@ -63,7 +63,6 @@ Number = [0-9]|[1-9][0-9]*
 AlphaNum = [{Alpha}|{Digit}]
 Id = {Alpha}{AlphaNum}*
 Comentario = "$"[^\n]*
-
 
 %%
 /* ------------------------Regras do scanner---------------------- */
@@ -101,8 +100,9 @@ Comentario = "$"[^\n]*
     "return" { print_token("return"); return symbol(sym.RETURN);}
     "tothemoon"  { print_token("show"); return symbol(sym.TOTHEMOON);}
 
-          /*----------Comentário e Espaço em Branco----------*/
+    /*----------Comentário e Espaço em Branco----------*/
     {Comentario}     { /* ignore */ }
+    {NewLine}        {System.out.println();}
     {WhiteSpace}     { /* ignore */ }
 
    /* ----------Char Literal---------- */
