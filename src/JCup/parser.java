@@ -209,32 +209,32 @@ public class parser extends java_cup.runtime.lr_parser {
 
     AuxArray aux =  new AuxArray();
     private String type_coming = "";
-    private boolean id_need_to_exist = false;
     private String Literal_type = "";
+    private boolean id_need_to_exist = false;
     private ArrayList<String[]> id_info = new ArrayList<>();
     private String[] var_to_assing;
     private boolean isDiv = false;
 
-     void create_id_info(String id, String type){
+    void create_id_info(String id, String type){
         String[] info = new String[2];
+        for (String newid : aux.nodes_var) {
+        if(newid.equals(id)){
+            int pos = 0;  
+            for(int i = 0; i < id_info.size(); i++){
+                if (id_info.get(i)[0].equals(id)){
+                pos = i;
+                break;
+                }
+            }
+            String[] info_of_id = id_info.get(pos);
+            type = info_of_id[1];
+            }
+        }
         info[0] = id;
         info[1] = type;
         id_info.add(info);
     }
 
-//     void verify_keyword(String id) throws Exception{
-//         System.out.println(); 
-//         System.out.println("ewfwef");
-//         System.out.println("wdwd");  
-//         String str[] = {"int", "char",  "if", "while", "tothemoon", "return"};
-//         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
-//         for (String newid : str) {
-//         if(newid.equals(s.value)){
-//             System.out.println();
-//             throw new java.io.IOException("\033[0;31m"+"Syntax error "+"< "+(id)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
-//         }
-//     }
-// }
 
     void verify_assing(String id) throws IOException{
         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
@@ -296,7 +296,7 @@ public class parser extends java_cup.runtime.lr_parser {
         boolean exist = false;
         for (String newid : aux.nodes_function) {
         if(newid.equals(id)){
-           exist = true;
+            exist = true;
             }
         }
         if (!exist){
@@ -721,7 +721,7 @@ class CUP$parser$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Id i = (Id)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
- var_id_exist(id_info.get(id_info.size()-1)[0]); 
+var_id_exist(id_info.get(id_info.size()-1)[0]); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$1",24, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
