@@ -252,22 +252,6 @@ public class parser extends java_cup.runtime.lr_parser {
         }
     }
 
-    void wrong_type(String type) throws IOException{
-        java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
-        if (type.equals("INT")){
-            if (type_coming != "INT"){
-                System.out.println(); 
-               throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
-            }   
-        }
-        else if (type.equals("CHAR")){
-            if (type_coming != "CHAR"){
-                System.out.println(); 
-               throw new java.io.IOException("\033[0;31m"+"Wrong type "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
-            }   
-        }
-        type_coming = "";
-    }
 
     void duplicate_var(String id) throws IOException{
         java_cup.runtime.Symbol s = (java_cup.runtime.Symbol)stack.peek();
