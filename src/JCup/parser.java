@@ -213,6 +213,7 @@ public class parser extends java_cup.runtime.lr_parser {
     private String Literal_type = "";
     private ArrayList<String[]> id_info = new ArrayList<>();
     private String[] var_to_assing;
+    private boolean isDiv = false;
 
      void create_id_info(String id, String type){
         String[] info = new String[2];
@@ -318,6 +319,15 @@ public class parser extends java_cup.runtime.lr_parser {
             throw new java.io.IOException("\033[0;31m"+ " Variable " + "< " + id + " >" + " isn't declared " + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
+    }
+
+    void div_by_zero() throws IOException{
+        java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
+        System.out.println();
+        if (isDiv && s.value.equals(0)){
+          throw new java.io.IOException("\033[0;31m"+"Division by zero in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
+        }
+        isDiv = false;
     }
 
     /* Sobrescrever o método report_error para que ele exiba a linha e
@@ -903,7 +913,7 @@ class CUP$parser$actions {
 		int lt2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int lt2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Integer lt2 = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new ExprNumberArithOp(lt ,aro,lt2);
+		div_by_zero(); RESULT = new ExprNumberArithOp(lt ,aro,lt2);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -921,7 +931,7 @@ class CUP$parser$actions {
 		int lt2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int lt2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Integer lt2 = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new ExprCompNumBinOpNum(l1, bio, lt2);
+		RESULT = new ExprCompNumBinOpNum(l1, bio, lt2);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ExprComp",22, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -993,7 +1003,7 @@ class CUP$parser$actions {
 		int divleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int divright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String div = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new DIVIDE(div);
+		 RESULT = new DIVIDE(div); isDiv = true;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ArithOp",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

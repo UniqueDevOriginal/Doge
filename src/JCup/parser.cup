@@ -15,6 +15,7 @@ parser code {:
     private String Literal_type = "";
     private ArrayList<String[]> id_info = new ArrayList<>();
     private String[] var_to_assing;
+    private boolean isDiv = false;
 
      void create_id_info(String id, String type){
         String[] info = new String[2];
@@ -120,6 +121,15 @@ parser code {:
             throw new java.io.IOException("\033[0;31m"+ " Variable " + "< " + id + " >" + " isn't declared " + "in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
         }
         id_need_to_exist = false;
+    }
+
+    void div_by_zero() throws IOException{
+        java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol)stack.peek());
+        System.out.println();
+        if (isDiv && s.value.equals(0)){
+          throw new java.io.IOException("\033[0;31m"+"Division by zero in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m");
+        }
+        isDiv = false;
     }
 
     /* Sobrescrever o método report_error para que ele exiba a linha e
@@ -267,16 +277,16 @@ Actuals            ::= Literal:lt COMMA Actuals:act {: RESULT = new ActualsLiter
                         | Literal:lt {: RESULT = new ActualsLiteral(lt);:}
                         | /* empty */
                         ;
-Expr                ::= NUMBER:lt ArithOp:aro NUMBER:lt2 {: RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
+Expr                ::= NUMBER:lt ArithOp:aro NUMBER:lt2 {:div_by_zero(); RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
                         ;
-ExprComp      ::= NUMBER:l1 BinOp:bio NUMBER:lt2 {: RESULT = new ExprCompNumBinOpNum(l1, bio, lt2);:};
+ExprComp      ::= NUMBER:l1 BinOp:bio NUMBER:lt2 {:RESULT = new ExprCompNumBinOpNum(l1, bio, lt2);:};
 Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); Literal_type = "INT"; /*wrong_type("INT");*/:}
                         |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); Literal_type = "CHAR"; /*wrong_type("CHAR");*/:}
                         ;
 ArithOp           ::= PLUS:plu {: RESULT = new PLUS(plu);:} 
                         | MINUS:min {: RESULT = new MINUS(min);:}
                         | TIMES:tim {: RESULT = new TIMES(tim);:}
-                        | DIVIDE:div {: RESULT = new DIVIDE(div);:}
+                        | DIVIDE:div {: RESULT = new DIVIDE(div); isDiv = true;:}
                         ;
 AssingOp        ::= EQUAL:eq {: RESULT = new EQUAL(eq); :};
 BinOp             ::= RelOp:reop {: RESULT = new BinOpRelOp(reop);:}
