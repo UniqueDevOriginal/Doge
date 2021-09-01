@@ -230,14 +230,14 @@ BlockStmt        ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(
                         | /* empty */
                         ;
 Stmt                ::=  IF LEFTPAREN ExprComp:ec RIGHTPAREN Block:bl {: RESULT = new StmtIf(ec, bl); :}
-                        | WHILE LEFTPAREN ExprComp RIGHTPAREN Block 
+                        | WHILE LEFTPAREN ExprComp:ec RIGHTPAREN Block:bl {: RESULT = new StmtWhile(ec, bl); :} 
                         | Id:i {: var_id_exist(id_info.get(id_info.size()-1)[0]); :} EQUAL Literal:lt SEMI {: verify_assing(id_info.get(id_info.size()-1)[0]); RESULT = new StmtIdEqualLiteralSemi(i, lt);:}
                         | TOTHEMOON LEFTPAREN Id {: /*function_id_exist(temp_id); */:} RIGHTPAREN SEMI
                         | Call
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;
 ReturnValue     ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:} 
-                        | Id:i {: RESULT = new ReturnValueId(i); :} 
+                        | Id:i  {: var_id_exist(id_info.get(id_info.size()-1)[0]); RESULT = new ReturnValueId(i); :} 
                         | /* empty */
                         ;
 Call                 ::= Id {: function_id_exist(id_info.get(id_info.size()-1)[0]); :}LEFTPAREN Actuals RIGHTPAREN SEMI; 

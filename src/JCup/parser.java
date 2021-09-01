@@ -665,7 +665,13 @@ class CUP$parser$actions {
           case 22: // Stmt ::= WHILE LEFTPAREN ExprComp RIGHTPAREN Block 
             {
               Stmt RESULT =null;
-
+		int ecleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int ecright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ExprComp ec = (ExprComp)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int blleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int blright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Block bl = (Block)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = new StmtWhile(ec, bl); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Stmt",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -759,7 +765,7 @@ class CUP$parser$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Id i = (Id)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new ReturnValueId(i); 
+		 var_id_exist(id_info.get(id_info.size()-1)[0]); RESULT = new ReturnValueId(i); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("ReturnValue",13, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

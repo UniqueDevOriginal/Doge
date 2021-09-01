@@ -12,8 +12,8 @@ public class ExprNumberArithOp extends Expr {
     @Override
     void print(String prefix, boolean isTail) {
 
-        System.out.println(prefix + "|   " + (isTail ? "|-- " : "|-- ") + "NUMBER");
+        System.out.println(prefix  + (isTail ? "|-- " : "|-- ") + "NUMBER");
         op.print(prefix + (isTail ? "" : ""), false);
-        System.out.println(prefix + "|   " + (isTail ? "|-- " : "|-- ") + "NUMBER");
+        System.out.println(prefix  + (isTail ? "|-- " : "|-- ") + "NUMBER");
     }
 }
