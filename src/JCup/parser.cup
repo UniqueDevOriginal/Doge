@@ -192,7 +192,7 @@ non terminal Literal Literal;
 non terminal ArithOp ArithOp; 
 non terminal Call ;
 non terminal Actuals ;
-non terminal ExprComp;
+non terminal ExprComp ExprComp;
 
 /* ---------------------------------Precedencia dos Terminais-------------------------------- */
 
@@ -247,7 +247,7 @@ Actuals            ::= Literal COMMA Actuals
                         ;
 Expr                ::= NUMBER:lt ArithOp:aro NUMBER:lt2 {: RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
                         ;
-ExprComp      ::= NUMBER BinOp NUMBER {: RESULT = new ExprCompNumBinOpNum(lt, aro, lt2);:}};
+ExprComp      ::= NUMBER:l1 BinOp:bio NUMBER:lt2 {: RESULT = new ExprCompNumBinOpNum(l1, bio, lt2);:};
 Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); Literal_type = "INT"; /*wrong_type("INT");*/:}
                         |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); Literal_type = "CHAR"; /*wrong_type("CHAR");*/:}
                         ;
@@ -257,12 +257,12 @@ ArithOp           ::= PLUS:plu {: RESULT = new PLUS(plu);:}
                         | DIVIDE:div {: RESULT = new DIVIDE(div);:}
                         ;
 AssingOp        ::= EQUAL:eq {: RESULT = new EQUAL(eq); :};
-BinOp             ::= RelOp 
+BinOp             ::= RelOp:reop {: RESULT = new BinOpRelOp(reop);:}
                         | EqOp
                         ;    
-RelOp               ::= LESS 
-                        | GREATER
+RelOp               ::= LESS:les {: RESULT = new LESS(les);:}
+                        | GREATER:gre {: RESULT = new GREATER(gre);:}
                         ;
-EqOp                ::= EQUALS 
+EqOp                ::= EQUALS
                         | NOTEQUALS
                         ;
