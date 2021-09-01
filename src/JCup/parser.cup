@@ -264,8 +264,8 @@ Actuals            ::= Literal:lt COMMA Actuals:act {: RESULT = new ActualsLiter
 Expr                ::= NUMBER:lt ArithOp:aro NUMBER:lt2 {:div_by_zero(); RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
                         ;
 ExprComp      ::= NUMBER:l1 BinOp:bio NUMBER:lt2 {:RESULT = new ExprCompNumBinOpNum(l1, bio, lt2);:};
-Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); Literal_type = "INT"; /*wrong_type("INT");*/:}
-                        |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); Literal_type = "CHAR"; /*wrong_type("CHAR");*/:}
+Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb); Literal_type = "INT"; :}
+                        |  CHARACTER:ct  {: RESULT = new CHARACTER(ct); Literal_type = "CHAR"; :}
                         ;
 ArithOp           ::= PLUS:plu {: RESULT = new PLUS(plu);:} 
                         | MINUS:min {: RESULT = new MINUS(min);:}
