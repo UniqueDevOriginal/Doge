@@ -17,13 +17,13 @@ public class sym {
   public static final int SEMI = 22;
   public static final int CHAR = 2;
   public static final int WHILE = 6;
-  public static final int SHOW = 4;
   public static final int RETURN = 7;
   public static final int GREATER = 14;
   public static final int IF = 5;
   public static final int EQUALS = 15;
   public static final int NOTEQUALS = 16;
   public static final int COMMA = 12;
+  public static final int TOTHEMOON = 4;
   public static final int NUMBER = 25;
   public static final int EOF = 0;
   public static final int DIVIDE = 11;
@@ -39,7 +39,7 @@ public class sym {
   "error",
   "CHAR",
   "INT",
-  "SHOW",
+  "TOTHEMOON",
   "IF",
   "WHILE",
   "RETURN",

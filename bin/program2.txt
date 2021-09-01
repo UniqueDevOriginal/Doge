@@ -1,6 +1,12 @@
-int main(){
-    int sum;
-    sum = 2 + 2;
+int f;
+int main(int a)
+{
+    f =1;
+    a = 2;
+    while(2<1){
+        $tothemoon(a) ;
+    }
+return;
+return a;
+return 2+2;
 }
-
-

@@ -33,7 +33,7 @@ parser code {:
         for (String newid : aux.nodes_var) {
         if(newid.equals(id)){
             System.out.println();
-            throw new java.io.IOException("\033[0;31m"+"Duplicate Var "+"< "+(s.value)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
+            throw new java.io.IOException("\033[0;31m"+"Duplicate Var "+"< "+(id)+" >"+" in line "+(s.left+1)+" on column "+(s.right+1)+" \033[0m"); 
         }
       }
       aux.nodes_var.add(id);
@@ -122,7 +122,7 @@ parser code {:
 /* ----------Palavras Reservadas----------*/
 terminal CHAR;
 terminal INT;
-terminal SHOW;
+terminal TOTHEMOON;
 terminal IF;
 terminal WHILE;
 terminal RETURN;
@@ -169,6 +169,7 @@ non terminal Literal Literal;
 non terminal ArithOp ArithOp; 
 non terminal Call ;
 non terminal Actuals ;
+non terminal ExprComp;
 
 /* ---------------------------------Precedencia dos Terminais-------------------------------- */
 
@@ -205,31 +206,25 @@ BlockStmt        ::= VarDecl:vd BlockStmt:blst {: RESULT = new BlockStmtVarDecl(
                         | Stmt:st BlockStmt:blst {: RESULT = new BlockStmtStmt(st, blst); :}
                         | /* empty */
                         ;
-Stmt                ::= Expr
-                        | IF LEFTPAREN Expr RIGHTPAREN Block 
-                        | WHILE LEFTPAREN Expr RIGHTPAREN Block 
+Stmt                ::=  IF LEFTPAREN ExprComp RIGHTPAREN Block 
+                        | WHILE LEFTPAREN ExprComp RIGHTPAREN Block 
                         | Id {:var_id_exist(temp_id);:} EQUAL Literal SEMI
-                        | SHOW LEFTPAREN Id RIGHTPAREN SEMI
+                        | TOTHEMOON LEFTPAREN Id {: function_id_exist(temp_id); :} RIGHTPAREN SEMI
                         | Call
                         | RETURN ReturnValue:rv SEMI {: RESULT = new StmtReturnValue(rv); :}
                         ;
-ReturnValue         ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:} 
+ReturnValue     ::= Expr:ex {: RESULT = new ReturnValueExpr(ex);:} 
                         | Id:i {: RESULT = new ReturnValueId(i); :} 
                         | /* empty */
                         ;
-Call                ::= Id {: function_id_exist(temp_id); :}LEFTPAREN Actuals RIGHTPAREN SEMI; 
-Actuals             ::= Literal COMMA Actuals 
-                        | Expr COMMA Actuals 
-                        | Expr 
+Call                 ::= Id {: function_id_exist(temp_id); :}LEFTPAREN Actuals RIGHTPAREN SEMI; 
+Actuals            ::= Literal COMMA Actuals 
+                        | Literal
                         | /* empty */
                         ;
-Expr                ::= NUMBER BinOp NUMBER
-                        | Id BinOp Id
-                        | Id ArithOp Id 
-                        | NUMBER BinOp Id 
-                        | Id BinOp NUMBER 
-                        | Literal:lt ArithOp:aro Literal:lt2 {: RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
+Expr                ::= NUMBER:lt ArithOp:aro NUMBER:lt2 {: RESULT = new ExprNumberArithOp(lt ,aro,lt2);:}
                         ;
+ExprComp      ::= NUMBER BinOp NUMBER;
 Literal             ::= NUMBER:nb {: RESULT = new NUMBER(nb);wrong_type("INT");:}
                         |  CHARACTER:ct  {: RESULT = new CHARACTER(ct);wrong_type("CHAR");:}
                         ;
@@ -238,8 +233,8 @@ ArithOp           ::= PLUS:plu {: RESULT = new PLUS(plu);:}
                         | TIMES:tim {: RESULT = new TIMES(tim);:}
                         | DIVIDE:div {: RESULT = new DIVIDE(div);:}
                         ;
-AssingOp            ::= EQUAL:eq {: RESULT = new EQUAL(eq); :};
-BinOp               ::= RelOp 
+AssingOp        ::= EQUAL:eq {: RESULT = new EQUAL(eq); :};
+BinOp             ::= RelOp 
                         | EqOp
                         ;    
 RelOp               ::= LESS 

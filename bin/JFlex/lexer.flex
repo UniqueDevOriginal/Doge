@@ -99,7 +99,7 @@ Comentario = "$"[^\n]*
     "if"     { print_token("if"); return symbol(sym.IF);}
     "while"  { print_token("while"); return symbol(sym.WHILE);}
     "return" { print_token("return"); return symbol(sym.RETURN);}
-    "show"  { print_token("show"); return symbol(sym.SHOW);}
+    "tothemoon"  { print_token("show"); return symbol(sym.TOTHEMOON);}
 
           /*----------Comentário e Espaço em Branco----------*/
     {Comentario}     { /* ignore */ }
